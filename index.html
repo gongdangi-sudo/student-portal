@@ -6,7 +6,7 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
-  <!-- SCORE_AI_FIX_V2 -->
+  <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -2783,14 +2783,19 @@ async function loginStudent() {
       loadStudentData();
     }
 
-    // 화면을 먼저 보여준 뒤 데이터 조회
-    // 학생정보 + 학습 + 성적 + 벌점은 통합 API 1회로 조회합니다.
-    loadDashboardAll();
+    // 로그인 성공 화면을 먼저 즉시 그린 뒤,
+    // 무거운 조회는 다음 이벤트 루프에서 시작합니다.
+    setTimeout(function() {
+      // QR은 학생이 바로 사용할 수 있게 우선 조회
+      loadQr();
 
-    // QR / 사유서 / 상담은 기능 특성상 기존 개별 API 유지
-    loadQr();
-    loadReasonList();
-    loadCounselingList();
+      // 나머지는 로그인 화면 전환을 막지 않게 비동기 시작
+      setTimeout(function() {
+        loadDashboardAll();
+        loadReasonList();
+        loadCounselingList();
+      }, 0);
+    }, 0);
 
   }
 
