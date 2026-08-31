@@ -2783,11 +2783,12 @@ async function loginStudent() {
       loadStudentData();
     }
 
-    // 나머지 데이터는 화면을 먼저 보여준 뒤 비동기로 불러옵니다.
+    // 화면을 먼저 보여준 뒤 데이터 조회
+    // 학생정보 + 학습 + 성적 + 벌점은 통합 API 1회로 조회합니다.
+    loadDashboardAll();
+
+    // QR / 사유서 / 상담은 기능 특성상 기존 개별 API 유지
     loadQr();
-    loadStudySummary();
-    loadScoreSummary();
-    loadPenaltySummary();
     loadReasonList();
     loadCounselingList();
 
@@ -2923,6 +2924,96 @@ function renderStudyData(result) {
 }
 
 
+
+/* =========================
+   동시접속 최적화 통합 조회
+   학생정보 + 학습 + 성적 + 벌점 = API 1회
+========================= */
+async function loadDashboardAll() {
+  try {
+    const result =
+      await apiRequest(
+        "studentDashboardAll",
+        {
+          sessionToken: sessionToken
+        }
+      );
+
+    if (
+      !result ||
+      !result.success
+    ) {
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "대시보드 정보를 불러오지 못했습니다."
+      );
+    }
+
+    if (
+      result.student &&
+      result.student.success !== false
+    ) {
+      // getStudentDashboardData가 {success:true, student:{...}} 형식이거나
+      // 학생 객체 자체를 반환하는 두 경우 모두 대응
+      const studentData =
+        result.student.student ||
+        result.student;
+
+      renderStudentData(
+        studentData
+      );
+    }
+
+    if (
+      result.study &&
+      result.study.success !== false
+    ) {
+      renderStudyData(
+        result.study
+      );
+    }
+
+    if (
+      result.score &&
+      result.score.success !== false
+    ) {
+      renderScoreData(
+        result.score
+      );
+    }
+
+    if (
+      result.penalty &&
+      result.penalty.success !== false
+    ) {
+      renderPenaltyData(
+        result.penalty
+      );
+    }
+
+    return result;
+
+  } catch (error) {
+    console.error(
+      "통합 대시보드 조회 오류",
+      error
+    );
+
+    // 통합 API가 아직 배포되지 않았거나 일시 오류인 경우에만
+    // 기존 개별 API로 자동 복구
+    await Promise.allSettled([
+      loadStudentData(),
+      loadStudySummary(),
+      loadScoreSummary(),
+      loadPenaltySummary()
+    ]);
+
+    return null;
+  }
+}
+
+
 async function loadStudentData() {
 
   const result =
@@ -3005,11 +3096,6 @@ async function loadScoreSummary() {
     }
 
     renderScoreDashboard(result);
-
-    localStorage.setItem(
-      "studentPortalScore",
-      JSON.stringify(result)
-    );
 
     return result;
 
