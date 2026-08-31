@@ -731,7 +731,7 @@
     .score-svg {
       display: block;
       width: 100%;
-      height: 315px;
+      height: 330px;
       min-width: 0;
     }
 
@@ -776,10 +776,15 @@
     .score-test-list {
       display: flex;
       flex-direction: column;
-      gap: 9px;
-      max-height: 470px;
+      gap: 10px;
+      height: 520px;
+      max-height: 520px;
       overflow-y: auto;
-      padding-right: 3px;
+      overflow-x: hidden;
+      padding: 2px 7px 2px 2px;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: stable;
     }
 
     .score-test-list::-webkit-scrollbar {
@@ -1032,7 +1037,8 @@
       background: #fff3f2;
       color: #5f3b39;
       font-size: 10px;
-      line-height: 1.55;
+      line-height: 1.65;
+      white-space: pre-line;
     }
 
     .score-ai-box strong {
@@ -1040,6 +1046,184 @@
       margin-bottom: 3px;
       color: #e53935;
       font-size: 10px;
+    }
+
+
+    /* =========================
+       GitHub 학생포털
+       최근 성적 AI 요약 카드
+    ========================= */
+
+    .score-ai-scroll {
+      white-space: normal;
+    }
+
+    .score-ai-compact {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .score-ai-mini-head {
+      margin-bottom: 5px;
+      color: #d93632;
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .score-ai-current {
+      padding: 9px;
+      border: 1px solid #f1d9d6;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .score-ai-current-main {
+      color: #222;
+      font-size: 10px;
+      line-height: 1.5;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    .score-ai-current-note {
+      margin-top: 4px;
+      color: #756563;
+      font-size: 8px;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .score-ai-subject-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 6px;
+    }
+
+    .score-ai-subject-card {
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid #f0dfdd;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .score-ai-subject-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      color: #222;
+      font-size: 9px;
+    }
+
+    .score-ai-subject-top strong {
+      display: block;
+      margin: 0;
+      color: #222;
+      font-size: 9px;
+    }
+
+    .score-ai-subject-top span {
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+
+    .score-ai-status {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 3px 6px;
+      border-radius: 999px;
+      background: #fff0ee;
+      color: #d93632;
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+    .score-ai-subject-meta {
+      margin-top: 5px;
+      color: #837270;
+      font-size: 7px;
+      line-height: 1.45;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .score-ai-focus {
+      padding: 9px;
+      border: 1px solid #f1e1d4;
+      border-radius: 10px;
+      background: #fff9f4;
+    }
+
+    .score-ai-focus-row {
+      position: relative;
+      margin-top: 4px;
+      padding-left: 9px;
+      color: #5d504d;
+      font-size: 8px;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .score-ai-focus-row::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #ef5350;
+    }
+
+    .score-ai-detail-guide {
+      padding: 7px 8px;
+      border-radius: 8px;
+      background: #f7f7f7;
+      color: #777;
+      font-size: 7px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* 상세 분석 모달 */
+    .score-ai-detail-section {
+      margin-top: 9px;
+      padding: 11px;
+      border: 1px solid #ececec;
+      border-radius: 11px;
+      background: #fff;
+    }
+
+    .score-ai-detail-section:first-child {
+      margin-top: 0;
+    }
+
+    .score-ai-detail-title {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 7px;
+      color: #d93632;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .score-ai-detail-body {
+      color: #504846;
+      font-size: 9px;
+      line-height: 1.75;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .score-ai-empty {
+      color: #777;
+      font-size: 9px;
+      line-height: 1.6;
     }
 
     .score-detail-button {
@@ -1062,18 +1246,94 @@
     }
 
     .score-history-card {
-      border: 1px solid #eceef2;
+      flex: 0 0 auto;
+      border: 1px solid #e5e7eb;
       border-radius: 13px;
       overflow: hidden;
       background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.025);
     }
 
     .score-history-head {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
       gap: 10px;
-      padding: 11px 12px 8px;
+      padding: 12px;
       border-bottom: 1px solid #f0f1f3;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .score-history-head:hover {
+      background: #fffafa;
+    }
+
+    .score-history-head-right {
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .score-history-total {
+      font-size: 15px;
+      font-weight: 950;
+      color: #ef4444;
+      white-space: nowrap;
+    }
+
+    .score-history-toggle {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 9px;
+      font-weight: 900;
+      cursor: pointer;
+      color:#475569;
+    }
+
+    .score-history-detail {
+      display: none;
+      background:#fafbfc;
+      border-top:1px solid #eef2f7;
+      padding:10px 12px 12px;
+    }
+
+    .score-history-card.open .score-history-detail {
+      display:block;
+    }
+
+    .score-history-card.open .score-history-toggle {
+      background:#fff1f2;
+      color:#dc2626;
+      border-color:#fecaca;
+    }
+
+    .score-history-extra {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:7px;
+      margin-top:8px;
+    }
+
+    .score-history-extra-box {
+      padding:8px 9px;
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:9px;
+    }
+
+    .score-history-extra-box span {
+      display:block;
+      font-size:8px;
+      color:#94a3b8;
+      margin-bottom:3px;
+    }
+
+    .score-history-extra-box strong {
+      font-size:10px;
+      color:#334155;
     }
 
     .score-history-name {
@@ -1111,17 +1371,23 @@
     }
 
     .score-history-label {
-      color: #777;
+      color: #64748b;
       font-size: 8px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      line-height:1.25;
+      min-height:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      white-space: normal;
+      word-break: keep-all;
     }
 
     .score-history-value {
       margin-top: 4px;
-      font-size: 11px;
-      font-weight: 900;
+      min-height:16px;
+      font-size: 12px;
+      font-weight: 950;
+      color:#111827;
     }
 
     .score-distribution {
@@ -1174,14 +1440,15 @@
     }
 
     .score-modal-ai {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 12px;
-      background: #fff3f2;
-      color: #5f3b39;
-      font-size: 11px;
-      line-height: 1.55;
+      margin-top: 15px; padding: 12px; border-radius: 12px; background: #fff3f2;
+      color: #5f3b39; font-size: 11px; line-height: 1.6;
+      max-height: 430px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
     }
+    .score-ai-scroll { max-height: 330px; overflow-y:auto; padding-right:5px; scrollbar-width:thin; }
+    .score-ai-section { padding:10px 0; border-bottom:1px solid #f3d9d7; }
+    .score-ai-section:last-child { border-bottom:0; }
+    .score-ai-section-title { font-weight:900; color:#7f1d1d; margin-bottom:5px; }
+    .score-ai-section-body { white-space:pre-line; line-height:1.65; }
 
     @media (max-width: 380px) {
       .latest-subject-grid {
@@ -1570,99 +1837,143 @@
       cursor: pointer;
     }
   
-    .score-detail-top20{
-      position:absolute;
-      left:0;
-      top:50%;
-      height:8px;
-      transform:translateY(-50%);
-      border-radius:999px;
-      background:#3478d4;
-      opacity:.85;
+    @media(max-width:620px){
+      .score-test-list{
+        height:460px;
+        max-height:460px;
+      }
+      .score-history-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .score-history-metric{
+        border-bottom:1px solid #f0f1f3;
+      }
+      .score-history-metric:nth-child(2n){
+        border-right:0;
+      }
+      .score-history-metric:last-child{
+        grid-column:1 / -1;
+        border-bottom:0;
+      }
+      .score-history-extra{
+        grid-template-columns:1fr;
+      }
     }
-    .legend-dot.top20{background:#3478d4;}
 
-
-    .score-chart-clickable{
-      cursor:pointer;
+    .score-chart-box{
       position:relative;
-      transition:transform .16s ease, box-shadow .16s ease;
+      cursor:zoom-in;
     }
 
-    .score-chart-clickable::after{
+    .score-chart-box::after{
       content:"클릭해서 크게 보기";
       position:absolute;
+      top:10px;
       right:12px;
-      bottom:10px;
       padding:5px 8px;
+      border:1px solid #e5e7eb;
       border-radius:999px;
       background:rgba(255,255,255,.92);
-      border:1px solid #e5e7eb;
       color:#64748b;
-      font-size:8px;
-      font-weight:800;
+      font-size:9px;
+      font-weight:900;
       pointer-events:none;
     }
 
-    .score-chart-clickable:hover{
-      transform:translateY(-1px);
-      box-shadow:0 8px 22px rgba(15,23,42,.08);
+    .score-trend-modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:99999;
+      background:rgba(15,23,42,.58);
+      padding:24px;
+      overflow:auto;
+    }
+
+    .score-trend-modal.show{
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .score-trend-modal-panel{
-      width:min(94vw, 760px);
-      max-height:90vh;
+      position:relative;
+      width:min(1100px,96vw);
+      max-height:92vh;
       overflow:auto;
       background:#fff;
-      border-radius:22px;
-      padding:22px 18px 20px;
-      position:relative;
-      box-shadow:0 24px 70px rgba(0,0,0,.25);
+      border-radius:18px;
+      box-shadow:0 24px 70px rgba(0,0,0,.22);
+      padding:22px;
+    }
+
+    .score-trend-modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
     }
 
     .score-trend-modal-title{
-      font-size:20px;
-      font-weight:900;
+      font-size:18px;
+      font-weight:950;
       color:#111827;
-      margin-bottom:4px;
     }
 
-    .score-trend-modal-sub{
-      font-size:10px;
-      color:#94a3b8;
-      margin-bottom:14px;
+    .score-trend-modal-close{
+      border:0;
+      background:#f3f4f6;
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      font-size:20px;
+      cursor:pointer;
     }
 
-    .score-trend-modal-chart{
-      border:1px solid #eceef2;
-      border-radius:16px;
-      padding:12px;
-      background:#fff;
+    .score-trend-modal-body .score-chart-box{
+      cursor:default;
+      margin:0;
+      box-shadow:none;
+      border:0;
+      padding:0;
+    }
+
+    .score-trend-modal-body .score-chart-box::after{
+      display:none;
+    }
+
+    .score-trend-modal-body .score-svg-wrap{
       overflow-x:auto;
+      padding-bottom:8px;
     }
 
-    .score-trend-modal-chart .score-svg{
+    .score-trend-modal-body .score-svg-wrap svg{
       width:100%;
-      min-width:620px;
-      height:auto;
-      display:block;
-    }
-
-    .score-trend-modal-summary{
-      margin-top:12px;
+      min-width:900px;
+      height:520px;
     }
 
     @media(max-width:620px){
-      .score-trend-modal-panel{
-        width:96vw;
-        padding:18px 12px 16px;
+      .score-trend-modal{
+        padding:10px;
       }
-
-      .score-trend-modal-chart .score-svg{
-        min-width:600px;
+      .score-trend-modal-panel{
+        width:100%;
+        max-height:94vh;
+        padding:16px;
+        border-radius:14px;
+      }
+      .score-trend-modal-body .score-svg-wrap svg{
+        min-width:820px;
+        height:460px;
+      }
+      .score-chart-box::after{
+        top:8px;
+        right:8px;
+        font-size:8px;
       }
     }
-
 </style>
 </head>
 
@@ -2191,7 +2502,7 @@
 ========================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzO4iggKXHjrldh8Mf75vtoy6xQwoZBS9niwCgWbgCFUrSQNahw98G94BlDsYDrUtr2ow/exec";
+  "https://script.google.com/macros/s/AKfycbzoApn9Z8PK3Gbk16yINX_5zrYf2N0uyn4TA20iZXaSmzEG0HDx8OEQRpvO1WGMgWxs/exec";
 
 
 let sessionToken = "";
@@ -2764,7 +3075,7 @@ function renderScoreDashboard(result) {
     renderLatestScoreCard_(latest) +
 
     '<div class="score-section-title">최근 시험 성적 추이</div>' +
-    '<div class="score-chart-box score-chart-clickable" onclick="openScoreTrendModal()">' +
+    '<div class="score-chart-box" onclick="openScoreTrendModal_(event)">' +
       '<div class="score-chart-title">' +
         '<strong>총점 추이</strong>' +
         '<span class="score-chart-unit">400점 만점</span>' +
@@ -2796,13 +3107,12 @@ function renderScoreDashboard(result) {
 
     '<div class="score-section-title">시험별 성적</div>' +
     '<div class="score-test-list">' +
-      scores.map(function(item) {
-        return renderScoreHistoryCard_(item, subjects);
+      scores.map(function(item,index) {
+        return renderScoreHistoryCard_(item, subjects, index);
       }).join("") +
     '</div>';
 
   window.latestScoreAnalysis_ = latest;
-  window.latestScoreResult_ = result;
 }
 
 
@@ -2889,10 +3199,7 @@ function renderLatestScoreCard_(latest) {
 
       '<div class="score-ai-box">' +
         '<strong>AI 성적 분석</strong>' +
-        escapeHtml(
-          latest.aiComment ||
-          "시험 결과를 바탕으로 학습 흐름을 확인해보세요."
-        ) +
+        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment,true) + '</div>' +
       '</div>' +
 
       '<button class="score-detail-button" type="button" ' +
@@ -2901,6 +3208,228 @@ function renderLatestScoreCard_(latest) {
   );
 }
 
+
+function formatScoreAiHtml_(text, compact){
+  const raw=String(text||"").trim();
+
+  if(!raw){
+    return '<div class="score-ai-empty">시험 결과를 바탕으로 학습 흐름을 확인해보세요.</div>';
+  }
+
+  const normalized=raw
+    .replace(/\r/g,"")
+    .replace(/\n{3,}/g,"\n\n");
+
+  const sectionRe=/■\s*([^\n]+)\n?/g;
+  let m;
+  const parts=[];
+  let last=null;
+
+  while((m=sectionRe.exec(normalized))){
+    if(last){
+      last.body=normalized.slice(last.start,m.index).trim();
+      parts.push(last);
+    }
+
+    last={
+      title:m[1].trim(),
+      start:sectionRe.lastIndex
+    };
+  }
+
+  if(last){
+    last.body=normalized.slice(last.start).trim();
+    parts.push(last);
+  }
+
+  if(!parts.length){
+    return '<div class="score-ai-empty">'+escapeHtml(normalized)+'</div>';
+  }
+
+  const alias={
+    "핵심 진단":"종합 진단",
+    "과목별 정밀 분석":"과목별 상태",
+    "과목별 상세 분석":"과목별 상태",
+    "우선 보완할 세부 개념":"핵심 복습 문항",
+    "바로 복습할 핵심개념":"핵심 복습 문항"
+  };
+
+  const allowed=[
+    "현재 위치",
+    "과목별 상태",
+    "취약단원 분석",
+    "오답 패턴 분석",
+    "핵심 복습 문항",
+    "종합 진단"
+  ];
+
+  const sections=[];
+  const seen=new Set();
+
+  parts.forEach(function(part){
+    const title=alias[part.title]||part.title;
+
+    if(allowed.indexOf(title)<0 || seen.has(title)){
+      return;
+    }
+
+    seen.add(title);
+    sections.push({
+      title:title,
+      body:part.body
+    });
+  });
+
+  function section_(name){
+    return sections.find(function(x){
+      return x.title===name;
+    }) || null;
+  }
+
+  function icon_(title){
+    if(title==="현재 위치")return "📍";
+    if(title==="과목별 상태")return "📚";
+    if(title==="취약단원 분석")return "⚠️";
+    if(title==="오답 패턴 분석")return "🔎";
+    if(title==="핵심 복습 문항")return "📝";
+    if(title==="종합 진단")return "🎯";
+    return "•";
+  }
+
+  function toLines_(body){
+    return String(body||"")
+      .split("\n")
+      .map(function(x){return x.trim();})
+      .filter(Boolean);
+  }
+
+  // ============================================
+  // 최근 시험 카드: 핵심 정보만 표시
+  // ============================================
+  if(compact){
+    const position=section_("현재 위치");
+    const subjects=section_("과목별 상태");
+    const weak=section_("취약단원 분석");
+
+    let html='<div class="score-ai-compact">';
+
+    if(position){
+      const lines=toLines_(position.body);
+
+      html+=
+        '<div class="score-ai-current">'+
+          '<div class="score-ai-mini-head">📍 현재 위치</div>'+
+          '<div class="score-ai-current-main">'+
+            escapeHtml(lines[0]||"")+
+          '</div>'+
+          (
+            lines[1]
+              ? '<div class="score-ai-current-note">'+escapeHtml(lines[1])+'</div>'
+              : ''
+          )+
+        '</div>';
+    }
+
+    if(subjects){
+      const rawBlocks=String(subjects.body||"")
+        .split(/\n(?=·\s)/)
+        .map(function(x){return x.trim();})
+        .filter(Boolean);
+
+      const subjectCards=[];
+
+      rawBlocks.slice(0,4).forEach(function(block){
+        const lines=toLines_(block);
+        const head=String(lines[0]||"").replace(/^·\s*/,"");
+
+        const hit=head.match(
+          /^(.+?)\s+(\d+(?:\.\d+)?)점\s+—\s+\[([^\]]+)\]/
+        );
+
+        if(!hit)return;
+
+        let meta="";
+
+        if(lines.length>1){
+          meta=lines[1]
+            .replace(/^오답\s*/,"오답 ")
+            .replace(/\s*\/\s*/g," · ");
+        }
+
+        subjectCards.push(
+          '<div class="score-ai-subject-card">'+
+            '<div class="score-ai-subject-top">'+
+              '<strong>'+escapeHtml(hit[1])+'</strong>'+
+              '<span>'+escapeHtml(hit[2])+'점</span>'+
+            '</div>'+
+            '<div class="score-ai-status">'+escapeHtml(hit[3])+'</div>'+
+            (
+              meta
+                ? '<div class="score-ai-subject-meta">'+escapeHtml(meta)+'</div>'
+                : ''
+            )+
+          '</div>'
+        );
+      });
+
+      if(subjectCards.length){
+        html+=
+          '<div class="score-ai-mini-head">📚 과목별 상태</div>'+
+          '<div class="score-ai-subject-grid">'+
+            subjectCards.join("")+
+          '</div>';
+      }
+    }
+
+    if(weak){
+      const weakLines=toLines_(weak.body)
+        .filter(function(x){
+          return /^·/.test(x);
+        })
+        .slice(0,3)
+        .map(function(x){
+          return x.replace(/^·\s*/,"");
+        });
+
+      if(weakLines.length){
+        html+=
+          '<div class="score-ai-focus">'+
+            '<div class="score-ai-mini-head">⚠️ 집중 취약 영역</div>'+
+            weakLines.map(function(line){
+              return '<div class="score-ai-focus-row">'+escapeHtml(line)+'</div>';
+            }).join("")+
+          '</div>';
+      }
+    }
+
+    html+=
+      '<div class="score-ai-detail-guide">'+
+        '아래 <strong>상세 분석 보기</strong>에서 오답 패턴과 핵심 복습 문항을 확인할 수 있어요.'+
+      '</div>'+
+    '</div>';
+
+    return html;
+  }
+
+  // ============================================
+  // 상세 분석 모달: 전체 5단계
+  // ============================================
+  return sections.map(function(x){
+    const bodyHtml=escapeHtml(String(x.body||""))
+      .replace(/\n/g,"<br>");
+
+    return (
+      '<div class="score-ai-detail-section">'+
+        '<div class="score-ai-detail-title">'+
+          '<span>'+icon_(x.title)+'</span>'+
+          escapeHtml(x.title)+
+        '</div>'+
+        '<div class="score-ai-detail-body">'+bodyHtml+'</div>'+
+      '</div>'
+    );
+  }).join("") ||
+  '<div class="score-ai-empty">'+escapeHtml(normalized)+'</div>';
+}
 
 function renderLatestRankBox_(label, value) {
   return (
@@ -2930,16 +3459,92 @@ function renderScoreSummaryCell_(label, value) {
 }
 
 
-function renderScoreHistoryCard_(item, subjects) {
+
+function openScoreTrendModal_(event){
+  if(event && event.target && event.target.closest &&
+     event.target.closest(".score-trend-modal")) return;
+
+  const source=document.querySelector("#scoreDashboard .score-chart-box");
+  if(!source)return;
+
+  closeScoreTrendModal_();
+
+  const modal=document.createElement("div");
+  modal.id="scoreTrendModal";
+  modal.className="score-trend-modal show";
+  modal.innerHTML=
+    '<div class="score-trend-modal-panel" onclick="event.stopPropagation()">' +
+      '<div class="score-trend-modal-head">' +
+        '<div class="score-trend-modal-title">📈 최근 시험 성적 추이</div>' +
+        '<button type="button" class="score-trend-modal-close" onclick="closeScoreTrendModal_()">×</button>' +
+      '</div>' +
+      '<div class="score-trend-modal-body">' +
+        source.outerHTML.replace('onclick="openScoreTrendModal_(event)"','') +
+      '</div>' +
+    '</div>';
+
+  modal.addEventListener("click",closeScoreTrendModal_);
+  document.body.appendChild(modal);
+  document.body.style.overflow="hidden";
+}
+
+function closeScoreTrendModal_(){
+  const modal=document.getElementById("scoreTrendModal");
+  if(modal)modal.remove();
+  document.body.style.overflow="";
+}
+
+document.addEventListener("keydown",function(event){
+  if(event.key==="Escape")closeScoreTrendModal_();
+});
+
+
+function renderScoreHistoryCard_(item, subjects, index) {
   const rankText =
     item.rank && item.participants
-      ? item.rank + "위 / " +
-        item.participants + "명"
+      ? item.rank + "위 / " + item.participants + "명"
       : "-";
 
+  const totalText =
+    item.total === null || item.total === undefined || item.total === ""
+      ? "-"
+      : formatScoreValue_(item.total) + "점";
+
+  const subjectNums=[
+    item.korean,
+    item.english,
+    item.major1,
+    item.major2
+  ].map(function(v){return Number(v);})
+   .filter(function(v){return Number.isFinite(v);});
+
+  const myAverageText =
+    subjectNums.length
+      ? formatScoreValue_(
+          subjectNums.reduce(function(a,b){return a+b;},0) / subjectNums.length
+        ) + "점"
+      : "-";
+
+  const overallText =
+    item.overallAverage === null || item.overallAverage === undefined
+      ? "-"
+      : formatScoreValue_(item.overallAverage) + "점";
+
+  const top20Text =
+    item.top20Average === null || item.top20Average === undefined
+      ? "-"
+      : formatScoreValue_(item.top20Average) + "점";
+
+  const percentileText =
+    item.percentile === null || item.percentile === undefined || item.percentile === ""
+      ? "-"
+      : "상위 " + formatScoreValue_(item.percentile) + "%";
+
+  const cardId="scoreHistoryCard_"+index;
+
   return (
-    '<div class="score-history-card">' +
-      '<div class="score-history-head">' +
+    '<div class="score-history-card" id="' + cardId + '">' +
+      '<div class="score-history-head" onclick="toggleScoreHistoryCardByElement_(this)">' +
         '<div>' +
           '<div class="score-history-name">' +
             escapeHtml(item.examName || "시험") +
@@ -2948,27 +3553,44 @@ function renderScoreHistoryCard_(item, subjects) {
             escapeHtml(item.examDate || "") +
           '</div>' +
         '</div>' +
-        '<div class="score-history-rank">' +
-          escapeHtml(rankText) +
+        '<div class="score-history-head-right">' +
+          '<div>' +
+            '<div class="score-history-total">' + escapeHtml(totalText) + '</div>' +
+            '<div class="score-history-rank">' + escapeHtml(rankText) + '</div>' +
+          '</div>' +
+          '<button type="button" class="score-history-toggle" onclick="event.stopPropagation();toggleScoreHistoryCardByElement_(this)">자세히</button>' +
         '</div>' +
       '</div>' +
+
       '<div class="score-history-grid">' +
         renderHistoryMetric_("국어", item.korean) +
         renderHistoryMetric_("영어", item.english) +
-        renderHistoryMetric_(
-          subjects.major1 || "전공1",
-          item.major1
-        ) +
-        renderHistoryMetric_(
-          subjects.major2 || "전공2",
-          item.major2
-        ) +
+        renderHistoryMetric_(subjects.major1 || "전공1", item.major1) +
+        renderHistoryMetric_(subjects.major2 || "전공2", item.major2) +
         renderHistoryMetric_("총점", item.total) +
+      '</div>' +
+
+      '<div class="score-history-detail">' +
+        '<div class="score-history-extra">' +
+          '<div class="score-history-extra-box"><span>직렬 석차</span><strong>' + escapeHtml(rankText) + '</strong></div>' +
+          '<div class="score-history-extra-box"><span>상위 비율</span><strong>' + escapeHtml(percentileText) + '</strong></div>' +
+          '<div class="score-history-extra-box"><span>나의 평균</span><strong>' + escapeHtml(myAverageText) + '</strong></div>' +
+          '<div class="score-history-extra-box"><span>전체 평균 총점</span><strong>' + escapeHtml(overallText) + '</strong></div>' +
+          '<div class="score-history-extra-box"><span>상위 20% 평균 총점</span><strong>' + escapeHtml(top20Text) + '</strong></div>' +
+        '</div>' +
       '</div>' +
     '</div>'
   );
 }
 
+
+function toggleScoreHistoryCardByElement_(el){
+  const card=el && el.closest ? el.closest(".score-history-card") : null;
+  if(!card)return;
+  const open=card.classList.toggle("open");
+  const btn=card.querySelector(".score-history-toggle");
+  if(btn)btn.textContent=open?"접기":"자세히";
+}
 
 function renderHistoryMetric_(label, value) {
   return (
@@ -3015,22 +3637,19 @@ function buildLatestFallback_(scores, subjects) {
       key: "korean",
       name: "국어",
       score: item.korean,
-      average: null,
-      top20Average: null
+      average: null
     },
     {
       key: "english",
       name: "영어",
       score: item.english,
-      average: null,
-      top20Average: null
+      average: null
     },
     {
       key: "major1",
       name: subjects.major1 || "전공1",
       score: item.major1,
-      average: null,
-      top20Average: null
+      average: null
     },
     {
       key: "major2",
@@ -3208,22 +3827,21 @@ function openLatestScoreModal() {
             Number(item.score);
           const avg =
             Number(item.average);
-          const top20 =
-            Number(item.top20Average);
 
           const mineWidth =
             Number.isFinite(mine)
-              ? Math.max(0, Math.min(100, mine))
+              ? Math.max(
+                  0,
+                  Math.min(100, mine)
+                )
               : 0;
 
           const avgWidth =
             Number.isFinite(avg)
-              ? Math.max(0, Math.min(100, avg))
-              : 0;
-
-          const top20Width =
-            Number.isFinite(top20)
-              ? Math.max(0, Math.min(100, top20))
+              ? Math.max(
+                  0,
+                  Math.min(100, avg)
+                )
               : 0;
 
           return (
@@ -3235,8 +3853,6 @@ function openLatestScoreModal() {
                 '<span class="score-detail-values">' +
                   '내 점수 ' +
                   escapeHtml(formatScoreValue_(item.score)) +
-                  ' · 상위20% ' +
-                  escapeHtml(formatScoreValue_(item.top20Average)) +
                   ' · 전체평균 ' +
                   escapeHtml(formatScoreValue_(item.average)) +
                 '</span>' +
@@ -3244,8 +3860,6 @@ function openLatestScoreModal() {
               '<div class="score-detail-bars">' +
                 '<div class="score-detail-average" style="width:' +
                   avgWidth + '%"></div>' +
-                '<div class="score-detail-top20" style="width:' +
-                  top20Width + '%"></div>' +
                 '<div class="score-detail-mine" style="width:' +
                   mineWidth + '%"></div>' +
               '</div>' +
@@ -3256,7 +3870,6 @@ function openLatestScoreModal() {
 
       '<div class="score-legend">' +
         '<span><i class="legend-dot mine"></i>내 점수</span>' +
-        '<span><i class="legend-dot top20"></i>상위 20% 평균</span>' +
         '<span><i class="legend-dot"></i>전체 평균</span>' +
       '</div>' +
 
@@ -3291,10 +3904,7 @@ function openLatestScoreModal() {
 
       '<div class="score-modal-ai">' +
         '<strong>AI 성적 분석</strong><br>' +
-        escapeHtml(
-          latest.aiComment ||
-          "시험 결과를 바탕으로 학습 흐름을 확인해보세요."
-        ) +
+        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment,false) + '</div>' +
       '</div>' +
     '</div>';
 
@@ -3368,320 +3978,6 @@ function renderScoreDistribution_(distribution) {
         );
       }).join("") +
     '</div>'
-  );
-}
-
-
-function openScoreTrendModal() {
-  const data =
-    window.latestScoreResult_ || null;
-
-  if (!data) return;
-
-  closeScoreTrendModal();
-
-  const trend =
-    Array.isArray(data.trend)
-      ? data.trend
-      : [];
-
-  const summary =
-    data.summary || {};
-
-  const modal =
-    document.createElement("div");
-
-  modal.id =
-    "scoreTrendModal";
-
-  modal.className =
-    "score-modal";
-
-  modal.innerHTML =
-    '<div class="score-modal-backdrop" onclick="closeScoreTrendModal()"></div>' +
-
-    '<div class="score-trend-modal-panel">' +
-      '<button class="score-modal-close" type="button" onclick="closeScoreTrendModal()">×</button>' +
-
-      '<div class="score-trend-modal-title">최근 시험 성적 추이</div>' +
-      '<div class="score-trend-modal-sub">총점 기준 · 내 점수 / 상위 20% 평균 / 전체 평균</div>' +
-
-      '<div class="score-legend-row" style="justify-content:flex-start;margin-bottom:10px;">' +
-        '<span class="score-legend-item"><i class="score-legend-dot mine"></i>내 점수</span>' +
-        '<span class="score-legend-item"><i class="score-legend-dot top20"></i>상위 20% 평균</span>' +
-        '<span class="score-legend-item"><i class="score-legend-dot all"></i>전체 평균</span>' +
-      '</div>' +
-
-      '<div class="score-trend-modal-chart">' +
-        renderScoreTrendSvgLarge_(trend) +
-      '</div>' +
-
-      '<div class="score-summary-strip score-trend-modal-summary">' +
-        renderScoreSummaryCell_("내 최근 평균", formatScoreValue_(summary.myAverageTotal)) +
-        renderScoreSummaryCell_("전체 평균", formatScoreValue_(summary.overallAverageTotal)) +
-        renderScoreSummaryCell_("상위 20% 평균", formatScoreValue_(summary.top20AverageTotal)) +
-      '</div>' +
-    '</div>';
-
-  document.body.appendChild(modal);
-}
-
-
-function closeScoreTrendModal() {
-  const modal =
-    document.getElementById(
-      "scoreTrendModal"
-    );
-
-  if (
-    modal &&
-    modal.parentNode
-  ) {
-    modal.parentNode.removeChild(
-      modal
-    );
-  }
-}
-
-
-function renderScoreTrendSvgLarge_(trend) {
-  if (
-    !Array.isArray(trend) ||
-    !trend.length
-  ) {
-    return (
-      '<div class="placeholder">' +
-        '성적 추이 데이터가 없습니다.' +
-      '</div>'
-    );
-  }
-
-  const width =
-    Math.max(
-      720,
-      trend.length * 135
-    );
-
-  const height = 420;
-  const left = 55;
-  const right = 30;
-  const top = 42;
-  const bottom = 76;
-  const plotWidth =
-    width - left - right;
-  const plotHeight =
-    height - top - bottom;
-
-  function xAt(index) {
-    if (trend.length <= 1) {
-      return left + plotWidth / 2;
-    }
-
-    return (
-      left +
-      plotWidth *
-      index /
-      (trend.length - 1)
-    );
-  }
-
-  function yAt(value) {
-    const num =
-      Number(value);
-
-    const safe =
-      Number.isFinite(num)
-        ? Math.max(
-            0,
-            Math.min(
-              400,
-              num
-            )
-          )
-        : 0;
-
-    return (
-      top +
-      plotHeight *
-      (1 - safe / 400)
-    );
-  }
-
-  function linePoints(key) {
-    return trend
-      .map(
-        function(item, index) {
-          const value =
-            Number(item[key]);
-
-          if (
-            !Number.isFinite(value)
-          ) {
-            return null;
-          }
-
-          return (
-            xAt(index) +
-            "," +
-            yAt(value)
-          );
-        }
-      )
-      .filter(Boolean)
-      .join(" ");
-  }
-
-  function circles(
-    key,
-    color
-  ) {
-    return trend
-      .map(
-        function(item, index) {
-          const value =
-            Number(item[key]);
-
-          if (
-            !Number.isFinite(value)
-          ) {
-            return "";
-          }
-
-          const x =
-            xAt(index);
-
-          const y =
-            yAt(value);
-
-          return (
-            '<circle cx="' +
-              x +
-              '" cy="' +
-              y +
-              '" r="6" fill="' +
-              color +
-            '"></circle>' +
-
-            '<text x="' +
-              x +
-              '" y="' +
-              (y - 12) +
-              '" text-anchor="middle" font-size="12" font-weight="900" fill="' +
-              color +
-            '">' +
-              escapeHtml(
-                formatScoreValue_(value)
-              ) +
-            '</text>'
-          );
-        }
-      )
-      .join("");
-  }
-
-  const gridValues =
-    [0,100,200,300,400];
-
-  const grid =
-    gridValues
-      .map(
-        function(value) {
-          const y =
-            yAt(value);
-
-          return (
-            '<line x1="' +
-              left +
-              '" y1="' +
-              y +
-              '" x2="' +
-              (width - right) +
-              '" y2="' +
-              y +
-              '" stroke="#eceef2" stroke-width="1"></line>' +
-
-            '<text x="' +
-              (left - 12) +
-              '" y="' +
-              (y + 4) +
-              '" text-anchor="end" font-size="11" fill="#999">' +
-              value +
-            '</text>'
-          );
-        }
-      )
-      .join("");
-
-  const labels =
-    trend
-      .map(
-        function(item, index) {
-          const x =
-            xAt(index);
-
-          return (
-            '<text x="' +
-              x +
-              '" y="' +
-              (height - 40) +
-              '" text-anchor="middle" font-size="10" font-weight="800" fill="#444">' +
-              escapeHtml(
-                item.examName || ""
-              ) +
-            '</text>' +
-
-            '<text x="' +
-              x +
-              '" y="' +
-              (height - 20) +
-              '" text-anchor="middle" font-size="9" fill="#999">' +
-              escapeHtml(
-                item.examDate || ""
-              ) +
-            '</text>'
-          );
-        }
-      )
-      .join("");
-
-  return (
-    '<svg class="score-svg" viewBox="0 0 ' +
-      width +
-      ' ' +
-      height +
-      '" xmlns="http://www.w3.org/2000/svg">' +
-
-      grid +
-
-      '<polyline fill="none" stroke="#9a9a9a" stroke-width="2.5" points="' +
-        linePoints("overallAverage") +
-      '"></polyline>' +
-
-      '<polyline fill="none" stroke="#3478d4" stroke-width="2.5" points="' +
-        linePoints("top20Average") +
-      '"></polyline>' +
-
-      '<polyline fill="none" stroke="#ef3b36" stroke-width="3" points="' +
-        linePoints("myTotal") +
-      '"></polyline>' +
-
-      circles(
-        "overallAverage",
-        "#9a9a9a"
-      ) +
-
-      circles(
-        "top20Average",
-        "#3478d4"
-      ) +
-
-      circles(
-        "myTotal",
-        "#ef3b36"
-      ) +
-
-      labels +
-    '</svg>'
   );
 }
 
@@ -3765,7 +4061,7 @@ function renderScoreTrendSvg_(trend) {
       .join(" ");
   }
 
-  function circles(key, color) {
+  function circles(key, color, labelOffset, fontSize) {
     return trend
       .map(function(item, index) {
         const value = Number(item[key]);
@@ -3776,18 +4072,20 @@ function renderScoreTrendSvg_(trend) {
 
         const x = xAt(index);
         const y = yAt(value);
+        const labelY = y + Number(labelOffset || -8);
 
         return (
           '<circle cx="' + x +
           '" cy="' + y +
-          '" r="4" fill="' +
+          '" r="4.2" fill="' +
           color + '"></circle>' +
 
           '<text x="' + x +
-          '" y="' + (y - 8) +
+          '" y="' + labelY +
           '" text-anchor="middle" ' +
-          'font-size="9" font-weight="700" fill="' +
-          color + '">' +
+          'font-size="' + (fontSize || 9) + '" font-weight="800" fill="' +
+          color + '" ' +
+          'stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">' +
           escapeHtml(
             formatScoreValue_(value)
           ) +
@@ -3863,9 +4161,10 @@ function renderScoreTrendSvg_(trend) {
         linePoints("myTotal") +
       '"></polyline>' +
 
-      circles("overallAverage", "#9a9a9a") +
-      circles("top20Average", "#3478d4") +
-      circles("myTotal", "#ef3b36") +
+      /* 값이 비슷할 때 숫자가 겹치지 않도록 계열별 라벨 위치를 분리 */
+      circles("top20Average", "#3478d4", -14, 9) +
+      circles("overallAverage", "#9a9a9a", -10, 8.5) +
+      circles("myTotal", "#ef3b36", 17, 9) +
       labels +
     '</svg>'
   );
@@ -4950,19 +5249,30 @@ function prepareReasonEvidence(
       "reasonEvidenceFile"
     );
 
+  if (!input) {
+    alert("증빙서류 선택창을 찾지 못했습니다. 페이지를 새로고침 후 다시 시도해주세요.");
+    return;
+  }
+
+  // 배포본/캐시 상태와 무관하게 파일 선택 직전에 업로드 핸들러를 확실히 연결
+  input.onchange = window.uploadStudentReasonEvidence;
   input.value = "";
   input.click();
 }
 
 
-document
-  .getElementById(
+const reasonEvidenceInput_ =
+  document.getElementById(
     "reasonEvidenceFile"
-  )
-  .addEventListener(
-    "change",
-    uploadReasonEvidence
   );
+
+if (reasonEvidenceInput_) {
+  reasonEvidenceInput_
+    .addEventListener(
+      "change",
+      window.uploadStudentReasonEvidence
+    );
+}
 
 
 async function uploadReasonEvidence(event) {
@@ -5009,9 +5319,16 @@ async function uploadReasonEvidence(event) {
 
 
   try {
+    // 큰 사진은 업로드 전에 자동 축소/압축합니다.
+    // 휴대폰 사진은 보통 수 MB이므로 이 단계에서 전송량을 크게 줄일 수 있습니다.
+    const preparedFile =
+      await prepareReasonEvidenceFile_(
+        file
+      );
+
     const base64Data =
       await fileToBase64_(
-        file
+        preparedFile
       );
 
     const postBody =
@@ -5031,11 +5348,11 @@ async function uploadReasonEvidence(event) {
     );
     postBody.set(
       "fileName",
-      file.name
+      preparedFile.name
     );
     postBody.set(
       "mimeType",
-      file.type
+      preparedFile.type
     );
     postBody.set(
       "base64Data",
@@ -5099,6 +5416,156 @@ async function uploadReasonEvidence(event) {
         : "증빙서류 제출 중 오류가 발생했습니다."
     );
   }
+}
+
+// Apps Script iframe/inline-handler 호환:
+// 증빙서류 첨부 버튼에서 호출하는 이름을 명시적으로 window에 공개합니다.
+window.uploadStudentReasonEvidence = function(event) {
+  return uploadReasonEvidence(event);
+};
+
+
+
+/**
+ * 증빙 이미지 업로드 속도 개선
+ * - PDF는 원본 유지
+ * - 1MB 이하 이미지는 원본 유지
+ * - 큰 JPG/PNG는 최대 1600px, JPEG 0.78로 자동 압축
+ */
+async function prepareReasonEvidenceFile_(file) {
+  if (!file) return file;
+
+  if (file.type === "application/pdf") {
+    return file;
+  }
+
+  if (
+    file.type !== "image/jpeg" &&
+    file.type !== "image/png"
+  ) {
+    return file;
+  }
+
+  if (file.size <= 1024 * 1024) {
+    return file;
+  }
+
+  try {
+    const bitmap =
+      await createImageBitmap(file);
+
+    const maxSide = 1600;
+    const scale =
+      Math.min(
+        1,
+        maxSide /
+          Math.max(
+            bitmap.width,
+            bitmap.height
+          )
+      );
+
+    const width =
+      Math.max(
+        1,
+        Math.round(
+          bitmap.width * scale
+        )
+      );
+
+    const height =
+      Math.max(
+        1,
+        Math.round(
+          bitmap.height * scale
+        )
+      );
+
+    const canvas =
+      document.createElement("canvas");
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx =
+      canvas.getContext("2d");
+
+    ctx.drawImage(
+      bitmap,
+      0,
+      0,
+      width,
+      height
+    );
+
+    if (bitmap.close) {
+      bitmap.close();
+    }
+
+    let quality = 0.78;
+    let blob =
+      await canvasToBlob_(
+        canvas,
+        "image/jpeg",
+        quality
+      );
+
+    // 여전히 큰 경우 품질을 한 번 더 낮춰 전송량을 줄입니다.
+    if (
+      blob &&
+      blob.size > 2 * 1024 * 1024
+    ) {
+      quality = 0.65;
+      blob =
+        await canvasToBlob_(
+          canvas,
+          "image/jpeg",
+          quality
+        );
+    }
+
+    if (!blob) {
+      return file;
+    }
+
+    const baseName =
+      String(file.name || "evidence")
+        .replace(/\.[^.]+$/, "");
+
+    return new File(
+      [blob],
+      baseName + ".jpg",
+      {
+        type: "image/jpeg",
+        lastModified: Date.now()
+      }
+    );
+
+  } catch (error) {
+    console.warn(
+      "증빙 이미지 압축 실패, 원본 업로드",
+      error
+    );
+
+    return file;
+  }
+}
+
+
+function canvasToBlob_(
+  canvas,
+  type,
+  quality
+) {
+  return new Promise(
+    function(resolve) {
+      canvas.toBlob(
+        resolve,
+        type,
+        quality
+      );
+    }
+  );
 }
 
 
