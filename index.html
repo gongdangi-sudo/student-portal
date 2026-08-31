@@ -4176,6 +4176,14 @@ function renderScoreTrendSvg_(trend) {
 ========================= */
 
 async function loadPenaltySummary() {
+  // 벌점은 캐시를 사용하지 않고 매번 서버의 최신 벌점로그만 조회합니다.
+  setText("penaltyTotal", "0점");
+  const initialList = document.getElementById("penaltyList");
+  if (initialList) {
+    initialList.className = "placeholder";
+    initialList.textContent = "벌점 내역을 불러오는 중입니다.";
+  }
+
   try {
     const result =
       await apiRequest(
@@ -4195,13 +4203,7 @@ async function loadPenaltySummary() {
     }
 
     renderPenaltyData(result);
-
-    localStorage.setItem(
-      "studentPortalPenalty",
-      JSON.stringify(result)
-    );
-
-    return result;
+return result;
 
   } catch (error) {
     console.log(
@@ -4552,24 +4554,7 @@ async function restoreSession() {
         );
       }
     } catch (e) {}
-
-    // 4) 이전 벌점도 즉시 표시
-    try {
-      const cachedPenalty =
-        JSON.parse(
-          localStorage.getItem(
-            "studentPortalPenalty"
-          ) || "null"
-        );
-
-      if (cachedPenalty) {
-        renderPenaltyData(
-          cachedPenalty
-        );
-      }
-    } catch (e) {}
-
-    // 5) 이전 성적도 즉시 표시
+// 5) 이전 성적도 즉시 표시
     try {
       const cachedScore =
         JSON.parse(
