@@ -1658,6 +1658,20 @@
     }
 
 
+
+    /* 부담임 상담 신청 카드 */
+    .assistant-counsel-card {
+      border: 1px solid #e6e9ef;
+    }
+
+    .assistant-counsel-submit {
+      background: #334155;
+    }
+
+    .assistant-counsel-submit:hover {
+      filter: brightness(.96);
+    }
+
     /* =========================
        상담 신청
     ========================= */
@@ -2479,6 +2493,79 @@
         상담 신청내역을 불러오는 중입니다.
       </div>
     </section>
+
+
+    <!-- 부담임 상담 신청 -->
+    <section class="card assistant-counsel-card">
+      <div class="card-title">🧑‍🏫 부담임 상담 신청</div>
+
+      <div class="counseling-help" style="margin-top:0;">
+        학습 · 생활 · 수강 관련 상담을 부담임에게 신청할 수 있습니다.
+      </div>
+
+      <div class="counseling-form">
+        <label class="counseling-label" for="assistantCounselingType">
+          상담유형
+        </label>
+
+        <select
+          id="assistantCounselingType"
+          class="counseling-input"
+        >
+          <option value="">선택해주세요</option>
+          <option value="학습상담">학습상담</option>
+          <option value="생활상담">생활상담</option>
+          <option value="수강상담">수강상담</option>
+          <option value="기타">기타</option>
+        </select>
+
+        <label class="counseling-label" for="assistantCounselingDate">
+          희망 상담일
+        </label>
+
+        <input
+          id="assistantCounselingDate"
+          class="counseling-input"
+          type="date"
+          onchange="loadAssistantCounselingSlots()"
+        >
+
+        <label class="counseling-label" for="assistantCounselingTime">
+          희망 상담시간
+        </label>
+
+        <select
+          id="assistantCounselingTime"
+          class="counseling-input"
+        >
+          <option value="">상담일을 먼저 선택해주세요</option>
+        </select>
+
+        <div class="counseling-help">
+          상담 가능 시간은 기존 상담 신청 가능시간과 동일하게 표시됩니다.
+        </div>
+
+        <label class="counseling-label" for="assistantCounselingContent">
+          상담내용
+        </label>
+
+        <textarea
+          id="assistantCounselingContent"
+          class="counseling-textarea"
+          maxlength="950"
+          placeholder="부담임에게 상담받고 싶은 내용을 입력해주세요."
+        ></textarea>
+
+        <button
+          id="assistantCounselingSubmitButton"
+          class="counseling-submit-button assistant-counsel-submit"
+          type="button"
+        >
+          부담임 상담 신청
+        </button>
+      </div>
+    </section>
+
 
 
     <button
@@ -6094,6 +6181,230 @@ function renderCounselingList(rows) {
         '</div>'
       );
     }).join("");
+}
+
+
+
+/* =========================
+   부담임 상담 신청
+========================= */
+
+document
+  .getElementById(
+    "assistantCounselingSubmitButton"
+  )
+  .addEventListener(
+    "click",
+    submitAssistantCounseling
+  );
+
+
+async function loadAssistantCounselingSlots() {
+  const date =
+    document.getElementById(
+      "assistantCounselingDate"
+    ).value.trim();
+
+  const select =
+    document.getElementById(
+      "assistantCounselingTime"
+    );
+
+  if (!date) {
+    select.innerHTML =
+      '<option value="">상담일을 먼저 선택해주세요</option>';
+    return;
+  }
+
+  select.innerHTML =
+    '<option value="">가능시간 확인 중...</option>';
+
+  try {
+    const result =
+      await apiRequest(
+        "studentCounselingSlots",
+        {
+          sessionToken:
+            sessionToken,
+          preferredDate:
+            date
+        }
+      );
+
+    if (
+      !result ||
+      !result.success
+    ) {
+      handleSessionError(result);
+
+      select.innerHTML =
+        '<option value="">시간을 불러오지 못했습니다</option>';
+      return;
+    }
+
+    const slots =
+      Array.isArray(result.slots)
+        ? result.slots
+        : [];
+
+    if (!slots.length) {
+      select.innerHTML =
+        '<option value="">예약 가능한 시간이 없습니다</option>';
+      return;
+    }
+
+    select.innerHTML =
+      '<option value="">선택해주세요</option>' +
+      slots
+        .map(function(slot) {
+          return (
+            '<option value="' +
+            escapeHtml(slot) +
+            '">' +
+            escapeHtml(slot) +
+            '</option>'
+          );
+        })
+        .join("");
+
+  } catch (error) {
+    select.innerHTML =
+      '<option value="">시간을 불러오지 못했습니다</option>';
+  }
+}
+
+
+async function submitAssistantCounseling() {
+  const button =
+    document.getElementById(
+      "assistantCounselingSubmitButton"
+    );
+
+  const counselingType =
+    document.getElementById(
+      "assistantCounselingType"
+    ).value.trim();
+
+  const preferredDate =
+    document.getElementById(
+      "assistantCounselingDate"
+    ).value.trim();
+
+  const preferredTime =
+    document.getElementById(
+      "assistantCounselingTime"
+    ).value.trim();
+
+  const rawContent =
+    document.getElementById(
+      "assistantCounselingContent"
+    ).value.trim();
+
+  if (!counselingType) {
+    alert("상담유형을 선택해주세요.");
+    return;
+  }
+
+  if (!preferredDate) {
+    alert("희망 상담일을 선택해주세요.");
+    return;
+  }
+
+  if (!preferredTime) {
+    alert("희망 상담시간을 선택해주세요.");
+    return;
+  }
+
+  if (!rawContent) {
+    alert("상담내용을 입력해주세요.");
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent =
+    "신청 중...";
+
+  try {
+    /*
+     * 현재 서버의 studentCounselingSubmit API를 그대로 사용하면서
+     * 부담임 신청임을 확실하게 구분할 수 있도록 상담내용 앞에 표식을 붙입니다.
+     * 이후 서버에 '상담대상' 전용 컬럼을 추가하면 이 부분만
+     * counselingTarget:'부담임' 방식으로 교체하면 됩니다.
+     */
+    const counselingContent =
+      "[부담임 상담 신청]\n" +
+      rawContent;
+
+    const result =
+      await apiRequest(
+        "studentCounselingSubmit",
+        {
+          sessionToken:
+            sessionToken,
+          counselingType:
+            counselingType,
+          preferredDate:
+            preferredDate,
+          preferredTime:
+            preferredTime,
+          counselingContent:
+            counselingContent
+        }
+      );
+
+    if (
+      !result ||
+      !result.success
+    ) {
+      alert(
+        result &&
+        result.message
+          ? result.message
+          : "부담임 상담 신청에 실패했습니다."
+      );
+      return;
+    }
+
+    alert(
+      "부담임 상담 신청이 완료되었습니다."
+    );
+
+    document
+      .getElementById(
+        "assistantCounselingType"
+      ).value = "";
+
+    document
+      .getElementById(
+        "assistantCounselingDate"
+      ).value = "";
+
+    document
+      .getElementById(
+        "assistantCounselingTime"
+      ).innerHTML =
+        '<option value="">상담일을 먼저 선택해주세요</option>';
+
+    document
+      .getElementById(
+        "assistantCounselingContent"
+      ).value = "";
+
+    // 기존 '내 상담 신청내역'에도 즉시 반영
+    loadCounselingList();
+
+  } catch (error) {
+    alert(
+      error &&
+      error.message
+        ? error.message
+        : "부담임 상담 신청 중 오류가 발생했습니다."
+    );
+  } finally {
+    button.disabled = false;
+    button.textContent =
+      "부담임 상담 신청";
+  }
 }
 
 
