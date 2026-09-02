@@ -6,16 +6,6 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
-
-  <!-- PWA -->
-  <meta name="theme-color" content="#6c3fd1">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="공단기 학생포털">
-  <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="./icons/icon-192.png">
-
   <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -787,10 +777,15 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      height: 520px;
-      max-height: 520px;
+
+      /* 성적이 적을 때는 내용 높이만큼만 표시 */
+      height: auto;
+
+      /* 성적이 누적되면 이 높이부터 내부 스크롤 */
+      max-height: 420px;
       overflow-y: auto;
       overflow-x: hidden;
+
       padding: 2px 7px 2px 2px;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
@@ -1863,8 +1858,8 @@
   
     @media(max-width:620px){
       .score-test-list{
-        height:460px;
-        max-height:460px;
+        height:auto;
+        max-height:360px;
       }
       .score-history-grid{
         grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1998,59 +1993,7 @@
         font-size:8px;
       }
     }
-
-    /* 부담임 상담 일정 */
-    .assistant-schedule-card { border: 1px solid #e6e9ef; }
-    .assistant-schedule-item { padding:14px; border:1px solid #e8ebf0; border-radius:14px; background:#fff; margin-top:10px; }
-    .assistant-schedule-head { display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:10px; }
-    .assistant-status { font-size:11px; font-weight:900; padding:5px 9px; border-radius:999px; background:#f1f5f9; }
-    .assistant-schedule-row { display:flex; justify-content:space-between; gap:12px; padding:6px 0; font-size:13px; }
-    .assistant-schedule-row span { color:#777; }
-    .assistant-response-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; }
-    .assistant-response-btn { border:0; border-radius:10px; padding:11px 8px; font-weight:900; cursor:pointer; }
-    .assistant-response-btn.attend { background:#edf8ef; color:#25733a; }
-    .assistant-response-btn.absent { background:#fff3f3; color:#b42318; }
-    .assistant-response-btn.change { background:#eef4ff; color:#315ca8; }
-    .assistant-response-btn.decline { background:#f3f4f6; color:#4b5563; }
-    .assistant-change-form { margin-top:10px; padding:12px; border-radius:12px; background:#f8fafc; }
-    .assistant-change-form label { display:block; margin:9px 0 5px; font-size:12px; font-weight:900; }
-    .assistant-change-form input,.assistant-change-form select,.assistant-change-form textarea { width:100%; padding:10px; border:1px solid #dfe3e8; border-radius:9px; background:#fff; }
-    .assistant-change-form textarea { min-height:75px; resize:vertical; }
-    .assistant-change-submit { width:100%; margin-top:10px; border:0; border-radius:10px; padding:11px; font-weight:900; background:#334155; color:#fff; cursor:pointer; }
-    .assistant-change-info { margin-top:10px; padding:10px; border-radius:10px; background:#fff7e8; font-size:12px; line-height:1.55; }
-
-  
-    .pwa-install-button {
-      display:none;
-      border:0;
-      border-radius:12px;
-      padding:10px 14px;
-      font-weight:900;
-      cursor:pointer;
-      background:#6c3fd1;
-      color:#fff;
-      box-shadow:0 6px 16px rgba(108,63,209,.18);
-    }
-    .pwa-install-button.show { display:inline-flex; align-items:center; gap:6px; }
-    .pwa-update-toast {
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%);
-      z-index:9999;
-      display:none;
-      width:min(92vw,420px);
-      padding:12px 14px;
-      border-radius:12px;
-      background:#111827;
-      color:#fff;
-      font-size:13px;
-      font-weight:800;
-      box-shadow:0 12px 30px rgba(0,0,0,.22);
-    }
-    .pwa-update-toast.show { display:block; }
-
-  </style>
+</style>
 </head>
 
 
@@ -2545,13 +2488,77 @@
     </section>
 
 
-    <!-- 부담임 상담 일정 -->
-    <section class="card assistant-schedule-card">
-      <div class="card-title">🧑‍🏫 부담임 상담 일정</div>
-      <div id="assistantScheduleBox" class="placeholder">
-        상담 일정을 불러오는 중입니다.
+    <!-- 부담임 상담 신청 -->
+    <section class="card assistant-counsel-card">
+      <div class="card-title">🧑‍🏫 부담임 상담 신청</div>
+
+      <div class="counseling-help" style="margin-top:0;">
+        학습 · 생활 · 수강 관련 상담을 부담임에게 신청할 수 있습니다.
+      </div>
+
+      <div class="counseling-form">
+        <label class="counseling-label" for="assistantCounselingType">
+          상담유형
+        </label>
+
+        <select
+          id="assistantCounselingType"
+          class="counseling-input"
+        >
+          <option value="">선택해주세요</option>
+          <option value="학습상담">학습상담</option>
+          <option value="생활상담">생활상담</option>
+          <option value="수강상담">수강상담</option>
+          <option value="기타">기타</option>
+        </select>
+
+        <label class="counseling-label" for="assistantCounselingDate">
+          희망 상담일
+        </label>
+
+        <input
+          id="assistantCounselingDate"
+          class="counseling-input"
+          type="date"
+          onchange="loadAssistantCounselingSlots()"
+        >
+
+        <label class="counseling-label" for="assistantCounselingTime">
+          희망 상담시간
+        </label>
+
+        <select
+          id="assistantCounselingTime"
+          class="counseling-input"
+        >
+          <option value="">상담일을 먼저 선택해주세요</option>
+        </select>
+
+        <div class="counseling-help">
+          상담 가능 시간은 기존 상담 신청 가능시간과 동일하게 표시됩니다.
+        </div>
+
+        <label class="counseling-label" for="assistantCounselingContent">
+          상담내용
+        </label>
+
+        <textarea
+          id="assistantCounselingContent"
+          class="counseling-textarea"
+          maxlength="950"
+          placeholder="부담임에게 상담받고 싶은 내용을 입력해주세요."
+        ></textarea>
+
+        <button
+          id="assistantCounselingSubmitButton"
+          class="counseling-submit-button assistant-counsel-submit"
+          type="button"
+        >
+          부담임 상담 신청
+        </button>
       </div>
     </section>
+
 
 
     <!-- 성적 -->
@@ -2567,14 +2574,6 @@
 
 
 <button
-      id="pwaInstallButton"
-      class="pwa-install-button"
-      type="button"
-    >
-      📲 앱 설치
-    </button>
-
-    <button
       id="logoutButton"
       class="logout-button"
       type="button"
@@ -2887,7 +2886,6 @@ async function loginStudent() {
         loadDashboardAll();
         loadReasonList();
         loadCounselingList();
-        loadAssistantSchedule();
       }, 0);
     }, 0);
 
@@ -4844,14 +4842,6 @@ async function restoreSession() {
         );
       });
 
-    loadAssistantSchedule()
-      .catch(function(error) {
-        console.log(
-          "부담임 상담일정 갱신 실패",
-          error
-        );
-      });
-
     // QR은 로그인 세션 확인 후 서버에서 새로 생성
     loadQr();
 
@@ -6201,205 +6191,224 @@ function renderCounselingList(rows) {
 
 
 /* =========================
-   부담임 상담 일정 / 학생 응답
+   부담임 상담 신청
 ========================= */
 
-async function loadAssistantSchedule() {
-  const box = document.getElementById("assistantScheduleBox");
-  if (!box || !sessionToken) return;
+document
+  .getElementById(
+    "assistantCounselingSubmitButton"
+  )
+  .addEventListener(
+    "click",
+    submitAssistantCounseling
+  );
 
-  box.className = "placeholder";
-  box.innerHTML = "상담 일정을 불러오는 중입니다.";
 
-  try {
-    const result = await apiRequest(
-      "studentAssistantCounselingList",
-      { sessionToken: sessionToken }
+async function loadAssistantCounselingSlots() {
+  const date =
+    document.getElementById(
+      "assistantCounselingDate"
+    ).value.trim();
+
+  const select =
+    document.getElementById(
+      "assistantCounselingTime"
     );
 
-    if (!result || !result.success) {
-      box.innerHTML = escapeHtml(
-        result && result.message
+  if (!date) {
+    select.innerHTML =
+      '<option value="">상담일을 먼저 선택해주세요</option>';
+    return;
+  }
+
+  select.innerHTML =
+    '<option value="">가능시간 확인 중...</option>';
+
+  try {
+    const result =
+      await apiRequest(
+        "studentCounselingSlots",
+        {
+          sessionToken:
+            sessionToken,
+          preferredDate:
+            date
+        }
+      );
+
+    if (
+      !result ||
+      !result.success
+    ) {
+      handleSessionError(result);
+
+      select.innerHTML =
+        '<option value="">시간을 불러오지 못했습니다</option>';
+      return;
+    }
+
+    const slots =
+      Array.isArray(result.slots)
+        ? result.slots
+        : [];
+
+    if (!slots.length) {
+      select.innerHTML =
+        '<option value="">예약 가능한 시간이 없습니다</option>';
+      return;
+    }
+
+    select.innerHTML =
+      '<option value="">선택해주세요</option>' +
+      slots
+        .map(function(slot) {
+          return (
+            '<option value="' +
+            escapeHtml(slot) +
+            '">' +
+            escapeHtml(slot) +
+            '</option>'
+          );
+        })
+        .join("");
+
+  } catch (error) {
+    select.innerHTML =
+      '<option value="">시간을 불러오지 못했습니다</option>';
+  }
+}
+
+
+async function submitAssistantCounseling() {
+  const button =
+    document.getElementById(
+      "assistantCounselingSubmitButton"
+    );
+
+  const counselingType =
+    document.getElementById(
+      "assistantCounselingType"
+    ).value.trim();
+
+  const preferredDate =
+    document.getElementById(
+      "assistantCounselingDate"
+    ).value.trim();
+
+  const preferredTime =
+    document.getElementById(
+      "assistantCounselingTime"
+    ).value.trim();
+
+  const rawContent =
+    document.getElementById(
+      "assistantCounselingContent"
+    ).value.trim();
+
+  if (!counselingType) {
+    alert("상담유형을 선택해주세요.");
+    return;
+  }
+
+  if (!preferredDate) {
+    alert("희망 상담일을 선택해주세요.");
+    return;
+  }
+
+  if (!preferredTime) {
+    alert("희망 상담시간을 선택해주세요.");
+    return;
+  }
+
+  if (!rawContent) {
+    alert("상담내용을 입력해주세요.");
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent =
+    "신청 중...";
+
+  try {
+    /*
+     * 현재 서버의 studentCounselingSubmit API를 그대로 사용하면서
+     * 부담임 신청임을 확실하게 구분할 수 있도록 상담내용 앞에 표식을 붙입니다.
+     * 이후 서버에 '상담대상' 전용 컬럼을 추가하면 이 부분만
+     * counselingTarget:'부담임' 방식으로 교체하면 됩니다.
+     */
+    const counselingContent =
+      "[부담임 상담 신청]\n" +
+      rawContent;
+
+    const result =
+      await apiRequest(
+        "studentCounselingSubmit",
+        {
+          sessionToken:
+            sessionToken,
+          counselingType:
+            counselingType,
+          preferredDate:
+            preferredDate,
+          preferredTime:
+            preferredTime,
+          counselingContent:
+            counselingContent
+        }
+      );
+
+    if (
+      !result ||
+      !result.success
+    ) {
+      alert(
+        result &&
+        result.message
           ? result.message
-          : "상담 일정을 불러오지 못했습니다."
+          : "부담임 상담 신청에 실패했습니다."
       );
       return;
     }
 
-    const rows = Array.isArray(result.rows) ? result.rows : [];
+    alert(
+      "부담임 상담 신청이 완료되었습니다."
+    );
 
-    if (!rows.length) {
-      box.innerHTML = "현재 예정된 부담임 상담 일정이 없습니다.";
-      return;
-    }
+    document
+      .getElementById(
+        "assistantCounselingType"
+      ).value = "";
 
-    box.className = "";
-    box.innerHTML = rows.map(renderAssistantScheduleItem_).join("");
+    document
+      .getElementById(
+        "assistantCounselingDate"
+      ).value = "";
 
-    box.querySelectorAll("[data-assistant-response]").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        const id = btn.getAttribute("data-id");
-        const type = btn.getAttribute("data-assistant-response");
-        respondAssistantSchedule(id, type);
-      });
-    });
+    document
+      .getElementById(
+        "assistantCounselingTime"
+      ).innerHTML =
+        '<option value="">상담일을 먼저 선택해주세요</option>';
 
-    box.querySelectorAll("[data-change-submit]").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        submitAssistantScheduleChange(btn.getAttribute("data-change-submit"));
-      });
-    });
+    document
+      .getElementById(
+        "assistantCounselingContent"
+      ).value = "";
 
-    box.querySelectorAll("[data-change-toggle]").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        const id = btn.getAttribute("data-change-toggle");
-        const form = document.getElementById("assistantChangeForm_" + id);
-        if (form) form.style.display = form.style.display === "none" ? "block" : "none";
-      });
-    });
+    // 기존 '내 상담 신청내역'에도 즉시 반영
+    loadCounselingList();
 
   } catch (error) {
-    box.className = "placeholder";
-    box.innerHTML = escapeHtml(
-      error && error.message
+    alert(
+      error &&
+      error.message
         ? error.message
-        : "상담 일정을 불러오지 못했습니다."
+        : "부담임 상담 신청 중 오류가 발생했습니다."
     );
-  }
-}
-
-function renderAssistantScheduleItem_(item) {
-  const id = escapeHtml(item.applicationId || "");
-  const status = String(item.status || "제안");
-  const statusText = {
-    "제안":"응답 대기",
-    "참석":"참석",
-    "미참석":"미참석",
-    "일정변경요청":"일정 변경 요청 확인 중",
-    "참여비희망":"상담 참여 비희망",
-    "변경승인":"일정 변경 완료",
-    "변경반려":"일정 변경 반려",
-    "완료":"상담 완료"
-  }[status] || status;
-
-  let actions = "";
-  if (status === "제안" || status === "미참석" || status === "변경반려") {
-    actions =
-      '<div class="assistant-response-grid">' +
-        '<button type="button" class="assistant-response-btn attend" data-assistant-response="참석" data-id="' + id + '">✅ 참석</button>' +
-        '<button type="button" class="assistant-response-btn absent" data-assistant-response="미참석" data-id="' + id + '">❌ 미참석</button>' +
-        '<button type="button" class="assistant-response-btn change" data-change-toggle="' + id + '">📅 상담일자 변경 요청</button>' +
-        '<button type="button" class="assistant-response-btn decline" data-assistant-response="참여비희망" data-id="' + id + '">🚫 상담 참여 비희망</button>' +
-      '</div>' +
-      '<div id="assistantChangeForm_' + id + '" class="assistant-change-form" style="display:none;">' +
-        '<label>희망 상담일</label>' +
-        '<input type="date" id="assistantChangeDate_' + id + '">' +
-        '<label>희망 상담시간</label>' +
-        '<select id="assistantChangeTime_' + id + '">' +
-          '<option value="">시간 선택</option>' +
-          '<option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>' +
-          '<option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>' +
-          '<option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option>' +
-        '</select>' +
-        '<label>변경 사유</label>' +
-        '<textarea id="assistantChangeReason_' + id + '" maxlength="500" placeholder="일정 변경 사유를 입력해주세요."></textarea>' +
-        '<button type="button" class="assistant-change-submit" data-change-submit="' + id + '">변경 요청 제출</button>' +
-      '</div>';
-  }
-
-  let changeInfo = "";
-  if (item.requestedDate || item.requestedTime || item.changeReason) {
-    changeInfo =
-      '<div class="assistant-change-info">' +
-        '<strong>변경 요청</strong><br>' +
-        escapeHtml(item.requestedDate || "-") + " " +
-        escapeHtml(item.requestedTime || "") +
-        (item.changeReason ? '<br>사유: ' + escapeHtml(item.changeReason) : '') +
-      '</div>';
-  }
-
-  return (
-    '<div class="assistant-schedule-item">' +
-      '<div class="assistant-schedule-head">' +
-        '<strong>' + escapeHtml(item.assistantName || "부담임") + '</strong>' +
-        '<span class="assistant-status">' + escapeHtml(statusText) + '</span>' +
-      '</div>' +
-      '<div class="assistant-schedule-row"><span>상담일자</span><b>' + escapeHtml(item.proposedDate || "-") + '</b></div>' +
-      '<div class="assistant-schedule-row"><span>상담시간</span><b>' + escapeHtml(item.proposedTime || "-") + '</b></div>' +
-      '<div class="assistant-schedule-row"><span>장소</span><b>' + escapeHtml(item.place || "학원 상담실") + '</b></div>' +
-      changeInfo +
-      actions +
-    '</div>'
-  );
-}
-
-async function respondAssistantSchedule(applicationId, responseType) {
-  let reason = "";
-
-  if (responseType === "미참석") {
-    reason = prompt("미참석 사유를 입력해주세요. (선택)") || "";
-  }
-
-  if (responseType === "참여비희망") {
-    if (!confirm("이번 부담임 상담에 참여하지 않는 것으로 제출할까요?")) return;
-    reason = prompt("상담 참여 비희망 사유를 입력해주세요. (선택)") || "";
-  }
-
-  try {
-    const result = await apiRequest(
-      "studentAssistantCounselingRespond",
-      {
-        sessionToken: sessionToken,
-        applicationId: applicationId,
-        responseType: responseType,
-        reason: reason
-      }
-    );
-
-    if (!result || !result.success) {
-      alert(result && result.message ? result.message : "응답 저장에 실패했습니다.");
-      return;
-    }
-
-    alert(result.message || "응답이 저장되었습니다.");
-    loadAssistantSchedule();
-  } catch (error) {
-    alert(error && error.message ? error.message : "응답 저장 중 오류가 발생했습니다.");
-  }
-}
-
-async function submitAssistantScheduleChange(applicationId) {
-  const date = document.getElementById("assistantChangeDate_" + applicationId).value;
-  const time = document.getElementById("assistantChangeTime_" + applicationId).value;
-  const reason = document.getElementById("assistantChangeReason_" + applicationId).value.trim();
-
-  if (!date || !time) {
-    alert("희망 상담일과 시간을 선택해주세요.");
-    return;
-  }
-
-  try {
-    const result = await apiRequest(
-      "studentAssistantCounselingRespond",
-      {
-        sessionToken: sessionToken,
-        applicationId: applicationId,
-        responseType: "일정변경요청",
-        requestedDate: date,
-        requestedTime: time,
-        reason: reason
-      }
-    );
-
-    if (!result || !result.success) {
-      alert(result && result.message ? result.message : "일정 변경 요청에 실패했습니다.");
-      return;
-    }
-
-    alert("상담일자 변경 요청이 전달되었습니다.");
-    loadAssistantSchedule();
-  } catch (error) {
-    alert(error && error.message ? error.message : "일정 변경 요청 중 오류가 발생했습니다.");
+  } finally {
+    button.disabled = false;
+    button.textContent =
+      "부담임 상담 신청";
   }
 }
 
@@ -6580,94 +6589,7 @@ function escapeHtml(
 
 restoreSession();
 
-
-/* =========================
-   PWA 설치 / 업데이트
-========================= */
-let pwaDeferredPrompt = null;
-
-window.addEventListener("beforeinstallprompt", function(event) {
-  event.preventDefault();
-  pwaDeferredPrompt = event;
-
-  const btn = document.getElementById("pwaInstallButton");
-  if (btn) {
-    btn.classList.add("show");
-  }
-});
-
-window.addEventListener("appinstalled", function() {
-  pwaDeferredPrompt = null;
-
-  const btn = document.getElementById("pwaInstallButton");
-  if (btn) {
-    btn.classList.remove("show");
-  }
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-  const installBtn = document.getElementById("pwaInstallButton");
-
-  if (installBtn) {
-    installBtn.addEventListener("click", async function() {
-      if (!pwaDeferredPrompt) {
-        alert(
-          "설치 메뉴가 보이지 않는 경우 브라우저 메뉴에서 '홈 화면에 추가' 또는 '앱 설치'를 선택해주세요."
-        );
-        return;
-      }
-
-      pwaDeferredPrompt.prompt();
-
-      try {
-        await pwaDeferredPrompt.userChoice;
-      } catch (e) {}
-
-      pwaDeferredPrompt = null;
-      installBtn.classList.remove("show");
-    });
-  }
-
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-      navigator.serviceWorker
-        .register("./sw.js")
-        .then(function(registration) {
-          registration.update();
-
-          registration.addEventListener("updatefound", function() {
-            const worker = registration.installing;
-            if (!worker) return;
-
-            worker.addEventListener("statechange", function() {
-              if (
-                worker.state === "installed" &&
-                navigator.serviceWorker.controller
-              ) {
-                const toast = document.getElementById("pwaUpdateToast");
-                if (toast) {
-                  toast.classList.add("show");
-                  setTimeout(function() {
-                    toast.classList.remove("show");
-                  }, 5000);
-                }
-              }
-            });
-          });
-        })
-        .catch(function(error) {
-          console.log("Service Worker 등록 실패", error);
-        });
-    });
-  }
-});
-
 </script>
-
-
-<div id="pwaUpdateToast" class="pwa-update-toast">
-  새 버전이 있습니다. 앱을 다시 열면 최신 화면으로 업데이트됩니다.
-</div>
 
 </body>
 </html>
