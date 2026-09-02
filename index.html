@@ -6,6 +6,16 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
+
+  <!-- PWA -->
+  <meta name="theme-color" content="#6c3fd1">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="공단기 학생포털">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
   <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -2009,6 +2019,37 @@
     .assistant-change-submit { width:100%; margin-top:10px; border:0; border-radius:10px; padding:11px; font-weight:900; background:#334155; color:#fff; cursor:pointer; }
     .assistant-change-info { margin-top:10px; padding:10px; border-radius:10px; background:#fff7e8; font-size:12px; line-height:1.55; }
 
+  
+    .pwa-install-button {
+      display:none;
+      border:0;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:900;
+      cursor:pointer;
+      background:#6c3fd1;
+      color:#fff;
+      box-shadow:0 6px 16px rgba(108,63,209,.18);
+    }
+    .pwa-install-button.show { display:inline-flex; align-items:center; gap:6px; }
+    .pwa-update-toast {
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      z-index:9999;
+      display:none;
+      width:min(92vw,420px);
+      padding:12px 14px;
+      border-radius:12px;
+      background:#111827;
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      box-shadow:0 12px 30px rgba(0,0,0,.22);
+    }
+    .pwa-update-toast.show { display:block; }
+
   </style>
 </head>
 
@@ -2526,6 +2567,14 @@
 
 
 <button
+      id="pwaInstallButton"
+      class="pwa-install-button"
+      type="button"
+    >
+      📲 앱 설치
+    </button>
+
+    <button
       id="logoutButton"
       class="logout-button"
       type="button"
@@ -6531,7 +6580,94 @@ function escapeHtml(
 
 restoreSession();
 
+
+/* =========================
+   PWA 설치 / 업데이트
+========================= */
+let pwaDeferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", function(event) {
+  event.preventDefault();
+  pwaDeferredPrompt = event;
+
+  const btn = document.getElementById("pwaInstallButton");
+  if (btn) {
+    btn.classList.add("show");
+  }
+});
+
+window.addEventListener("appinstalled", function() {
+  pwaDeferredPrompt = null;
+
+  const btn = document.getElementById("pwaInstallButton");
+  if (btn) {
+    btn.classList.remove("show");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const installBtn = document.getElementById("pwaInstallButton");
+
+  if (installBtn) {
+    installBtn.addEventListener("click", async function() {
+      if (!pwaDeferredPrompt) {
+        alert(
+          "설치 메뉴가 보이지 않는 경우 브라우저 메뉴에서 '홈 화면에 추가' 또는 '앱 설치'를 선택해주세요."
+        );
+        return;
+      }
+
+      pwaDeferredPrompt.prompt();
+
+      try {
+        await pwaDeferredPrompt.userChoice;
+      } catch (e) {}
+
+      pwaDeferredPrompt = null;
+      installBtn.classList.remove("show");
+    });
+  }
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then(function(registration) {
+          registration.update();
+
+          registration.addEventListener("updatefound", function() {
+            const worker = registration.installing;
+            if (!worker) return;
+
+            worker.addEventListener("statechange", function() {
+              if (
+                worker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                const toast = document.getElementById("pwaUpdateToast");
+                if (toast) {
+                  toast.classList.add("show");
+                  setTimeout(function() {
+                    toast.classList.remove("show");
+                  }, 5000);
+                }
+              }
+            });
+          });
+        })
+        .catch(function(error) {
+          console.log("Service Worker 등록 실패", error);
+        });
+    });
+  }
+});
+
 </script>
+
+
+<div id="pwaUpdateToast" class="pwa-update-toast">
+  새 버전이 있습니다. 앱을 다시 열면 최신 화면으로 업데이트됩니다.
+</div>
 
 </body>
 </html>
