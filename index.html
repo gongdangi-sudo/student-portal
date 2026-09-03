@@ -2645,6 +2645,12 @@ function apiRequest(
         callbackName
       );
 
+      // GitHub/브라우저 캐시를 우회해 항상 최신 Apps Script 응답 사용
+      query.set(
+        "_",
+        String(Date.now())
+      );
+
       Object.keys(
         params || {}
       ).forEach(function(key) {
@@ -2731,6 +2737,21 @@ function apiRequest(
 
 
 
+
+/* =========================
+   로그인 페이지 API 사전 예열
+   - 사용자가 이름/전화번호를 입력하는 동안 Apps Script 런타임을 미리 깨웁니다.
+   - 정상 세션이 없어도 빠르게 종료되는 가벼운 요청만 보냅니다.
+========================= */
+(function prewarmStudentApi_() {
+  setTimeout(function() {
+    apiRequest(
+      "studentPenalty",
+      {sessionToken:"__STUDENT_PREWARM__"}
+    ).catch(function(){});
+  }, 80);
+})();
+
 /* =========================
    로그인
 ========================= */
@@ -2807,7 +2828,7 @@ async function loginStudent() {
   button.disabled = true;
 
   button.textContent =
-    "확인 중...";
+    "로그인 중...";
 
 
   try {
