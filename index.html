@@ -2078,6 +2078,99 @@
   font-size:11px;
 }
 
+
+/* ===== 사유서 신청기간 / 증빙서류 즉시·추후 제출 ===== */
+.reason-apply-window{
+  margin:0 0 14px;
+  padding:11px 12px;
+  border-radius:10px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  font-size:12px;
+  line-height:1.55;
+  font-weight:800;
+}
+.reason-evidence-box{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fafafa;
+}
+.reason-evidence-title{
+  margin-bottom:10px;
+  font-size:13px;
+  font-weight:900;
+  color:#111827;
+}
+.reason-evidence-choice{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.reason-evidence-choice button{
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  background:#fff;
+  padding:11px 10px;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.reason-evidence-choice button.active{
+  background:#fee2e2;
+  border-color:#f87171;
+  color:#b91c1c;
+}
+.reason-evidence-selected{
+  margin-top:8px;
+  padding:8px 10px;
+  border-radius:9px;
+  background:#fff;
+  border:1px dashed #d1d5db;
+  color:#4b5563;
+  font-size:11px;
+  line-height:1.45;
+}
+.reason-evidence-note{
+  margin-top:10px;
+  color:#6b7280;
+  font-size:11px;
+  line-height:1.55;
+}
+.reason-evidence-examples{
+  margin-top:10px;
+  border-top:1px solid #e5e7eb;
+  padding-top:10px;
+}
+.reason-evidence-examples summary{
+  cursor:pointer;
+  font-size:11px;
+  font-weight:900;
+  color:#374151;
+}
+.reason-evidence-examples ul{
+  margin:8px 0 0 18px;
+  padding:0;
+  color:#4b5563;
+  font-size:11px;
+  line-height:1.6;
+}
+.reason-evidence-warning{
+  margin-top:10px;
+  padding:9px 10px;
+  border-radius:9px;
+  background:#fff1f2;
+  color:#be123c;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.55;
+}
+@media(max-width:520px){
+  .reason-evidence-choice{grid-template-columns:1fr 1fr}
+}
+
 </style>
 </head>
 
@@ -2409,6 +2502,10 @@
         </div>
       </details>
 
+      <div class="reason-apply-window">
+        사유서 신청 기간 : 일반 결석·지각·조퇴는 해당일 기준 <strong>5일 전부터 당일까지</strong> 신청 가능<br><span style="font-weight:700">※ 정기결석·정기지각·정기조퇴는 신청기간 제한에서 제외됩니다.</span>
+      </div>
+
       <div class="reason-form">
         <label class="reason-label" for="reasonDate">사유일</label>
         <input
@@ -2492,9 +2589,59 @@
           placeholder="사유내용을 입력해주세요."
         ></textarea>
 
-        <div class="reason-help">
-          증빙서류는 당일 제출하지 않아도 됩니다.
-          사유서 제출 후 준비되는 대로 추가 제출해주세요.
+        <div class="reason-evidence-box">
+          <div class="reason-evidence-title">증빙서류를 첨부해 주세요.</div>
+
+          <div class="reason-evidence-choice">
+            <button
+              id="reasonEvidenceNowButton"
+              type="button"
+              onclick="selectReasonEvidenceMode_('now')"
+            >
+              📎 파일 첨부
+            </button>
+
+            <button
+              id="reasonEvidenceLaterButton"
+              class="active"
+              type="button"
+              onclick="selectReasonEvidenceMode_('later')"
+            >
+              추후 제출
+            </button>
+          </div>
+
+          <input
+            id="reasonEvidenceNowFile"
+            type="file"
+            accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+            style="display:none;"
+          >
+
+          <div
+            id="reasonEvidenceSelectedText"
+            class="reason-evidence-selected"
+          >
+            현재 선택: 추후 제출
+          </div>
+
+          <div class="reason-evidence-note">
+            ※ 사유서 신청 시 증빙서류를 바로 제출하거나 <strong>‘추후 제출’</strong>을 선택할 수 있습니다.<br>
+            ※ <strong>증빙서류는 결석·지각·조퇴 해당일로부터 3일 이내 반드시 제출해 주세요.</strong>
+          </div>
+
+          <details class="reason-evidence-examples">
+            <summary>증빙 가능 자료 예시 [펼쳐보기]</summary>
+            <ul>
+              <li><strong>병원·약국</strong> : 약국 봉투, 진료·처방 관련 자료, 타임스탬프로 촬영한 병원 방문 사진</li>
+              <li><strong>은행·관공서 등</strong> : 타임스탬프로 촬영한 방문 사진, 방문·처리 문자 내역</li>
+              <li><strong>시험·면접·예비군 등</strong> : 응시표, 안내 문자, 참석 또는 소집 내역 등</li>
+            </ul>
+          </details>
+
+          <div class="reason-evidence-warning">
+            ⚠️ 기한 내 증빙서류 미제출 시 사유가 인정되지 않으며 벌점이 부여됩니다.
+          </div>
         </div>
 
         <button
@@ -5109,6 +5256,145 @@ function updateReasonPeriodVisibility() {
 }
 
 
+
+let reasonEvidenceMode_ = "later";
+
+function selectReasonEvidenceMode_(mode) {
+  const nowBtn = document.getElementById("reasonEvidenceNowButton");
+  const laterBtn = document.getElementById("reasonEvidenceLaterButton");
+  const fileInput = document.getElementById("reasonEvidenceNowFile");
+  const selected = document.getElementById("reasonEvidenceSelectedText");
+
+  reasonEvidenceMode_ = mode === "now" ? "now" : "later";
+
+  if (nowBtn) nowBtn.classList.toggle("active", reasonEvidenceMode_ === "now");
+  if (laterBtn) laterBtn.classList.toggle("active", reasonEvidenceMode_ === "later");
+
+  if (reasonEvidenceMode_ === "now") {
+    if (selected) selected.textContent = "파일을 선택해 주세요.";
+    if (fileInput) {
+      fileInput.value = "";
+      fileInput.click();
+    }
+  } else {
+    if (fileInput) fileInput.value = "";
+    if (selected) selected.textContent = "현재 선택: 추후 제출";
+  }
+}
+
+const reasonEvidenceNowFile_ = document.getElementById("reasonEvidenceNowFile");
+if (reasonEvidenceNowFile_) {
+  reasonEvidenceNowFile_.addEventListener("change", function() {
+    const file = this.files && this.files[0];
+    const selected = document.getElementById("reasonEvidenceSelectedText");
+
+    if (!file) {
+      reasonEvidenceMode_ = "later";
+      selectReasonEvidenceMode_("later");
+      return;
+    }
+
+    const allowed = ["image/jpeg","image/png","application/pdf"];
+    if (allowed.indexOf(file.type) === -1) {
+      alert("JPG, PNG, PDF 파일만 첨부할 수 있습니다.");
+      this.value = "";
+      reasonEvidenceMode_ = "later";
+      selectReasonEvidenceMode_("later");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      alert("증빙서류는 10MB 이하만 첨부할 수 있습니다.");
+      this.value = "";
+      reasonEvidenceMode_ = "later";
+      selectReasonEvidenceMode_("later");
+      return;
+    }
+
+    reasonEvidenceMode_ = "now";
+    document.getElementById("reasonEvidenceNowButton")?.classList.add("active");
+    document.getElementById("reasonEvidenceLaterButton")?.classList.remove("active");
+
+    if (selected) {
+      selected.textContent =
+        "첨부 예정: " + file.name +
+        " (" + Math.max(1, Math.round(file.size / 1024)) + "KB)";
+    }
+  });
+}
+
+function studentTodayYmd_() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,"0");
+  const d = String(now.getDate()).padStart(2,"0");
+  return y + "-" + m + "-" + d;
+}
+
+function addDaysYmd_(ymd, days) {
+  const p = String(ymd||"").split("-").map(Number);
+  if (p.length !== 3 || !p[0] || !p[1] || !p[2]) return "";
+  const d = new Date(p[0], p[1]-1, p[2]);
+  d.setDate(d.getDate() + Number(days||0));
+  return [
+    d.getFullYear(),
+    String(d.getMonth()+1).padStart(2,"0"),
+    String(d.getDate()).padStart(2,"0")
+  ].join("-");
+}
+
+function configureReasonDateWindow_() {
+  const today = studentTodayYmd_();
+  const maxDate = addDaysYmd_(today, 5);
+
+  const reasonDate = document.getElementById("reasonDate");
+  if (reasonDate) {
+    reasonDate.min = today;
+    reasonDate.max = maxDate;
+  }
+
+  // 정기지각/정기조퇴/정기결석은 5일 신청기간 제한 제외
+  const regularStart = document.getElementById("regularStartDate");
+  if (regularStart) {
+    regularStart.removeAttribute("min");
+    regularStart.removeAttribute("max");
+  }
+}
+
+configureReasonDateWindow_();
+
+async function uploadReasonEvidenceByApplication_(applicationId, file) {
+  if (!applicationId || !file) {
+    return {success:false, message:"증빙서류 업로드 정보가 없습니다."};
+  }
+
+  const preparedFile = await prepareReasonEvidenceFile_(file);
+  const base64Data = await fileToBase64_(preparedFile);
+
+  const postBody = new URLSearchParams();
+  postBody.set("action", "studentReasonEvidenceUpload");
+  postBody.set("sessionToken", sessionToken);
+  postBody.set("applicationId", applicationId);
+  postBody.set("fileName", preparedFile.name);
+  postBody.set("mimeType", preparedFile.type);
+  postBody.set("base64Data", base64Data);
+
+  const response = await fetch(API_URL, {
+    method:"POST",
+    headers:{
+      "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"
+    },
+    body:postBody.toString()
+  });
+
+  if (!response.ok) {
+    throw new Error("증빙서류 업로드 서버 오류 (" + response.status + ")");
+  }
+
+  return await response.json();
+}
+
+
 async function submitReason() {
   const button =
     document.getElementById(
@@ -5151,6 +5437,21 @@ async function submitReason() {
     .map(function(el){ return el.value; })
     .join(",");
   const isRegularReason = ["정기지각", "정기조퇴", "정기결석"].indexOf(reasonType) !== -1;
+
+  // 일반 지각/조퇴/결석 등만 5일 신청기간 제한 적용
+  // 정기지각/정기조퇴/정기결석은 제한에서 제외
+  if (!isRegularReason) {
+    const todayYmd = studentTodayYmd_();
+    const latestAllowedYmd = addDaysYmd_(todayYmd, 5);
+
+    if (
+      reasonDate &&
+      (reasonDate < todayYmd || reasonDate > latestAllowedYmd)
+    ) {
+      alert("사유서는 해당일 기준 5일 전부터 당일까지 신청할 수 있습니다.");
+      return;
+    }
+  }
 
   if (!isRegularReason && !reasonDate) {
     alert("사유일을 선택해주세요.");
@@ -5214,6 +5515,14 @@ async function submitReason() {
     return;
   }
 
+  const immediateEvidenceFile =
+    document.getElementById("reasonEvidenceNowFile")?.files?.[0] || null;
+
+  if (reasonEvidenceMode_ === "now" && !immediateEvidenceFile) {
+    alert("파일 첨부를 선택한 경우 증빙서류 파일을 선택해주세요.");
+    return;
+  }
+
   button.disabled = true;
   button.textContent =
     "제출 중...";
@@ -5261,6 +5570,33 @@ async function submitReason() {
       return;
     }
 
+    let immediateEvidenceUploaded = false;
+
+    if (
+      reasonEvidenceMode_ === "now" &&
+      immediateEvidenceFile &&
+      result.applicationId
+    ) {
+      button.textContent = "증빙 업로드 중...";
+
+      const uploadResult =
+        await uploadReasonEvidenceByApplication_(
+          result.applicationId,
+          immediateEvidenceFile
+        );
+
+      if (!uploadResult || !uploadResult.success) {
+        alert(
+          "사유서는 제출되었지만 증빙서류 업로드에 실패했습니다.\n" +
+          (uploadResult && uploadResult.message
+            ? uploadResult.message
+            : "내 신청내역에서 증빙서류를 다시 제출해주세요.")
+        );
+      } else {
+        immediateEvidenceUploaded = true;
+      }
+    }
+
     document
       .getElementById(
         "reasonContent"
@@ -5292,12 +5628,17 @@ async function submitReason() {
 
     updateReasonPeriodVisibility();
 
-    alert(
-      result.notice ||
-      "사유서 제출이 완료되었습니다.\n" +
-      "증빙서류는 당일 제출하지 않으셔도 됩니다.\n" +
-      "준비되는 대로 학생포털에서 증빙서류를 추가 제출해주세요."
-    );
+    if (reasonEvidenceMode_ === "now" && immediateEvidenceUploaded) {
+      alert("사유서와 증빙서류가 함께 제출되었습니다.");
+    } else if (reasonEvidenceMode_ === "later") {
+      alert(
+        "사유서 제출이 완료되었습니다.\n" +
+        "증빙서류는 해당일로부터 3일 이내 반드시 제출해주세요."
+      );
+    }
+
+    reasonEvidenceMode_ = "later";
+    selectReasonEvidenceMode_("later");
 
     await loadReasonList();
 
@@ -5572,68 +5913,11 @@ async function uploadReasonEvidence(event) {
   try {
     // 큰 사진은 업로드 전에 자동 축소/압축합니다.
     // 휴대폰 사진은 보통 수 MB이므로 이 단계에서 전송량을 크게 줄일 수 있습니다.
-    const preparedFile =
-      await prepareReasonEvidenceFile_(
+    const result =
+      await uploadReasonEvidenceByApplication_(
+        pendingReasonEvidenceId,
         file
       );
-
-    const base64Data =
-      await fileToBase64_(
-        preparedFile
-      );
-
-    const postBody =
-      new URLSearchParams();
-
-    postBody.set(
-      "action",
-      "studentReasonEvidenceUpload"
-    );
-    postBody.set(
-      "sessionToken",
-      sessionToken
-    );
-    postBody.set(
-      "applicationId",
-      pendingReasonEvidenceId
-    );
-    postBody.set(
-      "fileName",
-      preparedFile.name
-    );
-    postBody.set(
-      "mimeType",
-      preparedFile.type
-    );
-    postBody.set(
-      "base64Data",
-      base64Data
-    );
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/x-www-form-urlencoded;charset=UTF-8"
-          },
-          body:
-            postBody.toString()
-        }
-      );
-
-    if (!response.ok) {
-      throw new Error(
-        "서버 응답 오류 (" +
-        response.status +
-        ")"
-      );
-    }
-
-    const result =
-      await response.json();
 
 
     if (
