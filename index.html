@@ -2171,6 +2171,154 @@
   .reason-evidence-choice{grid-template-columns:1fr 1fr}
 }
 
+
+/* ===== 사유서 UI 정돈 버전 ===== */
+.reason-apply-window{
+  margin:8px 0 18px !important;
+  padding:10px 12px !important;
+  border:0 !important;
+  border-radius:10px !important;
+  background:#fff7ed !important;
+  color:#9a3412 !important;
+  font-size:11px !important;
+  line-height:1.55 !important;
+  font-weight:700 !important;
+}
+.reason-apply-window strong{
+  font-weight:900 !important;
+}
+.reason-apply-window span{
+  display:block;
+  margin-top:3px;
+  color:#a16207;
+  font-weight:700 !important;
+}
+
+.reason-evidence-box{
+  margin-top:14px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+.reason-evidence-title{
+  margin:0 0 9px !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+  color:#111827 !important;
+}
+.reason-evidence-choice{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:8px !important;
+}
+.reason-evidence-choice button{
+  min-height:44px !important;
+  padding:9px 10px !important;
+  border:1px solid #e5e7eb !important;
+  border-radius:10px !important;
+  background:#fff !important;
+  color:#374151 !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  box-shadow:none !important;
+}
+.reason-evidence-choice button.active{
+  border-color:#fca5a5 !important;
+  background:#fff1f2 !important;
+  color:#dc2626 !important;
+}
+.reason-evidence-selected{
+  margin-top:7px !important;
+  padding:7px 10px !important;
+  border:0 !important;
+  border-radius:8px !important;
+  background:#f8fafc !important;
+  color:#64748b !important;
+  font-size:10px !important;
+  line-height:1.4 !important;
+}
+.reason-evidence-note{
+  margin-top:10px !important;
+  padding:0 !important;
+  color:#6b7280 !important;
+  font-size:10px !important;
+  line-height:1.6 !important;
+}
+.reason-evidence-examples{
+  margin-top:9px !important;
+  padding:0 !important;
+  border:0 !important;
+}
+.reason-evidence-examples summary{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:4px !important;
+  padding:0 !important;
+  color:#4b5563 !important;
+  font-size:10px !important;
+  font-weight:800 !important;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.reason-evidence-examples ul{
+  margin:8px 0 0 18px !important;
+  padding:0 !important;
+  color:#6b7280 !important;
+  font-size:10px !important;
+  line-height:1.55 !important;
+}
+.reason-evidence-warning{
+  margin-top:10px !important;
+  padding:9px 10px !important;
+  border-radius:8px !important;
+  background:#fff1f2 !important;
+  color:#be123c !important;
+  font-size:10px !important;
+  line-height:1.5 !important;
+  font-weight:800 !important;
+}
+
+/* 안내 펼침 영역도 덜 무겁게 */
+.reason-guide{
+  margin:8px 0 10px !important;
+  border:1px solid #fecaca !important;
+  border-radius:10px !important;
+  background:#fff !important;
+}
+.reason-guide summary{
+  padding:11px 12px !important;
+  font-size:11px !important;
+}
+.reason-guide-body{
+  padding:0 12px 12px !important;
+  font-size:10px !important;
+  line-height:1.55 !important;
+}
+.reason-guide-alert{
+  margin:10px 0 8px !important;
+  padding:9px 10px !important;
+  border-radius:8px !important;
+}
+.reason-guide-alert strong{
+  font-size:11px !important;
+}
+.reason-guide-body ol{
+  margin:8px 0 8px 18px !important;
+}
+.reason-guide-body li{
+  margin:3px 0 !important;
+}
+.reason-guide-required{
+  margin:8px 0 6px !important;
+  padding:8px 9px !important;
+  font-size:10px !important;
+}
+.reason-guide-note{
+  margin-top:6px !important;
+  font-size:10px !important;
+}
+
 </style>
 </head>
 
@@ -2503,7 +2651,8 @@
       </details>
 
       <div class="reason-apply-window">
-        사유서 신청 기간 : 일반 결석·지각·조퇴는 해당일 기준 <strong>5일 전부터 당일까지</strong> 신청 가능<br><span style="font-weight:700">※ 정기결석·정기지각·정기조퇴는 신청기간 제한에서 제외됩니다.</span>
+        <strong>신청 가능 기간</strong> · 일반 결석·지각·조퇴는 해당일 기준 5일 전부터 당일까지<br>
+<span>정기결석·정기지각·정기조퇴는 기간 제한 없음</span>
       </div>
 
       <div class="reason-form">
@@ -2622,7 +2771,7 @@
             id="reasonEvidenceSelectedText"
             class="reason-evidence-selected"
           >
-            현재 선택: 추후 제출
+            추후 제출 선택됨
           </div>
 
           <div class="reason-evidence-note">
@@ -2631,7 +2780,7 @@
           </div>
 
           <details class="reason-evidence-examples">
-            <summary>증빙 가능 자료 예시 [펼쳐보기]</summary>
+            <summary>증빙 가능 자료 예시 보기</summary>
             <ul>
               <li><strong>병원·약국</strong> : 약국 봉투, 진료·처방 관련 자료, 타임스탬프로 촬영한 병원 방문 사진</li>
               <li><strong>은행·관공서 등</strong> : 타임스탬프로 촬영한 방문 사진, 방문·처리 문자 내역</li>
@@ -5278,7 +5427,7 @@ function selectReasonEvidenceMode_(mode) {
     }
   } else {
     if (fileInput) fileInput.value = "";
-    if (selected) selected.textContent = "현재 선택: 추후 제출";
+    if (selected) selected.textContent = "추후 제출 선택됨";
   }
 }
 
