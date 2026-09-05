@@ -2319,6 +2319,34 @@
   font-size:10px !important;
 }
 
+
+/* ===== 부담임 상담 당일 취소 ===== */
+.assistant-same-day-cancel-wrap{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #f1f5f9;
+}
+.assistant-same-day-cancel-btn{
+  width:100%;
+  min-height:42px;
+  border:1px solid #fca5a5;
+  border-radius:10px;
+  background:#fff1f2;
+  color:#dc2626;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.assistant-same-day-cancel-btn:hover{
+  background:#ffe4e6;
+}
+.assistant-same-day-cancel-help{
+  margin-top:6px;
+  color:#94a3b8;
+  font-size:10px;
+  line-height:1.45;
+}
+
 </style>
 </head>
 
@@ -6774,6 +6802,20 @@ async function loadAssistantSchedule() {
   }
 }
 
+
+function studentLocalTodayYmd_() {
+  const d = new Date();
+  return [
+    d.getFullYear(),
+    String(d.getMonth() + 1).padStart(2, "0"),
+    String(d.getDate()).padStart(2, "0")
+  ].join("-");
+}
+
+function isAssistantCounselingToday_(item) {
+  return String(item && item.proposedDate || "").trim() === studentLocalTodayYmd_();
+}
+
 function renderAssistantScheduleItem_(item) {
   const id = escapeHtml(item.applicationId || "");
   const status = String(item.status || "제안");
@@ -6783,6 +6825,7 @@ function renderAssistantScheduleItem_(item) {
     "미참석":"미참석",
     "일정변경요청":"일정 변경 요청 확인 중",
     "참여비희망":"상담 참여 비희망",
+    "당일취소":"당일 상담취소",
     "변경승인":"일정 변경 완료",
     "변경반려":"일정 변경 반려",
     "완료":"상담 완료"
@@ -6810,6 +6853,24 @@ function renderAssistantScheduleItem_(item) {
         '<label>변경 사유</label>' +
         '<textarea id="assistantChangeReason_' + id + '" maxlength="500" placeholder="일정 변경 사유를 입력해주세요."></textarea>' +
         '<button type="button" class="assistant-change-submit" data-change-submit="' + id + '">변경 요청 제출</button>' +
+      '</div>';
+  }
+
+  // 이미 참석 확정한 상담이라도 상담 당일에는 한 번 취소할 수 있습니다.
+  // "상담 참여 비희망"과 달리 향후 부담임 상담 대상에서는 제외되지 않습니다.
+  if (
+    (status === "참석" || status === "변경승인") &&
+    isAssistantCounselingToday_(item)
+  ) {
+    actions =
+      '<div class="assistant-same-day-cancel-wrap">' +
+        '<button type="button" class="assistant-same-day-cancel-btn" ' +
+          'data-assistant-response="당일취소" data-id="' + id + '">' +
+          '오늘 상담 취소' +
+        '</button>' +
+        '<div class="assistant-same-day-cancel-help">' +
+          '오늘 상담만 취소됩니다. 이후 부담임 상담 대상에서는 제외되지 않습니다.' +
+        '</div>' +
       '</div>';
   }
 
@@ -6849,6 +6910,15 @@ async function respondAssistantSchedule(applicationId, responseType) {
   if (responseType === "참여비희망") {
     if (!confirm("이번 부담임 상담에 참여하지 않는 것으로 제출할까요?")) return;
     reason = prompt("상담 참여 비희망 사유를 입력해주세요. (선택)") || "";
+  }
+
+  if (responseType === "당일취소") {
+    if (!confirm("오늘 예정된 부담임 상담을 취소할까요?\n오늘 상담만 취소되며 이후 상담 대상에서는 제외되지 않습니다.")) return;
+    reason = prompt("당일 상담 취소 사유를 입력해주세요.") || "";
+    if (!reason.trim()) {
+      alert("당일 상담 취소 사유를 입력해주세요.");
+      return;
+    }
   }
 
   try {
