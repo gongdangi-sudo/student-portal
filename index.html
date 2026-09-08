@@ -6,7 +6,7 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
-  <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 -->
+  <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 + STUDY_V3_DIRECT_API -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -3426,89 +3426,40 @@ function renderStudyData(result) {
    학생정보 + 학습 + 성적 + 벌점 = API 1회
 ========================= */
 async function loadDashboardAll() {
+  /*
+   * 2026-09-08 수정
+   * 기존 studentDashboardAll 통합 API를 사용하지 않습니다.
+   *
+   * 이유:
+   * - 퍼클 학생은 백엔드의 최신 getStudentStudySummaryV3 계산은 정상인데
+   *   통합 API 경로에서 예전 공부시간 결과가 들어올 수 있었습니다.
+   * - 공부시간은 반드시 현재 Code.gs의 studentStudy 라우트를 거치게 합니다.
+   *
+   * 학생정보/공부시간/성적/벌점을 각각 최신 API로 병렬 조회하므로
+   * 화면 속도는 유지하면서 오래된 통합 공부시간 결과가 화면을 덮지 않습니다.
+   */
   try {
-    const result =
-      await apiRequest(
-        "studentDashboardAll",
-        {
-          sessionToken: sessionToken
-        }
-      );
-
-    if (
-      !result ||
-      !result.success
-    ) {
-      throw new Error(
-        result && result.message
-          ? result.message
-          : "대시보드 정보를 불러오지 못했습니다."
-      );
-    }
-
-    if (
-      result.student &&
-      result.student.success !== false
-    ) {
-      // getStudentDashboardData가 {success:true, student:{...}} 형식이거나
-      // 학생 객체 자체를 반환하는 두 경우 모두 대응
-      const studentData =
-        result.student.student ||
-        result.student;
-
-      renderStudentData(
-        studentData
-      );
-    }
-
-    if (
-      result.study &&
-      result.study.success !== false
-    ) {
-      renderStudyData(
-        result.study
-      );
-    }
-
-    if (
-      result.score &&
-      result.score.success !== false
-    ) {
-      renderScoreData(
-        result.score
-      );
-    }
-
-    if (
-      result.penalty &&
-      result.penalty.success !== false
-    ) {
-      renderPenaltyData(
-        result.penalty
-      );
-    }
-
-    return result;
-
-  } catch (error) {
-    console.error(
-      "통합 대시보드 조회 오류",
-      error
-    );
-
-    // 통합 API가 아직 배포되지 않았거나 일시 오류인 경우에만
-    // 기존 개별 API로 자동 복구
-    await Promise.allSettled([
+    const results = await Promise.allSettled([
       loadStudentData(),
       loadStudySummary(),
       loadScoreSummary(),
       loadPenaltySummary()
     ]);
 
+    return {
+      success: true,
+      individualApi: true,
+      results: results
+    };
+
+  } catch (error) {
+    console.error(
+      "개별 대시보드 조회 오류",
+      error
+    );
     return null;
   }
 }
-
 
 async function loadStudentData() {
 
