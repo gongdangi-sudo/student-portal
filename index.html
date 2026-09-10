@@ -4380,204 +4380,137 @@ function renderPenaltyData(result) {
 
 /* =========================
    QR
+   - 서버에서 6개 QR을 한 번에 받아둠
+   - 화면에서는 20초마다 다음 QR로 자동 교체
+   - 서버 호출은 약 2분에 한 번만 수행
+   - 갱신 실패 시 기존 화면을 바로 "QR 생성 오류"로 지우지 않고 자동 재시도
 ========================= */
 
+let qrBatch = [];
+let qrBatchIndex = 0;
+let qrRefreshRetryTimer = null;
+let qrBatchLoading = false;
+
 async function loadQr() {
+  if (qrBatchLoading) return;
+  qrBatchLoading = true;
 
   try {
+    const result = await apiRequest(
+      "studentQr",
+      { sessionToken: sessionToken }
+    );
 
-    const result =
-      await apiRequest(
-        "studentQr",
-        {
-          sessionToken:
-            sessionToken
-        }
-      );
-
-
-    if (
-      !result ||
-      !result.success
-    ) {
-
-      handleSessionError(
-        result
-      );
-
+    if (!result || !result.success) {
+      handleSessionError(result);
+      scheduleQrRetry_();
       return;
     }
 
+    qrBatch = Array.isArray(result.tokens) && result.tokens.length
+      ? result.tokens
+      : [{
+          token: result.token,
+          validFrom: Date.now(),
+          expiresAt: Date.now() + Number(result.expiresIn || 20) * 1000
+        }];
 
-    renderQr(
-      result
-    );
+    qrBatchIndex = 0;
+    renderQrStudent_(result.student || {});
+    showQrBatchItem_();
 
+  } catch (error) {
+    console.error("QR_REFRESH_ERROR", error);
+    scheduleQrRetry_();
+  } finally {
+    qrBatchLoading = false;
   }
-
-  catch (error) {
-
-    showQrError(
-      "QR 생성 오류"
-    );
-
-  }
-
 }
 
+function renderQrStudent_(student) {
+  document.getElementById("qrStudent").innerHTML =
+    '<div class="qr-name">' + escapeHtml(student.name || "") + '</div>' +
+    '<div class="qr-meta">' +
+      escapeHtml(student.className || "") + ' · ' +
+      escapeHtml(student.classroom || "") + ' · ' +
+      escapeHtml(student.seat || "") + '번 · ' +
+      escapeHtml(student.job || "") +
+    '</div>';
+}
 
+function showQrBatchItem_() {
+  clearInterval(qrTimer);
 
-function renderQr(
-  result
-) {
+  if (!qrBatch.length || qrBatchIndex >= qrBatch.length) {
+    loadQr();
+    return;
+  }
 
-  const student =
-    result.student;
+  const item = qrBatch[qrBatchIndex];
+  const now = Date.now();
+  const waitMs = Number(item.validFrom || now) - now;
 
+  // 다음 QR 유효시작이 아직 안 왔으면 그 시간까지 짧게 기다림.
+  if (waitMs > 300) {
+    setTimeout(showQrBatchItem_, Math.min(waitMs, 1500));
+    return;
+  }
 
-  document
-    .getElementById(
-      "qrStudent"
-    )
-    .innerHTML =
-      '<div class="qr-name">' +
-      escapeHtml(
-        student.name
-      ) +
-      '</div>' +
-
-      '<div class="qr-meta">' +
-      escapeHtml(
-        student.className
-      ) +
-      ' · ' +
-
-      escapeHtml(
-        student.classroom
-      ) +
-      ' · ' +
-
-      escapeHtml(
-        student.seat
-      ) +
-      '번 · ' +
-
-      escapeHtml(
-        student.job
-      ) +
-      '</div>';
-
-
-  const box =
-    document.getElementById(
-      "studentQrBox"
-    );
-
-
+  const box = document.getElementById("studentQrBox");
   box.innerHTML = "";
 
+  new QRCode(box, {
+    text: item.token,
+    width: 220,
+    height: 220,
+    correctLevel: QRCode.CorrectLevel.M
+  });
 
-  new QRCode(
-    box,
-    {
-      text:
-        result.token,
+  let seconds = Math.max(
+    1,
+    Math.ceil((Number(item.expiresAt || (Date.now()+20000)) - Date.now()) / 1000)
+  );
+  qrCountdown = Math.min(seconds, 20);
+  document.getElementById("qrSeconds").textContent = qrCountdown;
 
-      width:
-        220,
+  qrTimer = setInterval(function() {
+    qrCountdown--;
+    document.getElementById("qrSeconds").textContent = Math.max(qrCountdown, 0);
 
-      height:
-        220,
-
-      correctLevel:
-        QRCode.CorrectLevel.M
+    if (qrCountdown <= 0) {
+      clearInterval(qrTimer);
+      qrBatchIndex++;
+      showQrBatchItem_();
     }
-  );
-
-
-  qrCountdown =
-    Number(
-      result.expiresIn ||
-      20
-    );
-
-
-  document
-    .getElementById(
-      "qrSeconds"
-    )
-    .textContent =
-      qrCountdown;
-
-
-  clearInterval(
-    qrTimer
-  );
-
-
-  qrTimer =
-    setInterval(
-      function() {
-
-        qrCountdown--;
-
-
-        document
-          .getElementById(
-            "qrSeconds"
-          )
-          .textContent =
-            Math.max(
-              qrCountdown,
-              0
-            );
-
-
-        if (
-          qrCountdown <= 0
-        ) {
-
-          clearInterval(
-            qrTimer
-          );
-
-          loadQr();
-
-        }
-
-      },
-      1000
-    );
-
+  }, 1000);
 }
 
-
-
-function showQrError(
-  message
-) {
-
-  clearInterval(
-    qrTimer
-  );
-
-
-  document
-    .getElementById(
-      "qrStudent"
-    )
-    .textContent =
-      message;
-
-
-  document
-    .getElementById(
-      "studentQrBox"
-    )
-    .innerHTML = "";
-
+function scheduleQrRetry_() {
+  // QR 갱신이 잠깐 실패해도 화면 전체를 오류로 지우지 않음.
+  clearTimeout(qrRefreshRetryTimer);
+  qrRefreshRetryTimer = setTimeout(function() {
+    loadQr();
+  }, 3000);
 }
 
+function renderQr(result) {
+  // 기존 다른 코드와의 호환용
+  qrBatch = [{
+    token: result.token,
+    validFrom: Date.now(),
+    expiresAt: Date.now() + Number(result.expiresIn || 20) * 1000
+  }];
+  qrBatchIndex = 0;
+  renderQrStudent_(result.student || {});
+  showQrBatchItem_();
+}
+
+function showQrError(message) {
+  // 세션 자체가 끊긴 경우에만 명시적 오류 표시용으로 남김.
+  clearInterval(qrTimer);
+  document.getElementById("qrStudent").textContent = message;
+  document.getElementById("studentQrBox").innerHTML = "";
+}
 
 
 /* =========================
