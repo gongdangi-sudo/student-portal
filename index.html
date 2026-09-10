@@ -6,7 +6,7 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
-  <!-- SCORE_AI_FIX_V2 -->
+  <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -1046,6 +1046,184 @@
       margin-bottom: 3px;
       color: #e53935;
       font-size: 10px;
+    }
+
+
+    /* =========================
+       GitHub 학생포털
+       최근 성적 AI 요약 카드
+    ========================= */
+
+    .score-ai-scroll {
+      white-space: normal;
+    }
+
+    .score-ai-compact {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .score-ai-mini-head {
+      margin-bottom: 5px;
+      color: #d93632;
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .score-ai-current {
+      padding: 9px;
+      border: 1px solid #f1d9d6;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .score-ai-current-main {
+      color: #222;
+      font-size: 10px;
+      line-height: 1.5;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    .score-ai-current-note {
+      margin-top: 4px;
+      color: #756563;
+      font-size: 8px;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .score-ai-subject-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 6px;
+    }
+
+    .score-ai-subject-card {
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid #f0dfdd;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .score-ai-subject-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      color: #222;
+      font-size: 9px;
+    }
+
+    .score-ai-subject-top strong {
+      display: block;
+      margin: 0;
+      color: #222;
+      font-size: 9px;
+    }
+
+    .score-ai-subject-top span {
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+
+    .score-ai-status {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 3px 6px;
+      border-radius: 999px;
+      background: #fff0ee;
+      color: #d93632;
+      font-size: 7px;
+      font-weight: 900;
+    }
+
+    .score-ai-subject-meta {
+      margin-top: 5px;
+      color: #837270;
+      font-size: 7px;
+      line-height: 1.45;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .score-ai-focus {
+      padding: 9px;
+      border: 1px solid #f1e1d4;
+      border-radius: 10px;
+      background: #fff9f4;
+    }
+
+    .score-ai-focus-row {
+      position: relative;
+      margin-top: 4px;
+      padding-left: 9px;
+      color: #5d504d;
+      font-size: 8px;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    .score-ai-focus-row::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #ef5350;
+    }
+
+    .score-ai-detail-guide {
+      padding: 7px 8px;
+      border-radius: 8px;
+      background: #f7f7f7;
+      color: #777;
+      font-size: 7px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* 상세 분석 모달 */
+    .score-ai-detail-section {
+      margin-top: 9px;
+      padding: 11px;
+      border: 1px solid #ececec;
+      border-radius: 11px;
+      background: #fff;
+    }
+
+    .score-ai-detail-section:first-child {
+      margin-top: 0;
+    }
+
+    .score-ai-detail-title {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 7px;
+      color: #d93632;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .score-ai-detail-body {
+      color: #504846;
+      font-size: 9px;
+      line-height: 1.75;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .score-ai-empty {
+      color: #777;
+      font-size: 9px;
+      line-height: 1.6;
     }
 
     .score-detail-button {
@@ -2324,7 +2502,7 @@
 ========================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbys-kQQEXdZ-exQRCuUZE618XLgXpddnb0mJKxDkgc8MOUeXREQedgYBrdSo61wX1Fa/exec";
+  "https://script.google.com/macros/s/AKfycbzO4iggKXHjrldh8Mf75vtoy6xQwoZBS9niwCgWbgCFUrSQNahw98G94BlDsYDrUtr2ow/exec";
 
 
 let sessionToken = "";
@@ -2605,13 +2783,19 @@ async function loginStudent() {
       loadStudentData();
     }
 
-    // 나머지 데이터는 화면을 먼저 보여준 뒤 비동기로 불러옵니다.
-    loadQr();
-    loadStudySummary();
-    loadScoreSummary();
-    loadPenaltySummary();
-    loadReasonList();
-    loadCounselingList();
+    // 로그인 성공 화면을 먼저 즉시 그린 뒤,
+    // 무거운 조회는 다음 이벤트 루프에서 시작합니다.
+    setTimeout(function() {
+      // QR은 학생이 바로 사용할 수 있게 우선 조회
+      loadQr();
+
+      // 나머지는 로그인 화면 전환을 막지 않게 비동기 시작
+      setTimeout(function() {
+        loadDashboardAll();
+        loadReasonList();
+        loadCounselingList();
+      }, 0);
+    }, 0);
 
   }
 
@@ -2745,6 +2929,96 @@ function renderStudyData(result) {
 }
 
 
+
+/* =========================
+   동시접속 최적화 통합 조회
+   학생정보 + 학습 + 성적 + 벌점 = API 1회
+========================= */
+async function loadDashboardAll() {
+  try {
+    const result =
+      await apiRequest(
+        "studentDashboardAll",
+        {
+          sessionToken: sessionToken
+        }
+      );
+
+    if (
+      !result ||
+      !result.success
+    ) {
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "대시보드 정보를 불러오지 못했습니다."
+      );
+    }
+
+    if (
+      result.student &&
+      result.student.success !== false
+    ) {
+      // getStudentDashboardData가 {success:true, student:{...}} 형식이거나
+      // 학생 객체 자체를 반환하는 두 경우 모두 대응
+      const studentData =
+        result.student.student ||
+        result.student;
+
+      renderStudentData(
+        studentData
+      );
+    }
+
+    if (
+      result.study &&
+      result.study.success !== false
+    ) {
+      renderStudyData(
+        result.study
+      );
+    }
+
+    if (
+      result.score &&
+      result.score.success !== false
+    ) {
+      renderScoreData(
+        result.score
+      );
+    }
+
+    if (
+      result.penalty &&
+      result.penalty.success !== false
+    ) {
+      renderPenaltyData(
+        result.penalty
+      );
+    }
+
+    return result;
+
+  } catch (error) {
+    console.error(
+      "통합 대시보드 조회 오류",
+      error
+    );
+
+    // 통합 API가 아직 배포되지 않았거나 일시 오류인 경우에만
+    // 기존 개별 API로 자동 복구
+    await Promise.allSettled([
+      loadStudentData(),
+      loadStudySummary(),
+      loadScoreSummary(),
+      loadPenaltySummary()
+    ]);
+
+    return null;
+  }
+}
+
+
 async function loadStudentData() {
 
   const result =
@@ -2827,11 +3101,6 @@ async function loadScoreSummary() {
     }
 
     renderScoreDashboard(result);
-
-    localStorage.setItem(
-      "studentPortalScore",
-      JSON.stringify(result)
-    );
 
     return result;
 
@@ -3021,7 +3290,7 @@ function renderLatestScoreCard_(latest) {
 
       '<div class="score-ai-box">' +
         '<strong>AI 성적 분석</strong>' +
-        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment) + '</div>' +
+        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment,true) + '</div>' +
       '</div>' +
 
       '<button class="score-detail-button" type="button" ' +
@@ -3031,26 +3300,226 @@ function renderLatestScoreCard_(latest) {
 }
 
 
-function formatScoreAiHtml_(text){
+function formatScoreAiHtml_(text, compact){
   const raw=String(text||"").trim();
-  if(!raw)return '<div class="score-ai-section-body">시험 결과를 바탕으로 학습 흐름을 확인해보세요.</div>';
-  const wanted=["현재 위치","종합 진단","핵심 진단","과목별 정밀 분석","과목별 상세 분석","우선 보완할 세부 개념","바로 복습할 핵심개념","다음 학습 우선순위","다음 학습 계획"];
-  const normalized=raw.replace(/\r/g,"").replace(/\n{3,}/g,"\n\n");
-  const re=/■\s*([^\n]+)\n?/g; let m, parts=[], last=null;
-  while((m=re.exec(normalized))){ if(last){last.body=normalized.slice(last.start,m.index).trim(); parts.push(last);} last={title:m[1].trim(),start:re.lastIndex}; }
-  if(last){last.body=normalized.slice(last.start).trim();parts.push(last);}
-  if(!parts.length)return '<div class="score-ai-section-body">'+escapeHtml(normalized)+'</div>';
-  const selected=[]; const seen=new Set();
-  parts.forEach(function(x){
-    let title=x.title;
-    if(title==="핵심 진단") title="종합 진단";
-    if(title==="과목별 정밀 분석") title="과목별 상세 분석";
-    if(title==="우선 보완할 세부 개념") title="바로 복습할 핵심개념";
-    if(title==="다음 학습 우선순위") title="다음 학습 계획";
-    if(wanted.indexOf(x.title)<0 || seen.has(title))return;
-    seen.add(title); selected.push({title:title,body:x.body});
+
+  if(!raw){
+    return '<div class="score-ai-empty">시험 결과를 바탕으로 학습 흐름을 확인해보세요.</div>';
+  }
+
+  const normalized=raw
+    .replace(/\r/g,"")
+    .replace(/\n{3,}/g,"\n\n");
+
+  const sectionRe=/■\s*([^\n]+)\n?/g;
+  let m;
+  const parts=[];
+  let last=null;
+
+  while((m=sectionRe.exec(normalized))){
+    if(last){
+      last.body=normalized.slice(last.start,m.index).trim();
+      parts.push(last);
+    }
+
+    last={
+      title:m[1].trim(),
+      start:sectionRe.lastIndex
+    };
+  }
+
+  if(last){
+    last.body=normalized.slice(last.start).trim();
+    parts.push(last);
+  }
+
+  if(!parts.length){
+    return '<div class="score-ai-empty">'+escapeHtml(normalized)+'</div>';
+  }
+
+  const alias={
+    "핵심 진단":"종합 진단",
+    "과목별 정밀 분석":"과목별 상태",
+    "과목별 상세 분석":"과목별 상태",
+    "우선 보완할 세부 개념":"핵심 복습 문항",
+    "바로 복습할 핵심개념":"핵심 복습 문항"
+  };
+
+  const allowed=[
+    "현재 위치",
+    "과목별 상태",
+    "취약단원 분석",
+    "오답 패턴 분석",
+    "핵심 복습 문항",
+    "종합 진단"
+  ];
+
+  const sections=[];
+  const seen=new Set();
+
+  parts.forEach(function(part){
+    const title=alias[part.title]||part.title;
+
+    if(allowed.indexOf(title)<0 || seen.has(title)){
+      return;
+    }
+
+    seen.add(title);
+    sections.push({
+      title:title,
+      body:part.body
+    });
   });
-  return selected.map(function(x){return '<div class="score-ai-section"><div class="score-ai-section-title">■ '+escapeHtml(x.title)+'</div><div class="score-ai-section-body">'+escapeHtml(x.body)+'</div></div>';}).join("") || '<div class="score-ai-section-body">'+escapeHtml(normalized)+'</div>';
+
+  function section_(name){
+    return sections.find(function(x){
+      return x.title===name;
+    }) || null;
+  }
+
+  function icon_(title){
+    if(title==="현재 위치")return "📍";
+    if(title==="과목별 상태")return "📚";
+    if(title==="취약단원 분석")return "⚠️";
+    if(title==="오답 패턴 분석")return "🔎";
+    if(title==="핵심 복습 문항")return "📝";
+    if(title==="종합 진단")return "🎯";
+    return "•";
+  }
+
+  function toLines_(body){
+    return String(body||"")
+      .split("\n")
+      .map(function(x){return x.trim();})
+      .filter(Boolean);
+  }
+
+  // ============================================
+  // 최근 시험 카드: 핵심 정보만 표시
+  // ============================================
+  if(compact){
+    const position=section_("현재 위치");
+    const subjects=section_("과목별 상태");
+    const weak=section_("취약단원 분석");
+
+    let html='<div class="score-ai-compact">';
+
+    if(position){
+      const lines=toLines_(position.body);
+
+      html+=
+        '<div class="score-ai-current">'+
+          '<div class="score-ai-mini-head">📍 현재 위치</div>'+
+          '<div class="score-ai-current-main">'+
+            escapeHtml(lines[0]||"")+
+          '</div>'+
+          (
+            lines[1]
+              ? '<div class="score-ai-current-note">'+escapeHtml(lines[1])+'</div>'
+              : ''
+          )+
+        '</div>';
+    }
+
+    if(subjects){
+      const rawBlocks=String(subjects.body||"")
+        .split(/\n(?=·\s)/)
+        .map(function(x){return x.trim();})
+        .filter(Boolean);
+
+      const subjectCards=[];
+
+      rawBlocks.slice(0,4).forEach(function(block){
+        const lines=toLines_(block);
+        const head=String(lines[0]||"").replace(/^·\s*/,"");
+
+        const hit=head.match(
+          /^(.+?)\s+(\d+(?:\.\d+)?)점\s+—\s+\[([^\]]+)\]/
+        );
+
+        if(!hit)return;
+
+        let meta="";
+
+        if(lines.length>1){
+          meta=lines[1]
+            .replace(/^오답\s*/,"오답 ")
+            .replace(/\s*\/\s*/g," · ");
+        }
+
+        subjectCards.push(
+          '<div class="score-ai-subject-card">'+
+            '<div class="score-ai-subject-top">'+
+              '<strong>'+escapeHtml(hit[1])+'</strong>'+
+              '<span>'+escapeHtml(hit[2])+'점</span>'+
+            '</div>'+
+            '<div class="score-ai-status">'+escapeHtml(hit[3])+'</div>'+
+            (
+              meta
+                ? '<div class="score-ai-subject-meta">'+escapeHtml(meta)+'</div>'
+                : ''
+            )+
+          '</div>'
+        );
+      });
+
+      if(subjectCards.length){
+        html+=
+          '<div class="score-ai-mini-head">📚 과목별 상태</div>'+
+          '<div class="score-ai-subject-grid">'+
+            subjectCards.join("")+
+          '</div>';
+      }
+    }
+
+    if(weak){
+      const weakLines=toLines_(weak.body)
+        .filter(function(x){
+          return /^·/.test(x);
+        })
+        .slice(0,3)
+        .map(function(x){
+          return x.replace(/^·\s*/,"");
+        });
+
+      if(weakLines.length){
+        html+=
+          '<div class="score-ai-focus">'+
+            '<div class="score-ai-mini-head">⚠️ 집중 취약 영역</div>'+
+            weakLines.map(function(line){
+              return '<div class="score-ai-focus-row">'+escapeHtml(line)+'</div>';
+            }).join("")+
+          '</div>';
+      }
+    }
+
+    html+=
+      '<div class="score-ai-detail-guide">'+
+        '아래 <strong>상세 분석 보기</strong>에서 오답 패턴과 핵심 복습 문항을 확인할 수 있어요.'+
+      '</div>'+
+    '</div>';
+
+    return html;
+  }
+
+  // ============================================
+  // 상세 분석 모달: 전체 5단계
+  // ============================================
+  return sections.map(function(x){
+    const bodyHtml=escapeHtml(String(x.body||""))
+      .replace(/\n/g,"<br>");
+
+    return (
+      '<div class="score-ai-detail-section">'+
+        '<div class="score-ai-detail-title">'+
+          '<span>'+icon_(x.title)+'</span>'+
+          escapeHtml(x.title)+
+        '</div>'+
+        '<div class="score-ai-detail-body">'+bodyHtml+'</div>'+
+      '</div>'
+    );
+  }).join("") ||
+  '<div class="score-ai-empty">'+escapeHtml(normalized)+'</div>';
 }
 
 function renderLatestRankBox_(label, value) {
@@ -3526,7 +3995,7 @@ function openLatestScoreModal() {
 
       '<div class="score-modal-ai">' +
         '<strong>AI 성적 분석</strong><br>' +
-        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment) + '</div>' +
+        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment,false) + '</div>' +
       '</div>' +
     '</div>';
 
@@ -3798,6 +4267,14 @@ function renderScoreTrendSvg_(trend) {
 ========================= */
 
 async function loadPenaltySummary() {
+  // 벌점은 캐시를 사용하지 않고 매번 서버의 최신 벌점로그만 조회합니다.
+  setText("penaltyTotal", "0점");
+  const initialList = document.getElementById("penaltyList");
+  if (initialList) {
+    initialList.className = "placeholder";
+    initialList.textContent = "벌점 내역을 불러오는 중입니다.";
+  }
+
   try {
     const result =
       await apiRequest(
@@ -3817,13 +4294,7 @@ async function loadPenaltySummary() {
     }
 
     renderPenaltyData(result);
-
-    localStorage.setItem(
-      "studentPortalPenalty",
-      JSON.stringify(result)
-    );
-
-    return result;
+return result;
 
   } catch (error) {
     console.log(
@@ -3911,102 +4382,175 @@ function renderPenaltyData(result) {
    QR
 ========================= */
 
-let qrBatchTokens_ = [];
-let qrBatchIndex_ = 0;
-
 async function loadQr() {
-  try {
-    const result = await apiRequest(
-      "studentQr",
-      { sessionToken: sessionToken }
-    );
 
-    if (!result || !result.success) {
-      handleSessionError(result);
+  try {
+
+    const result =
+      await apiRequest(
+        "studentQr",
+        {
+          sessionToken:
+            sessionToken
+        }
+      );
+
+
+    if (
+      !result ||
+      !result.success
+    ) {
+
+      handleSessionError(
+        result
+      );
+
       return;
     }
 
-    qrBatchTokens_ = Array.isArray(result.tokens) && result.tokens.length
-      ? result.tokens
-      : [{ token: result.token }];
-    qrBatchIndex_ = 0;
 
-    renderQr(result);
-  } catch (error) {
-    showQrError("QR 생성 오류");
+    renderQr(
+      result
+    );
+
   }
+
+  catch (error) {
+
+    showQrError(
+      "QR 생성 오류"
+    );
+
+  }
+
 }
 
-function getQrStudentFromDashboard_() {
-  function text_(id) {
-    const el = document.getElementById(id);
-    return el ? String(el.textContent || "").trim() : "";
-  }
 
-  return {
-    name: text_("dashboardStudentName"),
-    className: text_("className"),
-    classroom: text_("classroom"),
-    seat: text_("seat"),
-    job: text_("job")
-  };
-}
 
-function drawCurrentBatchQr_() {
-  const item = qrBatchTokens_[qrBatchIndex_];
-  if (!item || !item.token) {
-    loadQr();
-    return;
-  }
+function renderQr(
+  result
+) {
 
-  const box = document.getElementById("studentQrBox");
+  const student =
+    result.student;
+
+
+  document
+    .getElementById(
+      "qrStudent"
+    )
+    .innerHTML =
+      '<div class="qr-name">' +
+      escapeHtml(
+        student.name
+      ) +
+      '</div>' +
+
+      '<div class="qr-meta">' +
+      escapeHtml(
+        student.className
+      ) +
+      ' · ' +
+
+      escapeHtml(
+        student.classroom
+      ) +
+      ' · ' +
+
+      escapeHtml(
+        student.seat
+      ) +
+      '번 · ' +
+
+      escapeHtml(
+        student.job
+      ) +
+      '</div>';
+
+
+  const box =
+    document.getElementById(
+      "studentQrBox"
+    );
+
+
   box.innerHTML = "";
 
-  new QRCode(box, {
-    text: item.token,
-    width: 220,
-    height: 220,
-    correctLevel: QRCode.CorrectLevel.M
-  });
-}
 
-function renderQr(result) {
-  const student = result.student || getQrStudentFromDashboard_();
+  new QRCode(
+    box,
+    {
+      text:
+        result.token,
 
-  document.getElementById("qrStudent").innerHTML =
-    '<div class="qr-name">' + escapeHtml(student.name || "") + '</div>' +
-    '<div class="qr-meta">' +
-      escapeHtml(student.className || "") + ' · ' +
-      escapeHtml(student.classroom || "") + ' · ' +
-      escapeHtml(student.seat || "") + '번 · ' +
-      escapeHtml(student.job || "") +
-    '</div>';
+      width:
+        220,
 
-  qrCountdown = Number(result.expiresIn || 20);
-  document.getElementById("qrSeconds").textContent = qrCountdown;
+      height:
+        220,
 
-  drawCurrentBatchQr_();
-  clearInterval(qrTimer);
-
-  qrTimer = setInterval(function() {
-    qrCountdown--;
-    document.getElementById("qrSeconds").textContent = Math.max(qrCountdown, 0);
-
-    if (qrCountdown <= 0) {
-      qrBatchIndex_++;
-
-      if (qrBatchIndex_ >= qrBatchTokens_.length) {
-        clearInterval(qrTimer);
-        loadQr();
-        return;
-      }
-
-      qrCountdown = Number(result.expiresIn || 20);
-      document.getElementById("qrSeconds").textContent = qrCountdown;
-      drawCurrentBatchQr_();
+      correctLevel:
+        QRCode.CorrectLevel.M
     }
-  }, 1000);
+  );
+
+
+  qrCountdown =
+    Number(
+      result.expiresIn ||
+      20
+    );
+
+
+  document
+    .getElementById(
+      "qrSeconds"
+    )
+    .textContent =
+      qrCountdown;
+
+
+  clearInterval(
+    qrTimer
+  );
+
+
+  qrTimer =
+    setInterval(
+      function() {
+
+        qrCountdown--;
+
+
+        document
+          .getElementById(
+            "qrSeconds"
+          )
+          .textContent =
+            Math.max(
+              qrCountdown,
+              0
+            );
+
+
+        if (
+          qrCountdown <= 0
+        ) {
+
+          clearInterval(
+            qrTimer
+          );
+
+          loadQr();
+
+        }
+
+      },
+      1000
+    );
+
 }
+
 
 
 function showQrError(
@@ -4101,24 +4645,7 @@ async function restoreSession() {
         );
       }
     } catch (e) {}
-
-    // 4) 이전 벌점도 즉시 표시
-    try {
-      const cachedPenalty =
-        JSON.parse(
-          localStorage.getItem(
-            "studentPortalPenalty"
-          ) || "null"
-        );
-
-      if (cachedPenalty) {
-        renderPenaltyData(
-          cachedPenalty
-        );
-      }
-    } catch (e) {}
-
-    // 5) 이전 성적도 즉시 표시
+// 5) 이전 성적도 즉시 표시
     try {
       const cachedScore =
         JSON.parse(
