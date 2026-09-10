@@ -6,7 +6,7 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
-  <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 + STUDY_V3_DIRECT_API -->
+  <!-- SCORE_AI_FIX_V2 -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -1048,184 +1048,6 @@
       font-size: 10px;
     }
 
-
-    /* =========================
-       GitHub 학생포털
-       최근 성적 AI 요약 카드
-    ========================= */
-
-    .score-ai-scroll {
-      white-space: normal;
-    }
-
-    .score-ai-compact {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .score-ai-mini-head {
-      margin-bottom: 5px;
-      color: #d93632;
-      font-size: 9px;
-      font-weight: 900;
-    }
-
-    .score-ai-current {
-      padding: 9px;
-      border: 1px solid #f1d9d6;
-      border-radius: 10px;
-      background: #fff;
-    }
-
-    .score-ai-current-main {
-      color: #222;
-      font-size: 10px;
-      line-height: 1.5;
-      font-weight: 900;
-      word-break: keep-all;
-    }
-
-    .score-ai-current-note {
-      margin-top: 4px;
-      color: #756563;
-      font-size: 8px;
-      line-height: 1.55;
-      word-break: keep-all;
-    }
-
-    .score-ai-subject-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 6px;
-    }
-
-    .score-ai-subject-card {
-      min-width: 0;
-      padding: 8px;
-      border: 1px solid #f0dfdd;
-      border-radius: 9px;
-      background: #fff;
-    }
-
-    .score-ai-subject-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 5px;
-      color: #222;
-      font-size: 9px;
-    }
-
-    .score-ai-subject-top strong {
-      display: block;
-      margin: 0;
-      color: #222;
-      font-size: 9px;
-    }
-
-    .score-ai-subject-top span {
-      flex: 0 0 auto;
-      font-weight: 900;
-    }
-
-    .score-ai-status {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 3px 6px;
-      border-radius: 999px;
-      background: #fff0ee;
-      color: #d93632;
-      font-size: 7px;
-      font-weight: 900;
-    }
-
-    .score-ai-subject-meta {
-      margin-top: 5px;
-      color: #837270;
-      font-size: 7px;
-      line-height: 1.45;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .score-ai-focus {
-      padding: 9px;
-      border: 1px solid #f1e1d4;
-      border-radius: 10px;
-      background: #fff9f4;
-    }
-
-    .score-ai-focus-row {
-      position: relative;
-      margin-top: 4px;
-      padding-left: 9px;
-      color: #5d504d;
-      font-size: 8px;
-      line-height: 1.5;
-      word-break: keep-all;
-    }
-
-    .score-ai-focus-row::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: .65em;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #ef5350;
-    }
-
-    .score-ai-detail-guide {
-      padding: 7px 8px;
-      border-radius: 8px;
-      background: #f7f7f7;
-      color: #777;
-      font-size: 7px;
-      line-height: 1.5;
-      text-align: center;
-    }
-
-    /* 상세 분석 모달 */
-    .score-ai-detail-section {
-      margin-top: 9px;
-      padding: 11px;
-      border: 1px solid #ececec;
-      border-radius: 11px;
-      background: #fff;
-    }
-
-    .score-ai-detail-section:first-child {
-      margin-top: 0;
-    }
-
-    .score-ai-detail-title {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 7px;
-      color: #d93632;
-      font-size: 10px;
-      font-weight: 900;
-    }
-
-    .score-ai-detail-body {
-      color: #504846;
-      font-size: 9px;
-      line-height: 1.75;
-      word-break: keep-all;
-      overflow-wrap: anywhere;
-    }
-
-    .score-ai-empty {
-      color: #777;
-      font-size: 9px;
-      line-height: 1.6;
-    }
-
     .score-detail-button {
       width: 100%;
       height: 40px;
@@ -1658,20 +1480,6 @@
     }
 
 
-
-    /* 부담임 상담 신청 카드 */
-    .assistant-counsel-card {
-      border: 1px solid #e6e9ef;
-    }
-
-    .assistant-counsel-submit {
-      background: #334155;
-    }
-
-    .assistant-counsel-submit:hover {
-      filter: brightness(.96);
-    }
-
     /* =========================
        상담 신청
     ========================= */
@@ -1988,365 +1796,6 @@
         font-size:8px;
       }
     }
-
-    /* 부담임 상담 일정 */
-    .assistant-schedule-card { border: 1px solid #e6e9ef; }
-    .assistant-schedule-item { padding:14px; border:1px solid #e8ebf0; border-radius:14px; background:#fff; margin-top:10px; }
-    .assistant-schedule-head { display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:10px; }
-    .assistant-status { font-size:11px; font-weight:900; padding:5px 9px; border-radius:999px; background:#f1f5f9; }
-    .assistant-schedule-row { display:flex; justify-content:space-between; gap:12px; padding:6px 0; font-size:13px; }
-    .assistant-schedule-row span { color:#777; }
-    .assistant-response-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; }
-    .assistant-response-btn { border:0; border-radius:10px; padding:11px 8px; font-weight:900; cursor:pointer; }
-    .assistant-response-btn.attend { background:#edf8ef; color:#25733a; }
-    .assistant-response-btn.absent { background:#fff3f3; color:#b42318; }
-    .assistant-response-btn.change { background:#eef4ff; color:#315ca8; }
-    .assistant-response-btn.decline { background:#f3f4f6; color:#4b5563; }
-    .assistant-change-form { margin-top:10px; padding:12px; border-radius:12px; background:#f8fafc; }
-    .assistant-change-form label { display:block; margin:9px 0 5px; font-size:12px; font-weight:900; }
-    .assistant-change-form input,.assistant-change-form select,.assistant-change-form textarea { width:100%; padding:10px; border:1px solid #dfe3e8; border-radius:9px; background:#fff; }
-    .assistant-change-form textarea { min-height:75px; resize:vertical; }
-    .assistant-change-submit { width:100%; margin-top:10px; border:0; border-radius:10px; padding:11px; font-weight:900; background:#334155; color:#fff; cursor:pointer; }
-    .assistant-change-info { margin-top:10px; padding:10px; border-radius:10px; background:#fff7e8; font-size:12px; line-height:1.55; }
-
-  
-/* ===== 사유서 인정 가능 사유 안내 ===== */
-.reason-guide{
-  margin:10px 0 16px;
-  border:1px solid #fecaca;
-  border-radius:12px;
-  background:#fffafa;
-  overflow:hidden;
-}
-.reason-guide summary{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:13px 14px;
-  cursor:pointer;
-  list-style:none;
-  color:#b91c1c;
-  font-size:13px;
-  font-weight:900;
-  user-select:none;
-}
-.reason-guide summary::-webkit-details-marker{display:none}
-.reason-guide summary::after{
-  content:"▼";
-  flex:0 0 auto;
-  font-size:10px;
-  color:#ef4444;
-  transition:transform .18s ease;
-}
-.reason-guide[open] summary::after{transform:rotate(180deg)}
-.reason-guide-body{
-  padding:0 14px 15px;
-  border-top:1px solid #fee2e2;
-  color:#374151;
-  font-size:12px;
-  line-height:1.65;
-}
-.reason-guide-alert{
-  margin:13px 0 10px;
-  padding:11px 12px;
-  border-radius:10px;
-  background:#fff1f2;
-  color:#be123c;
-}
-.reason-guide-alert strong{
-  display:block;
-  margin-bottom:4px;
-  font-size:13px;
-}
-.reason-guide-body ol{
-  margin:10px 0 10px 20px;
-  padding:0;
-}
-.reason-guide-body li{margin:5px 0}
-.reason-guide-required{
-  margin:12px 0 8px;
-  padding:10px 11px;
-  border-radius:9px;
-  background:#fef2f2;
-  color:#b91c1c;
-  font-weight:900;
-}
-.reason-guide-note{
-  margin-top:8px;
-  color:#6b7280;
-  font-size:11px;
-}
-
-
-/* ===== 사유서 신청기간 / 증빙서류 즉시·추후 제출 ===== */
-.reason-apply-window{
-  margin:0 0 14px;
-  padding:11px 12px;
-  border-radius:10px;
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
-  font-size:12px;
-  line-height:1.55;
-  font-weight:800;
-}
-.reason-evidence-box{
-  margin-top:14px;
-  padding:14px;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  background:#fafafa;
-}
-.reason-evidence-title{
-  margin-bottom:10px;
-  font-size:13px;
-  font-weight:900;
-  color:#111827;
-}
-.reason-evidence-choice{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-.reason-evidence-choice button{
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  background:#fff;
-  padding:11px 10px;
-  font-size:12px;
-  font-weight:900;
-  cursor:pointer;
-}
-.reason-evidence-choice button.active{
-  background:#fee2e2;
-  border-color:#f87171;
-  color:#b91c1c;
-}
-.reason-evidence-selected{
-  margin-top:8px;
-  padding:8px 10px;
-  border-radius:9px;
-  background:#fff;
-  border:1px dashed #d1d5db;
-  color:#4b5563;
-  font-size:11px;
-  line-height:1.45;
-}
-.reason-evidence-note{
-  margin-top:10px;
-  color:#6b7280;
-  font-size:11px;
-  line-height:1.55;
-}
-.reason-evidence-examples{
-  margin-top:10px;
-  border-top:1px solid #e5e7eb;
-  padding-top:10px;
-}
-.reason-evidence-examples summary{
-  cursor:pointer;
-  font-size:11px;
-  font-weight:900;
-  color:#374151;
-}
-.reason-evidence-examples ul{
-  margin:8px 0 0 18px;
-  padding:0;
-  color:#4b5563;
-  font-size:11px;
-  line-height:1.6;
-}
-.reason-evidence-warning{
-  margin-top:10px;
-  padding:9px 10px;
-  border-radius:9px;
-  background:#fff1f2;
-  color:#be123c;
-  font-size:11px;
-  font-weight:900;
-  line-height:1.55;
-}
-@media(max-width:520px){
-  .reason-evidence-choice{grid-template-columns:1fr 1fr}
-}
-
-
-/* ===== 사유서 UI 정돈 버전 ===== */
-.reason-apply-window{
-  margin:8px 0 18px !important;
-  padding:10px 12px !important;
-  border:0 !important;
-  border-radius:10px !important;
-  background:#fff7ed !important;
-  color:#9a3412 !important;
-  font-size:11px !important;
-  line-height:1.55 !important;
-  font-weight:700 !important;
-}
-.reason-apply-window strong{
-  font-weight:900 !important;
-}
-.reason-apply-window span{
-  display:block;
-  margin-top:3px;
-  color:#a16207;
-  font-weight:700 !important;
-}
-
-.reason-evidence-box{
-  margin-top:14px !important;
-  padding:0 !important;
-  border:0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-}
-.reason-evidence-title{
-  margin:0 0 9px !important;
-  font-size:12px !important;
-  font-weight:900 !important;
-  color:#111827 !important;
-}
-.reason-evidence-choice{
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:8px !important;
-}
-.reason-evidence-choice button{
-  min-height:44px !important;
-  padding:9px 10px !important;
-  border:1px solid #e5e7eb !important;
-  border-radius:10px !important;
-  background:#fff !important;
-  color:#374151 !important;
-  font-size:12px !important;
-  font-weight:800 !important;
-  box-shadow:none !important;
-}
-.reason-evidence-choice button.active{
-  border-color:#fca5a5 !important;
-  background:#fff1f2 !important;
-  color:#dc2626 !important;
-}
-.reason-evidence-selected{
-  margin-top:7px !important;
-  padding:7px 10px !important;
-  border:0 !important;
-  border-radius:8px !important;
-  background:#f8fafc !important;
-  color:#64748b !important;
-  font-size:10px !important;
-  line-height:1.4 !important;
-}
-.reason-evidence-note{
-  margin-top:10px !important;
-  padding:0 !important;
-  color:#6b7280 !important;
-  font-size:10px !important;
-  line-height:1.6 !important;
-}
-.reason-evidence-examples{
-  margin-top:9px !important;
-  padding:0 !important;
-  border:0 !important;
-}
-.reason-evidence-examples summary{
-  display:inline-flex !important;
-  align-items:center !important;
-  gap:4px !important;
-  padding:0 !important;
-  color:#4b5563 !important;
-  font-size:10px !important;
-  font-weight:800 !important;
-  text-decoration:underline;
-  text-underline-offset:2px;
-}
-.reason-evidence-examples ul{
-  margin:8px 0 0 18px !important;
-  padding:0 !important;
-  color:#6b7280 !important;
-  font-size:10px !important;
-  line-height:1.55 !important;
-}
-.reason-evidence-warning{
-  margin-top:10px !important;
-  padding:9px 10px !important;
-  border-radius:8px !important;
-  background:#fff1f2 !important;
-  color:#be123c !important;
-  font-size:10px !important;
-  line-height:1.5 !important;
-  font-weight:800 !important;
-}
-
-/* 안내 펼침 영역도 덜 무겁게 */
-.reason-guide{
-  margin:8px 0 10px !important;
-  border:1px solid #fecaca !important;
-  border-radius:10px !important;
-  background:#fff !important;
-}
-.reason-guide summary{
-  padding:11px 12px !important;
-  font-size:11px !important;
-}
-.reason-guide-body{
-  padding:0 12px 12px !important;
-  font-size:10px !important;
-  line-height:1.55 !important;
-}
-.reason-guide-alert{
-  margin:10px 0 8px !important;
-  padding:9px 10px !important;
-  border-radius:8px !important;
-}
-.reason-guide-alert strong{
-  font-size:11px !important;
-}
-.reason-guide-body ol{
-  margin:8px 0 8px 18px !important;
-}
-.reason-guide-body li{
-  margin:3px 0 !important;
-}
-.reason-guide-required{
-  margin:8px 0 6px !important;
-  padding:8px 9px !important;
-  font-size:10px !important;
-}
-.reason-guide-note{
-  margin-top:6px !important;
-  font-size:10px !important;
-}
-
-
-/* ===== 부담임 상담 당일 취소 ===== */
-.assistant-same-day-cancel-wrap{
-  margin-top:12px;
-  padding-top:12px;
-  border-top:1px solid #f1f5f9;
-}
-.assistant-same-day-cancel-btn{
-  width:100%;
-  min-height:42px;
-  border:1px solid #fca5a5;
-  border-radius:10px;
-  background:#fff1f2;
-  color:#dc2626;
-  font-size:12px;
-  font-weight:900;
-  cursor:pointer;
-}
-.assistant-same-day-cancel-btn:hover{
-  background:#ffe4e6;
-}
-.assistant-same-day-cancel-help{
-  margin-top:6px;
-  color:#94a3b8;
-  font-size:10px;
-  line-height:1.45;
-}
-
 </style>
 </head>
 
@@ -2626,7 +2075,19 @@
     </section>
 
 
-    <!-- 벌점 -->
+    <!-- 성적 -->
+    <section class="card score-dashboard-card">
+      <div class="card-title">📊 최근 시험 성적</div>
+
+      <div id="scoreDashboard">
+        <div class="placeholder">
+          성적을 불러오는 중입니다.
+        </div>
+      </div>
+    </section>
+
+
+<!-- 벌점 -->
     <section class="card">
       <div class="card-title">⚠️ 현재 벌점</div>
 
@@ -2644,44 +2105,6 @@
     <!-- 사유서 -->
     <section class="card">
       <div class="card-title">📝 사유서 신청</div>
-
-      <details class="reason-guide">
-        <summary>결석·지각·조퇴 인정 가능 사유 안내</summary>
-        <div class="reason-guide-body">
-          <div class="reason-guide-alert">
-            <strong>🚨 사유서 제출 필수</strong>
-            결석·지각·조퇴 시 반드시 사유서를 제출해야 합니다.<br>
-            결석·지각·조퇴 시 아래 사유에 한하여 인정 가능합니다.
-          </div>
-
-          <ol>
-            <li><strong>병원·의료기관 방문</strong> — 진료, 검사, 치료, 치과, 건강검진 등</li>
-            <li><strong>은행·금융기관 업무</strong> — 본인이 직접 방문해야 하는 금융 업무</li>
-            <li><strong>관공서·공공기관 업무</strong> — 주민센터, 구청, 경찰서, 법원 등</li>
-            <li><strong>예비군·민방위</strong> — 훈련 및 관련 소집</li>
-            <li><strong>시험·면접</strong> — 공무원 시험, 자격시험, 면접 등</li>
-            <li><strong>학교 관련 일정</strong> — 졸업, 학사 행정 등</li>
-            <li><strong>가족 행사</strong> — 결혼식, 장례식 등 경조사</li>
-            <li><strong>가족 관련 긴급 사유</strong> — 가족 병원 동행 등</li>
-            <li><strong>부모님 요청·허락</strong> — 부모님 확인이 가능한 경우</li>
-            <li><strong>교통 관련 불가피한 사유</strong> — 열차 지연, 교통사고, 대중교통 운행 장애 등</li>
-            <li><strong>기타 담임이 사전에 승인한 사유</strong></li>
-          </ol>
-
-          <div class="reason-guide-required">
-            인정 가능한 사유에 해당하더라도 사유서를 제출하지 않을 경우 벌점이 부여됩니다.
-          </div>
-
-          <div class="reason-guide-note">
-            ※ 개인 약속, 친구 만남, 쇼핑, 단순 늦잠 등 개인적인 사유는 인정되지 않습니다.
-          </div>
-        </div>
-      </details>
-
-      <div class="reason-apply-window">
-        <strong>신청 가능 기간</strong> · 일반 결석·지각·조퇴는 해당일 기준 5일 전부터 당일까지<br>
-<span>정기결석·정기지각·정기조퇴는 기간 제한 없음</span>
-      </div>
 
       <div class="reason-form">
         <label class="reason-label" for="reasonDate">사유일</label>
@@ -2766,59 +2189,9 @@
           placeholder="사유내용을 입력해주세요."
         ></textarea>
 
-        <div class="reason-evidence-box">
-          <div class="reason-evidence-title">증빙서류를 첨부해 주세요.</div>
-
-          <div class="reason-evidence-choice">
-            <button
-              id="reasonEvidenceNowButton"
-              type="button"
-              onclick="selectReasonEvidenceMode_('now')"
-            >
-              📎 파일 첨부
-            </button>
-
-            <button
-              id="reasonEvidenceLaterButton"
-              class="active"
-              type="button"
-              onclick="selectReasonEvidenceMode_('later')"
-            >
-              추후 제출
-            </button>
-          </div>
-
-          <input
-            id="reasonEvidenceNowFile"
-            type="file"
-            accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
-            style="display:none;"
-          >
-
-          <div
-            id="reasonEvidenceSelectedText"
-            class="reason-evidence-selected"
-          >
-            추후 제출 선택됨
-          </div>
-
-          <div class="reason-evidence-note">
-            ※ 사유서 신청 시 증빙서류를 바로 제출하거나 <strong>‘추후 제출’</strong>을 선택할 수 있습니다.<br>
-            ※ <strong>증빙서류는 결석·지각·조퇴 해당일로부터 3일 이내 반드시 제출해 주세요.</strong>
-          </div>
-
-          <details class="reason-evidence-examples">
-            <summary>증빙 가능 자료 예시 보기</summary>
-            <ul>
-              <li><strong>병원·약국</strong> : 약국 봉투, 진료·처방 관련 자료, 타임스탬프로 촬영한 병원 방문 사진</li>
-              <li><strong>은행·관공서 등</strong> : 타임스탬프로 촬영한 방문 사진, 방문·처리 문자 내역</li>
-              <li><strong>시험·면접·예비군 등</strong> : 응시표, 안내 문자, 참석 또는 소집 내역 등</li>
-            </ul>
-          </details>
-
-          <div class="reason-evidence-warning">
-            ⚠️ 기한 내 증빙서류 미제출 시 사유가 인정되지 않으며 벌점이 부여됩니다.
-          </div>
+        <div class="reason-help">
+          증빙서류는 당일 제출하지 않아도 됩니다.
+          사유서 제출 후 준비되는 대로 추가 제출해주세요.
         </div>
 
         <button
@@ -2930,28 +2303,7 @@
     </section>
 
 
-    <!-- 부담임 상담 일정 -->
-    <section class="card assistant-schedule-card">
-      <div class="card-title">🧑‍🏫 부담임 상담 일정</div>
-      <div id="assistantScheduleBox" class="placeholder">
-        상담 일정을 불러오는 중입니다.
-      </div>
-    </section>
-
-
-    <!-- 성적 -->
-    <section class="card score-dashboard-card">
-      <div class="card-title">📊 최근 시험 성적</div>
-
-      <div id="scoreDashboard">
-        <div class="placeholder">
-          성적을 불러오는 중입니다.
-        </div>
-      </div>
-    </section>
-
-
-<button
+    <button
       id="logoutButton"
       class="logout-button"
       type="button"
@@ -3021,12 +2373,6 @@ function apiRequest(
       query.set(
         "callback",
         callbackName
-      );
-
-      // 브라우저/GitHub 캐시 우회
-      query.set(
-        "_",
-        String(Date.now())
       );
 
       Object.keys(
@@ -3116,20 +2462,6 @@ function apiRequest(
 
 
 /* =========================
-   학생 API 사전 예열
-   - 로그인 화면이 열린 직후 Apps Script 런타임을 미리 깨웁니다.
-========================= */
-(function prewarmStudentApi_() {
-  setTimeout(function() {
-    apiRequest(
-      "studentPenalty",
-      {sessionToken:"__STUDENT_PREWARM__"}
-    ).catch(function(){});
-  }, 80);
-})();
-
-
-/* =========================
    로그인
 ========================= */
 
@@ -3205,7 +2537,7 @@ async function loginStudent() {
   button.disabled = true;
 
   button.textContent =
-    "로그인 중...";
+    "확인 중...";
 
 
   try {
@@ -3273,20 +2605,13 @@ async function loginStudent() {
       loadStudentData();
     }
 
-    // 로그인 성공 화면을 먼저 즉시 그린 뒤,
-    // 무거운 조회는 다음 이벤트 루프에서 시작합니다.
-    setTimeout(function() {
-      // QR은 학생이 바로 사용할 수 있게 우선 조회
-      loadQr();
-
-      // 나머지는 로그인 화면 전환을 막지 않게 비동기 시작
-      setTimeout(function() {
-        loadDashboardAll();
-        loadReasonList();
-        loadCounselingList();
-        loadAssistantSchedule();
-      }, 0);
-    }, 0);
+    // 나머지 데이터는 화면을 먼저 보여준 뒤 비동기로 불러옵니다.
+    loadQr();
+    loadStudySummary();
+    loadScoreSummary();
+    loadPenaltySummary();
+    loadReasonList();
+    loadCounselingList();
 
   }
 
@@ -3420,47 +2745,6 @@ function renderStudyData(result) {
 }
 
 
-
-/* =========================
-   동시접속 최적화 통합 조회
-   학생정보 + 학습 + 성적 + 벌점 = API 1회
-========================= */
-async function loadDashboardAll() {
-  /*
-   * 2026-09-08 수정
-   * 기존 studentDashboardAll 통합 API를 사용하지 않습니다.
-   *
-   * 이유:
-   * - 퍼클 학생은 백엔드의 최신 getStudentStudySummaryV3 계산은 정상인데
-   *   통합 API 경로에서 예전 공부시간 결과가 들어올 수 있었습니다.
-   * - 공부시간은 반드시 현재 Code.gs의 studentStudy 라우트를 거치게 합니다.
-   *
-   * 학생정보/공부시간/성적/벌점을 각각 최신 API로 병렬 조회하므로
-   * 화면 속도는 유지하면서 오래된 통합 공부시간 결과가 화면을 덮지 않습니다.
-   */
-  try {
-    const results = await Promise.allSettled([
-      loadStudentData(),
-      loadStudySummary(),
-      loadScoreSummary(),
-      loadPenaltySummary()
-    ]);
-
-    return {
-      success: true,
-      individualApi: true,
-      results: results
-    };
-
-  } catch (error) {
-    console.error(
-      "개별 대시보드 조회 오류",
-      error
-    );
-    return null;
-  }
-}
-
 async function loadStudentData() {
 
   const result =
@@ -3543,6 +2827,11 @@ async function loadScoreSummary() {
     }
 
     renderScoreDashboard(result);
+
+    localStorage.setItem(
+      "studentPortalScore",
+      JSON.stringify(result)
+    );
 
     return result;
 
@@ -3732,7 +3021,7 @@ function renderLatestScoreCard_(latest) {
 
       '<div class="score-ai-box">' +
         '<strong>AI 성적 분석</strong>' +
-        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment,true) + '</div>' +
+        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment) + '</div>' +
       '</div>' +
 
       '<button class="score-detail-button" type="button" ' +
@@ -3742,226 +3031,26 @@ function renderLatestScoreCard_(latest) {
 }
 
 
-function formatScoreAiHtml_(text, compact){
+function formatScoreAiHtml_(text){
   const raw=String(text||"").trim();
-
-  if(!raw){
-    return '<div class="score-ai-empty">시험 결과를 바탕으로 학습 흐름을 확인해보세요.</div>';
-  }
-
-  const normalized=raw
-    .replace(/\r/g,"")
-    .replace(/\n{3,}/g,"\n\n");
-
-  const sectionRe=/■\s*([^\n]+)\n?/g;
-  let m;
-  const parts=[];
-  let last=null;
-
-  while((m=sectionRe.exec(normalized))){
-    if(last){
-      last.body=normalized.slice(last.start,m.index).trim();
-      parts.push(last);
-    }
-
-    last={
-      title:m[1].trim(),
-      start:sectionRe.lastIndex
-    };
-  }
-
-  if(last){
-    last.body=normalized.slice(last.start).trim();
-    parts.push(last);
-  }
-
-  if(!parts.length){
-    return '<div class="score-ai-empty">'+escapeHtml(normalized)+'</div>';
-  }
-
-  const alias={
-    "핵심 진단":"종합 진단",
-    "과목별 정밀 분석":"과목별 상태",
-    "과목별 상세 분석":"과목별 상태",
-    "우선 보완할 세부 개념":"핵심 복습 문항",
-    "바로 복습할 핵심개념":"핵심 복습 문항"
-  };
-
-  const allowed=[
-    "현재 위치",
-    "과목별 상태",
-    "취약단원 분석",
-    "오답 패턴 분석",
-    "핵심 복습 문항",
-    "종합 진단"
-  ];
-
-  const sections=[];
-  const seen=new Set();
-
-  parts.forEach(function(part){
-    const title=alias[part.title]||part.title;
-
-    if(allowed.indexOf(title)<0 || seen.has(title)){
-      return;
-    }
-
-    seen.add(title);
-    sections.push({
-      title:title,
-      body:part.body
-    });
+  if(!raw)return '<div class="score-ai-section-body">시험 결과를 바탕으로 학습 흐름을 확인해보세요.</div>';
+  const wanted=["현재 위치","종합 진단","핵심 진단","과목별 정밀 분석","과목별 상세 분석","우선 보완할 세부 개념","바로 복습할 핵심개념","다음 학습 우선순위","다음 학습 계획"];
+  const normalized=raw.replace(/\r/g,"").replace(/\n{3,}/g,"\n\n");
+  const re=/■\s*([^\n]+)\n?/g; let m, parts=[], last=null;
+  while((m=re.exec(normalized))){ if(last){last.body=normalized.slice(last.start,m.index).trim(); parts.push(last);} last={title:m[1].trim(),start:re.lastIndex}; }
+  if(last){last.body=normalized.slice(last.start).trim();parts.push(last);}
+  if(!parts.length)return '<div class="score-ai-section-body">'+escapeHtml(normalized)+'</div>';
+  const selected=[]; const seen=new Set();
+  parts.forEach(function(x){
+    let title=x.title;
+    if(title==="핵심 진단") title="종합 진단";
+    if(title==="과목별 정밀 분석") title="과목별 상세 분석";
+    if(title==="우선 보완할 세부 개념") title="바로 복습할 핵심개념";
+    if(title==="다음 학습 우선순위") title="다음 학습 계획";
+    if(wanted.indexOf(x.title)<0 || seen.has(title))return;
+    seen.add(title); selected.push({title:title,body:x.body});
   });
-
-  function section_(name){
-    return sections.find(function(x){
-      return x.title===name;
-    }) || null;
-  }
-
-  function icon_(title){
-    if(title==="현재 위치")return "📍";
-    if(title==="과목별 상태")return "📚";
-    if(title==="취약단원 분석")return "⚠️";
-    if(title==="오답 패턴 분석")return "🔎";
-    if(title==="핵심 복습 문항")return "📝";
-    if(title==="종합 진단")return "🎯";
-    return "•";
-  }
-
-  function toLines_(body){
-    return String(body||"")
-      .split("\n")
-      .map(function(x){return x.trim();})
-      .filter(Boolean);
-  }
-
-  // ============================================
-  // 최근 시험 카드: 핵심 정보만 표시
-  // ============================================
-  if(compact){
-    const position=section_("현재 위치");
-    const subjects=section_("과목별 상태");
-    const weak=section_("취약단원 분석");
-
-    let html='<div class="score-ai-compact">';
-
-    if(position){
-      const lines=toLines_(position.body);
-
-      html+=
-        '<div class="score-ai-current">'+
-          '<div class="score-ai-mini-head">📍 현재 위치</div>'+
-          '<div class="score-ai-current-main">'+
-            escapeHtml(lines[0]||"")+
-          '</div>'+
-          (
-            lines[1]
-              ? '<div class="score-ai-current-note">'+escapeHtml(lines[1])+'</div>'
-              : ''
-          )+
-        '</div>';
-    }
-
-    if(subjects){
-      const rawBlocks=String(subjects.body||"")
-        .split(/\n(?=·\s)/)
-        .map(function(x){return x.trim();})
-        .filter(Boolean);
-
-      const subjectCards=[];
-
-      rawBlocks.slice(0,4).forEach(function(block){
-        const lines=toLines_(block);
-        const head=String(lines[0]||"").replace(/^·\s*/,"");
-
-        const hit=head.match(
-          /^(.+?)\s+(\d+(?:\.\d+)?)점\s+—\s+\[([^\]]+)\]/
-        );
-
-        if(!hit)return;
-
-        let meta="";
-
-        if(lines.length>1){
-          meta=lines[1]
-            .replace(/^오답\s*/,"오답 ")
-            .replace(/\s*\/\s*/g," · ");
-        }
-
-        subjectCards.push(
-          '<div class="score-ai-subject-card">'+
-            '<div class="score-ai-subject-top">'+
-              '<strong>'+escapeHtml(hit[1])+'</strong>'+
-              '<span>'+escapeHtml(hit[2])+'점</span>'+
-            '</div>'+
-            '<div class="score-ai-status">'+escapeHtml(hit[3])+'</div>'+
-            (
-              meta
-                ? '<div class="score-ai-subject-meta">'+escapeHtml(meta)+'</div>'
-                : ''
-            )+
-          '</div>'
-        );
-      });
-
-      if(subjectCards.length){
-        html+=
-          '<div class="score-ai-mini-head">📚 과목별 상태</div>'+
-          '<div class="score-ai-subject-grid">'+
-            subjectCards.join("")+
-          '</div>';
-      }
-    }
-
-    if(weak){
-      const weakLines=toLines_(weak.body)
-        .filter(function(x){
-          return /^·/.test(x);
-        })
-        .slice(0,3)
-        .map(function(x){
-          return x.replace(/^·\s*/,"");
-        });
-
-      if(weakLines.length){
-        html+=
-          '<div class="score-ai-focus">'+
-            '<div class="score-ai-mini-head">⚠️ 집중 취약 영역</div>'+
-            weakLines.map(function(line){
-              return '<div class="score-ai-focus-row">'+escapeHtml(line)+'</div>';
-            }).join("")+
-          '</div>';
-      }
-    }
-
-    html+=
-      '<div class="score-ai-detail-guide">'+
-        '아래 <strong>상세 분석 보기</strong>에서 오답 패턴과 핵심 복습 문항을 확인할 수 있어요.'+
-      '</div>'+
-    '</div>';
-
-    return html;
-  }
-
-  // ============================================
-  // 상세 분석 모달: 전체 5단계
-  // ============================================
-  return sections.map(function(x){
-    const bodyHtml=escapeHtml(String(x.body||""))
-      .replace(/\n/g,"<br>");
-
-    return (
-      '<div class="score-ai-detail-section">'+
-        '<div class="score-ai-detail-title">'+
-          '<span>'+icon_(x.title)+'</span>'+
-          escapeHtml(x.title)+
-        '</div>'+
-        '<div class="score-ai-detail-body">'+bodyHtml+'</div>'+
-      '</div>'
-    );
-  }).join("") ||
-  '<div class="score-ai-empty">'+escapeHtml(normalized)+'</div>';
+  return selected.map(function(x){return '<div class="score-ai-section"><div class="score-ai-section-title">■ '+escapeHtml(x.title)+'</div><div class="score-ai-section-body">'+escapeHtml(x.body)+'</div></div>';}).join("") || '<div class="score-ai-section-body">'+escapeHtml(normalized)+'</div>';
 }
 
 function renderLatestRankBox_(label, value) {
@@ -4437,7 +3526,7 @@ function openLatestScoreModal() {
 
       '<div class="score-modal-ai">' +
         '<strong>AI 성적 분석</strong><br>' +
-        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment,false) + '</div>' +
+        '<div class="score-ai-scroll">' + formatScoreAiHtml_(latest.aiComment) + '</div>' +
       '</div>' +
     '</div>';
 
@@ -4709,14 +3798,6 @@ function renderScoreTrendSvg_(trend) {
 ========================= */
 
 async function loadPenaltySummary() {
-  // 벌점은 캐시를 사용하지 않고 매번 서버의 최신 벌점로그만 조회합니다.
-  setText("penaltyTotal", "0점");
-  const initialList = document.getElementById("penaltyList");
-  if (initialList) {
-    initialList.className = "placeholder";
-    initialList.textContent = "벌점 내역을 불러오는 중입니다.";
-  }
-
   try {
     const result =
       await apiRequest(
@@ -4736,7 +3817,13 @@ async function loadPenaltySummary() {
     }
 
     renderPenaltyData(result);
-return result;
+
+    localStorage.setItem(
+      "studentPortalPenalty",
+      JSON.stringify(result)
+    );
+
+    return result;
 
   } catch (error) {
     console.log(
@@ -4824,175 +3911,102 @@ function renderPenaltyData(result) {
    QR
 ========================= */
 
+let qrBatchTokens_ = [];
+let qrBatchIndex_ = 0;
+
 async function loadQr() {
-
   try {
+    const result = await apiRequest(
+      "studentQr",
+      { sessionToken: sessionToken }
+    );
 
-    const result =
-      await apiRequest(
-        "studentQr",
-        {
-          sessionToken:
-            sessionToken
-        }
-      );
-
-
-    if (
-      !result ||
-      !result.success
-    ) {
-
-      handleSessionError(
-        result
-      );
-
+    if (!result || !result.success) {
+      handleSessionError(result);
       return;
     }
 
+    qrBatchTokens_ = Array.isArray(result.tokens) && result.tokens.length
+      ? result.tokens
+      : [{ token: result.token }];
+    qrBatchIndex_ = 0;
 
-    renderQr(
-      result
-    );
-
+    renderQr(result);
+  } catch (error) {
+    showQrError("QR 생성 오류");
   }
-
-  catch (error) {
-
-    showQrError(
-      "QR 생성 오류"
-    );
-
-  }
-
 }
 
+function getQrStudentFromDashboard_() {
+  function text_(id) {
+    const el = document.getElementById(id);
+    return el ? String(el.textContent || "").trim() : "";
+  }
 
+  return {
+    name: text_("dashboardStudentName"),
+    className: text_("className"),
+    classroom: text_("classroom"),
+    seat: text_("seat"),
+    job: text_("job")
+  };
+}
 
-function renderQr(
-  result
-) {
+function drawCurrentBatchQr_() {
+  const item = qrBatchTokens_[qrBatchIndex_];
+  if (!item || !item.token) {
+    loadQr();
+    return;
+  }
 
-  const student =
-    result.student;
-
-
-  document
-    .getElementById(
-      "qrStudent"
-    )
-    .innerHTML =
-      '<div class="qr-name">' +
-      escapeHtml(
-        student.name
-      ) +
-      '</div>' +
-
-      '<div class="qr-meta">' +
-      escapeHtml(
-        student.className
-      ) +
-      ' · ' +
-
-      escapeHtml(
-        student.classroom
-      ) +
-      ' · ' +
-
-      escapeHtml(
-        student.seat
-      ) +
-      '번 · ' +
-
-      escapeHtml(
-        student.job
-      ) +
-      '</div>';
-
-
-  const box =
-    document.getElementById(
-      "studentQrBox"
-    );
-
-
+  const box = document.getElementById("studentQrBox");
   box.innerHTML = "";
 
-
-  new QRCode(
-    box,
-    {
-      text:
-        result.token,
-
-      width:
-        220,
-
-      height:
-        220,
-
-      correctLevel:
-        QRCode.CorrectLevel.M
-    }
-  );
-
-
-  qrCountdown =
-    Number(
-      result.expiresIn ||
-      20
-    );
-
-
-  document
-    .getElementById(
-      "qrSeconds"
-    )
-    .textContent =
-      qrCountdown;
-
-
-  clearInterval(
-    qrTimer
-  );
-
-
-  qrTimer =
-    setInterval(
-      function() {
-
-        qrCountdown--;
-
-
-        document
-          .getElementById(
-            "qrSeconds"
-          )
-          .textContent =
-            Math.max(
-              qrCountdown,
-              0
-            );
-
-
-        if (
-          qrCountdown <= 0
-        ) {
-
-          clearInterval(
-            qrTimer
-          );
-
-          loadQr();
-
-        }
-
-      },
-      1000
-    );
-
+  new QRCode(box, {
+    text: item.token,
+    width: 220,
+    height: 220,
+    correctLevel: QRCode.CorrectLevel.M
+  });
 }
 
+function renderQr(result) {
+  const student = result.student || getQrStudentFromDashboard_();
+
+  document.getElementById("qrStudent").innerHTML =
+    '<div class="qr-name">' + escapeHtml(student.name || "") + '</div>' +
+    '<div class="qr-meta">' +
+      escapeHtml(student.className || "") + ' · ' +
+      escapeHtml(student.classroom || "") + ' · ' +
+      escapeHtml(student.seat || "") + '번 · ' +
+      escapeHtml(student.job || "") +
+    '</div>';
+
+  qrCountdown = Number(result.expiresIn || 20);
+  document.getElementById("qrSeconds").textContent = qrCountdown;
+
+  drawCurrentBatchQr_();
+  clearInterval(qrTimer);
+
+  qrTimer = setInterval(function() {
+    qrCountdown--;
+    document.getElementById("qrSeconds").textContent = Math.max(qrCountdown, 0);
+
+    if (qrCountdown <= 0) {
+      qrBatchIndex_++;
+
+      if (qrBatchIndex_ >= qrBatchTokens_.length) {
+        clearInterval(qrTimer);
+        loadQr();
+        return;
+      }
+
+      qrCountdown = Number(result.expiresIn || 20);
+      document.getElementById("qrSeconds").textContent = qrCountdown;
+      drawCurrentBatchQr_();
+    }
+  }, 1000);
+}
 
 
 function showQrError(
@@ -5087,7 +4101,24 @@ async function restoreSession() {
         );
       }
     } catch (e) {}
-// 5) 이전 성적도 즉시 표시
+
+    // 4) 이전 벌점도 즉시 표시
+    try {
+      const cachedPenalty =
+        JSON.parse(
+          localStorage.getItem(
+            "studentPortalPenalty"
+          ) || "null"
+        );
+
+      if (cachedPenalty) {
+        renderPenaltyData(
+          cachedPenalty
+        );
+      }
+    } catch (e) {}
+
+    // 5) 이전 성적도 즉시 표시
     try {
       const cachedScore =
         JSON.parse(
@@ -5188,14 +4219,6 @@ async function restoreSession() {
       .catch(function(error) {
         console.log(
           "상담 신청내역 갱신 실패",
-          error
-        );
-      });
-
-    loadAssistantSchedule()
-      .catch(function(error) {
-        console.log(
-          "부담임 상담일정 갱신 실패",
           error
         );
       });
@@ -5384,145 +4407,6 @@ function updateReasonPeriodVisibility() {
 }
 
 
-
-let reasonEvidenceMode_ = "later";
-
-function selectReasonEvidenceMode_(mode) {
-  const nowBtn = document.getElementById("reasonEvidenceNowButton");
-  const laterBtn = document.getElementById("reasonEvidenceLaterButton");
-  const fileInput = document.getElementById("reasonEvidenceNowFile");
-  const selected = document.getElementById("reasonEvidenceSelectedText");
-
-  reasonEvidenceMode_ = mode === "now" ? "now" : "later";
-
-  if (nowBtn) nowBtn.classList.toggle("active", reasonEvidenceMode_ === "now");
-  if (laterBtn) laterBtn.classList.toggle("active", reasonEvidenceMode_ === "later");
-
-  if (reasonEvidenceMode_ === "now") {
-    if (selected) selected.textContent = "파일을 선택해 주세요.";
-    if (fileInput) {
-      fileInput.value = "";
-      fileInput.click();
-    }
-  } else {
-    if (fileInput) fileInput.value = "";
-    if (selected) selected.textContent = "추후 제출 선택됨";
-  }
-}
-
-const reasonEvidenceNowFile_ = document.getElementById("reasonEvidenceNowFile");
-if (reasonEvidenceNowFile_) {
-  reasonEvidenceNowFile_.addEventListener("change", function() {
-    const file = this.files && this.files[0];
-    const selected = document.getElementById("reasonEvidenceSelectedText");
-
-    if (!file) {
-      reasonEvidenceMode_ = "later";
-      selectReasonEvidenceMode_("later");
-      return;
-    }
-
-    const allowed = ["image/jpeg","image/png","application/pdf"];
-    if (allowed.indexOf(file.type) === -1) {
-      alert("JPG, PNG, PDF 파일만 첨부할 수 있습니다.");
-      this.value = "";
-      reasonEvidenceMode_ = "later";
-      selectReasonEvidenceMode_("later");
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      alert("증빙서류는 10MB 이하만 첨부할 수 있습니다.");
-      this.value = "";
-      reasonEvidenceMode_ = "later";
-      selectReasonEvidenceMode_("later");
-      return;
-    }
-
-    reasonEvidenceMode_ = "now";
-    document.getElementById("reasonEvidenceNowButton")?.classList.add("active");
-    document.getElementById("reasonEvidenceLaterButton")?.classList.remove("active");
-
-    if (selected) {
-      selected.textContent =
-        "첨부 예정: " + file.name +
-        " (" + Math.max(1, Math.round(file.size / 1024)) + "KB)";
-    }
-  });
-}
-
-function studentTodayYmd_() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth()+1).padStart(2,"0");
-  const d = String(now.getDate()).padStart(2,"0");
-  return y + "-" + m + "-" + d;
-}
-
-function addDaysYmd_(ymd, days) {
-  const p = String(ymd||"").split("-").map(Number);
-  if (p.length !== 3 || !p[0] || !p[1] || !p[2]) return "";
-  const d = new Date(p[0], p[1]-1, p[2]);
-  d.setDate(d.getDate() + Number(days||0));
-  return [
-    d.getFullYear(),
-    String(d.getMonth()+1).padStart(2,"0"),
-    String(d.getDate()).padStart(2,"0")
-  ].join("-");
-}
-
-function configureReasonDateWindow_() {
-  const today = studentTodayYmd_();
-  const maxDate = addDaysYmd_(today, 5);
-
-  const reasonDate = document.getElementById("reasonDate");
-  if (reasonDate) {
-    reasonDate.min = today;
-    reasonDate.max = maxDate;
-  }
-
-  // 정기지각/정기조퇴/정기결석은 5일 신청기간 제한 제외
-  const regularStart = document.getElementById("regularStartDate");
-  if (regularStart) {
-    regularStart.removeAttribute("min");
-    regularStart.removeAttribute("max");
-  }
-}
-
-configureReasonDateWindow_();
-
-async function uploadReasonEvidenceByApplication_(applicationId, file) {
-  if (!applicationId || !file) {
-    return {success:false, message:"증빙서류 업로드 정보가 없습니다."};
-  }
-
-  const preparedFile = await prepareReasonEvidenceFile_(file);
-  const base64Data = await fileToBase64_(preparedFile);
-
-  const postBody = new URLSearchParams();
-  postBody.set("action", "studentReasonEvidenceUpload");
-  postBody.set("sessionToken", sessionToken);
-  postBody.set("applicationId", applicationId);
-  postBody.set("fileName", preparedFile.name);
-  postBody.set("mimeType", preparedFile.type);
-  postBody.set("base64Data", base64Data);
-
-  const response = await fetch(API_URL, {
-    method:"POST",
-    headers:{
-      "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"
-    },
-    body:postBody.toString()
-  });
-
-  if (!response.ok) {
-    throw new Error("증빙서류 업로드 서버 오류 (" + response.status + ")");
-  }
-
-  return await response.json();
-}
-
-
 async function submitReason() {
   const button =
     document.getElementById(
@@ -5565,21 +4449,6 @@ async function submitReason() {
     .map(function(el){ return el.value; })
     .join(",");
   const isRegularReason = ["정기지각", "정기조퇴", "정기결석"].indexOf(reasonType) !== -1;
-
-  // 일반 지각/조퇴/결석 등만 5일 신청기간 제한 적용
-  // 정기지각/정기조퇴/정기결석은 제한에서 제외
-  if (!isRegularReason) {
-    const todayYmd = studentTodayYmd_();
-    const latestAllowedYmd = addDaysYmd_(todayYmd, 5);
-
-    if (
-      reasonDate &&
-      (reasonDate < todayYmd || reasonDate > latestAllowedYmd)
-    ) {
-      alert("사유서는 해당일 기준 5일 전부터 당일까지 신청할 수 있습니다.");
-      return;
-    }
-  }
 
   if (!isRegularReason && !reasonDate) {
     alert("사유일을 선택해주세요.");
@@ -5643,14 +4512,6 @@ async function submitReason() {
     return;
   }
 
-  const immediateEvidenceFile =
-    document.getElementById("reasonEvidenceNowFile")?.files?.[0] || null;
-
-  if (reasonEvidenceMode_ === "now" && !immediateEvidenceFile) {
-    alert("파일 첨부를 선택한 경우 증빙서류 파일을 선택해주세요.");
-    return;
-  }
-
   button.disabled = true;
   button.textContent =
     "제출 중...";
@@ -5698,33 +4559,6 @@ async function submitReason() {
       return;
     }
 
-    let immediateEvidenceUploaded = false;
-
-    if (
-      reasonEvidenceMode_ === "now" &&
-      immediateEvidenceFile &&
-      result.applicationId
-    ) {
-      button.textContent = "증빙 업로드 중...";
-
-      const uploadResult =
-        await uploadReasonEvidenceByApplication_(
-          result.applicationId,
-          immediateEvidenceFile
-        );
-
-      if (!uploadResult || !uploadResult.success) {
-        alert(
-          "사유서는 제출되었지만 증빙서류 업로드에 실패했습니다.\n" +
-          (uploadResult && uploadResult.message
-            ? uploadResult.message
-            : "내 신청내역에서 증빙서류를 다시 제출해주세요.")
-        );
-      } else {
-        immediateEvidenceUploaded = true;
-      }
-    }
-
     document
       .getElementById(
         "reasonContent"
@@ -5756,17 +4590,12 @@ async function submitReason() {
 
     updateReasonPeriodVisibility();
 
-    if (reasonEvidenceMode_ === "now" && immediateEvidenceUploaded) {
-      alert("사유서와 증빙서류가 함께 제출되었습니다.");
-    } else if (reasonEvidenceMode_ === "later") {
-      alert(
-        "사유서 제출이 완료되었습니다.\n" +
-        "증빙서류는 해당일로부터 3일 이내 반드시 제출해주세요."
-      );
-    }
-
-    reasonEvidenceMode_ = "later";
-    selectReasonEvidenceMode_("later");
+    alert(
+      result.notice ||
+      "사유서 제출이 완료되었습니다.\n" +
+      "증빙서류는 당일 제출하지 않으셔도 됩니다.\n" +
+      "준비되는 대로 학생포털에서 증빙서류를 추가 제출해주세요."
+    );
 
     await loadReasonList();
 
@@ -6041,11 +4870,68 @@ async function uploadReasonEvidence(event) {
   try {
     // 큰 사진은 업로드 전에 자동 축소/압축합니다.
     // 휴대폰 사진은 보통 수 MB이므로 이 단계에서 전송량을 크게 줄일 수 있습니다.
-    const result =
-      await uploadReasonEvidenceByApplication_(
-        pendingReasonEvidenceId,
+    const preparedFile =
+      await prepareReasonEvidenceFile_(
         file
       );
+
+    const base64Data =
+      await fileToBase64_(
+        preparedFile
+      );
+
+    const postBody =
+      new URLSearchParams();
+
+    postBody.set(
+      "action",
+      "studentReasonEvidenceUpload"
+    );
+    postBody.set(
+      "sessionToken",
+      sessionToken
+    );
+    postBody.set(
+      "applicationId",
+      pendingReasonEvidenceId
+    );
+    postBody.set(
+      "fileName",
+      preparedFile.name
+    );
+    postBody.set(
+      "mimeType",
+      preparedFile.type
+    );
+    postBody.set(
+      "base64Data",
+      base64Data
+    );
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/x-www-form-urlencoded;charset=UTF-8"
+          },
+          body:
+            postBody.toString()
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "서버 응답 오류 (" +
+        response.status +
+        ")"
+      );
+    }
+
+    const result =
+      await response.json();
 
 
     if (
@@ -6681,253 +5567,6 @@ function renderCounselingList(rows) {
         '</div>'
       );
     }).join("");
-}
-
-
-
-/* =========================
-   부담임 상담 일정 / 학생 응답
-========================= */
-
-async function loadAssistantSchedule() {
-  const box = document.getElementById("assistantScheduleBox");
-  if (!box || !sessionToken) return;
-
-  box.className = "placeholder";
-  box.innerHTML = "상담 일정을 불러오는 중입니다.";
-
-  try {
-    const result = await apiRequest(
-      "studentAssistantCounselingList",
-      { sessionToken: sessionToken }
-    );
-
-    if (!result || !result.success) {
-      box.innerHTML = escapeHtml(
-        result && result.message
-          ? result.message
-          : "상담 일정을 불러오지 못했습니다."
-      );
-      return;
-    }
-
-    const rows = Array.isArray(result.rows) ? result.rows : [];
-
-    if (!rows.length) {
-      box.innerHTML = "현재 예정된 부담임 상담 일정이 없습니다.";
-      return;
-    }
-
-    box.className = "";
-    box.innerHTML = rows.map(renderAssistantScheduleItem_).join("");
-
-    box.querySelectorAll("[data-assistant-response]").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        const id = btn.getAttribute("data-id");
-        const type = btn.getAttribute("data-assistant-response");
-        respondAssistantSchedule(id, type);
-      });
-    });
-
-    box.querySelectorAll("[data-change-submit]").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        submitAssistantScheduleChange(btn.getAttribute("data-change-submit"));
-      });
-    });
-
-    box.querySelectorAll("[data-change-toggle]").forEach(function(btn) {
-      btn.addEventListener("click", function() {
-        const id = btn.getAttribute("data-change-toggle");
-        const form = document.getElementById("assistantChangeForm_" + id);
-        if (form) form.style.display = form.style.display === "none" ? "block" : "none";
-      });
-    });
-
-  } catch (error) {
-    box.className = "placeholder";
-    box.innerHTML = escapeHtml(
-      error && error.message
-        ? error.message
-        : "상담 일정을 불러오지 못했습니다."
-    );
-  }
-}
-
-
-function studentLocalTodayYmd_() {
-  const d = new Date();
-  return [
-    d.getFullYear(),
-    String(d.getMonth() + 1).padStart(2, "0"),
-    String(d.getDate()).padStart(2, "0")
-  ].join("-");
-}
-
-function isAssistantCounselingToday_(item) {
-  return String(item && item.proposedDate || "").trim() === studentLocalTodayYmd_();
-}
-
-function renderAssistantScheduleItem_(item) {
-  const id = escapeHtml(item.applicationId || "");
-  const status = String(item.status || "제안");
-  const statusText = {
-    "제안":"응답 대기",
-    "참석":"참석",
-    "미참석":"미참석",
-    "일정변경요청":"일정 변경 요청 확인 중",
-    "참여비희망":"상담 참여 비희망",
-    "당일취소":"당일 상담취소",
-    "변경승인":"일정 변경 완료",
-    "변경반려":"일정 변경 반려",
-    "완료":"상담 완료"
-  }[status] || status;
-
-  let actions = "";
-  if (status === "제안" || status === "미참석" || status === "변경반려") {
-    actions =
-      '<div class="assistant-response-grid">' +
-        '<button type="button" class="assistant-response-btn attend" data-assistant-response="참석" data-id="' + id + '">✅ 참석</button>' +
-        '<button type="button" class="assistant-response-btn absent" data-assistant-response="미참석" data-id="' + id + '">❌ 미참석</button>' +
-        '<button type="button" class="assistant-response-btn change" data-change-toggle="' + id + '">📅 상담일자 변경 요청</button>' +
-        '<button type="button" class="assistant-response-btn decline" data-assistant-response="참여비희망" data-id="' + id + '">🚫 상담 참여 비희망</button>' +
-      '</div>' +
-      '<div id="assistantChangeForm_' + id + '" class="assistant-change-form" style="display:none;">' +
-        '<label>희망 상담일</label>' +
-        '<input type="date" id="assistantChangeDate_' + id + '">' +
-        '<label>희망 상담시간</label>' +
-        '<select id="assistantChangeTime_' + id + '">' +
-          '<option value="">시간 선택</option>' +
-          '<option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>' +
-          '<option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>' +
-          '<option>14:00</option><option>14:30</option><option>15:00</option><option>15:30</option><option>16:00</option>' +
-        '</select>' +
-        '<label>변경 사유</label>' +
-        '<textarea id="assistantChangeReason_' + id + '" maxlength="500" placeholder="일정 변경 사유를 입력해주세요."></textarea>' +
-        '<button type="button" class="assistant-change-submit" data-change-submit="' + id + '">변경 요청 제출</button>' +
-      '</div>';
-  }
-
-  // 이미 참석 확정한 상담이라도 상담 당일에는 한 번 취소할 수 있습니다.
-  // "상담 참여 비희망"과 달리 향후 부담임 상담 대상에서는 제외되지 않습니다.
-  if (
-    (status === "참석" || status === "변경승인") &&
-    isAssistantCounselingToday_(item)
-  ) {
-    actions =
-      '<div class="assistant-same-day-cancel-wrap">' +
-        '<button type="button" class="assistant-same-day-cancel-btn" ' +
-          'data-assistant-response="당일취소" data-id="' + id + '">' +
-          '오늘 상담 취소' +
-        '</button>' +
-        '<div class="assistant-same-day-cancel-help">' +
-          '오늘 상담만 취소됩니다. 이후 부담임 상담 대상에서는 제외되지 않습니다.' +
-        '</div>' +
-      '</div>';
-  }
-
-  let changeInfo = "";
-  if (item.requestedDate || item.requestedTime || item.changeReason) {
-    changeInfo =
-      '<div class="assistant-change-info">' +
-        '<strong>변경 요청</strong><br>' +
-        escapeHtml(item.requestedDate || "-") + " " +
-        escapeHtml(item.requestedTime || "") +
-        (item.changeReason ? '<br>사유: ' + escapeHtml(item.changeReason) : '') +
-      '</div>';
-  }
-
-  return (
-    '<div class="assistant-schedule-item">' +
-      '<div class="assistant-schedule-head">' +
-        '<strong>' + escapeHtml(item.assistantName || "부담임") + '</strong>' +
-        '<span class="assistant-status">' + escapeHtml(statusText) + '</span>' +
-      '</div>' +
-      '<div class="assistant-schedule-row"><span>상담일자</span><b>' + escapeHtml(item.proposedDate || "-") + '</b></div>' +
-      '<div class="assistant-schedule-row"><span>상담시간</span><b>' + escapeHtml(item.proposedTime || "-") + '</b></div>' +
-      '<div class="assistant-schedule-row"><span>장소</span><b>' + escapeHtml(item.place || "학원 상담실") + '</b></div>' +
-      changeInfo +
-      actions +
-    '</div>'
-  );
-}
-
-async function respondAssistantSchedule(applicationId, responseType) {
-  let reason = "";
-
-  if (responseType === "미참석") {
-    reason = prompt("미참석 사유를 입력해주세요. (선택)") || "";
-  }
-
-  if (responseType === "참여비희망") {
-    if (!confirm("이번 부담임 상담에 참여하지 않는 것으로 제출할까요?")) return;
-    reason = prompt("상담 참여 비희망 사유를 입력해주세요. (선택)") || "";
-  }
-
-  if (responseType === "당일취소") {
-    if (!confirm("오늘 예정된 부담임 상담을 취소할까요?\n오늘 상담만 취소되며 이후 상담 대상에서는 제외되지 않습니다.")) return;
-    reason = prompt("당일 상담 취소 사유를 입력해주세요.") || "";
-    if (!reason.trim()) {
-      alert("당일 상담 취소 사유를 입력해주세요.");
-      return;
-    }
-  }
-
-  try {
-    const result = await apiRequest(
-      "studentAssistantCounselingRespond",
-      {
-        sessionToken: sessionToken,
-        applicationId: applicationId,
-        responseType: responseType,
-        reason: reason
-      }
-    );
-
-    if (!result || !result.success) {
-      alert(result && result.message ? result.message : "응답 저장에 실패했습니다.");
-      return;
-    }
-
-    alert(result.message || "응답이 저장되었습니다.");
-    loadAssistantSchedule();
-  } catch (error) {
-    alert(error && error.message ? error.message : "응답 저장 중 오류가 발생했습니다.");
-  }
-}
-
-async function submitAssistantScheduleChange(applicationId) {
-  const date = document.getElementById("assistantChangeDate_" + applicationId).value;
-  const time = document.getElementById("assistantChangeTime_" + applicationId).value;
-  const reason = document.getElementById("assistantChangeReason_" + applicationId).value.trim();
-
-  if (!date || !time) {
-    alert("희망 상담일과 시간을 선택해주세요.");
-    return;
-  }
-
-  try {
-    const result = await apiRequest(
-      "studentAssistantCounselingRespond",
-      {
-        sessionToken: sessionToken,
-        applicationId: applicationId,
-        responseType: "일정변경요청",
-        requestedDate: date,
-        requestedTime: time,
-        reason: reason
-      }
-    );
-
-    if (!result || !result.success) {
-      alert(result && result.message ? result.message : "일정 변경 요청에 실패했습니다.");
-      return;
-    }
-
-    alert("상담일자 변경 요청이 전달되었습니다.");
-    loadAssistantSchedule();
-  } catch (error) {
-    alert(error && error.message ? error.message : "일정 변경 요청 중 오류가 발생했습니다.");
-  }
 }
 
 
