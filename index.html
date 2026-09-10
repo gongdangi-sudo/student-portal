@@ -3331,19 +3331,18 @@ async function loginStudent() {
       loadStudentData();
     }
 
-    // 로그인 성공 화면을 먼저 즉시 그린 뒤,
-    // 무거운 조회는 다음 이벤트 루프에서 시작합니다.
-    setTimeout(function() {
-      // QR은 학생이 바로 사용할 수 있게 우선 조회
-      loadQr();
+    // 로그인 직후에는 QR 요청을 단독 최우선 처리합니다.
+    // QR이 뜨기 전에 성적/사유서/상담 API가 동시에 몰리지 않게 합니다.
+    setTimeout(async function() {
+      await loadQr();
 
-      // 나머지는 로그인 화면 전환을 막지 않게 비동기 시작
+      // QR 화면이 먼저 그려진 뒤 나머지 조회 시작
       setTimeout(function() {
         loadDashboardAll();
         loadReasonList();
         loadCounselingList();
         loadAssistantSchedule();
-      }, 0);
+      }, 150);
     }, 0);
 
   }
@@ -4944,6 +4943,14 @@ async function loadQr() {
   if (qrBatchLoading) return;
   qrBatchLoading = true;
 
+  // 이전 QR이 아직 없을 때만 로딩 표시
+  if (!qrBatch.length) {
+    const qrStudentEl = document.getElementById("qrStudent");
+    if (qrStudentEl) {
+      qrStudentEl.innerHTML = '<div class="qr-name">QR 준비 중...</div><div class="qr-meta">잠시만 기다려주세요.</div>';
+    }
+  }
+
   try {
     const result = await apiRequest(
       "studentQr",
@@ -5183,65 +5190,48 @@ async function restoreSession() {
       }
     } catch (e) {}
 
-    // 7) 서버 최신값은 뒤에서 갱신
-    loadStudentData()
-      .catch(function(error) {
-        console.log(
-          "학생정보 갱신 실패",
-          error
-        );
-      });
+    // 7) 세션 복원에서도 QR을 가장 먼저 단독 요청합니다.
+    // 기존에는 학생정보/성적/벌점/상담 요청을 먼저 여러 개 시작해서
+    // QR 요청이 뒤에서 밀릴 수 있었습니다.
+    await loadQr();
 
-    loadStudySummary()
-      .catch(function(error) {
-        console.log(
-          "공부시간 갱신 실패",
-          error
-        );
-      });
+    // QR이 표시된 다음 서버 최신값 갱신
+    setTimeout(function() {
+      loadStudentData()
+        .catch(function(error) {
+          console.log("학생정보 갱신 실패", error);
+        });
 
-    loadScoreSummary()
-      .catch(function(error) {
-        console.log(
-          "시험성적 갱신 실패",
-          error
-        );
-      });
+      loadStudySummary()
+        .catch(function(error) {
+          console.log("공부시간 갱신 실패", error);
+        });
 
-    loadPenaltySummary()
-      .catch(function(error) {
-        console.log(
-          "벌점 갱신 실패",
-          error
-        );
-      });
+      loadScoreSummary()
+        .catch(function(error) {
+          console.log("시험성적 갱신 실패", error);
+        });
 
-    loadReasonList()
-      .catch(function(error) {
-        console.log(
-          "사유서 신청내역 갱신 실패",
-          error
-        );
-      });
+      loadPenaltySummary()
+        .catch(function(error) {
+          console.log("벌점 갱신 실패", error);
+        });
 
-    loadCounselingList()
-      .catch(function(error) {
-        console.log(
-          "상담 신청내역 갱신 실패",
-          error
-        );
-      });
+      loadReasonList()
+        .catch(function(error) {
+          console.log("사유서 신청내역 갱신 실패", error);
+        });
 
-    loadAssistantSchedule()
-      .catch(function(error) {
-        console.log(
-          "부담임 상담일정 갱신 실패",
-          error
-        );
-      });
+      loadCounselingList()
+        .catch(function(error) {
+          console.log("상담 신청내역 갱신 실패", error);
+        });
 
-    // QR은 로그인 세션 확인 후 서버에서 새로 생성
-    loadQr();
+      loadAssistantSchedule()
+        .catch(function(error) {
+          console.log("부담임 상담일정 갱신 실패", error);
+        });
+    }, 150);
 
   } catch (error) {
     logout();
