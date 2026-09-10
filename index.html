@@ -3099,6 +3099,15 @@ function apiRequest(
       });
 
 
+      // Apps Script가 순간적으로 느려질 때 로그인 자체가 15초에 끊기지 않도록
+      // 요청 종류별로 제한시간을 다르게 둡니다.
+      const timeoutMs =
+        action === "studentLogin"
+          ? 45000
+          : action === "studentQr"
+          ? 30000
+          : 30000;
+
       const timeout =
         setTimeout(function() {
 
@@ -3106,11 +3115,13 @@ function apiRequest(
 
           reject(
             new Error(
-              "서버 응답 시간이 초과되었습니다."
+              action === "studentLogin"
+                ? "로그인 서버 응답이 지연되고 있습니다. 잠시 후 다시 시도해주세요."
+                : "서버 응답 시간이 초과되었습니다."
             )
           );
 
-        }, 15000);
+        }, timeoutMs);
 
 
       function cleanup() {
