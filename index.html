@@ -3035,6 +3035,7 @@ const API_URL =
 
 let sessionToken = "";
 let sessionErrorHandling = false;
+let studyStatusRefreshTimer = null;
 
 let studentId = "";
 
@@ -3235,6 +3236,50 @@ document
   );
 
 
+
+/* ========================================
+ * 현재 출결상태 자동 갱신
+ * 전체 대시보드가 아니라 studentStudy 하나만 15초마다 조회
+ * ======================================== */
+function stopStudyStatusAutoRefresh() {
+  if (studyStatusRefreshTimer) {
+    clearInterval(studyStatusRefreshTimer);
+    studyStatusRefreshTimer = null;
+  }
+}
+
+function startStudyStatusAutoRefresh() {
+  stopStudyStatusAutoRefresh();
+
+  if (!sessionToken) {
+    return;
+  }
+
+  studyStatusRefreshTimer = setInterval(function() {
+    if (!sessionToken || document.hidden) {
+      return;
+    }
+
+    loadStudy().catch(function(error) {
+      console.log("현재 출결상태 자동 갱신 실패", error);
+    });
+  }, 15000);
+}
+
+document.addEventListener("visibilitychange", function() {
+  if (document.hidden || !sessionToken) {
+    return;
+  }
+
+  // 학생포털 화면으로 돌아오면 즉시 최신 상태 확인
+  loadStudy().catch(function(error) {
+    console.log("현재 출결상태 복귀 갱신 실패", error);
+  });
+
+  startStudyStatusAutoRefresh();
+});
+
+
 async function loginStudent() {
 
   const button =
@@ -3328,6 +3373,8 @@ async function loginStudent() {
 
 
     showDashboard();
+
+    startStudyStatusAutoRefresh();
 
     // 로그인 응답에 학생정보가 있으면 즉시 표시
     if (result.student) {
@@ -5119,6 +5166,8 @@ async function restoreSession() {
 
     // 1) 화면부터 즉시 표시
     showDashboard();
+
+    startStudyStatusAutoRefresh();
 
     // 2) 이전에 저장한 학생정보를 즉시 표시
     try {
@@ -7150,6 +7199,7 @@ document
 
 
 function logout() {
+  stopStudyStatusAutoRefresh();
 
   clearInterval(
     qrTimer
