@@ -3349,10 +3349,21 @@ async function loginStudent() {
 
       // QR 화면이 먼저 그려진 뒤 나머지 조회 시작
       setTimeout(function() {
+        // 기본정보/공부시간/성적/벌점은 통합 API 1회
         loadDashboardAll();
-        loadReasonList();
-        loadCounselingList();
-        loadAssistantSchedule();
+
+        // 부가 조회는 동시에 몰지 않고 순차적으로 분산
+        setTimeout(function() {
+          loadReasonList();
+        }, 250);
+
+        setTimeout(function() {
+          loadCounselingList();
+        }, 550);
+
+        setTimeout(function() {
+          loadAssistantSchedule();
+        }, 850);
       }, 150);
     }, 0);
 
@@ -5208,40 +5219,33 @@ async function restoreSession() {
 
     // QR이 표시된 다음 서버 최신값 갱신
     setTimeout(function() {
-      loadStudentData()
+      // 학생정보 + 공부시간 + 성적 + 벌점을 API 1회로 갱신
+      loadDashboardAll()
         .catch(function(error) {
-          console.log("학생정보 갱신 실패", error);
+          console.log("통합 대시보드 갱신 실패", error);
         });
 
-      loadStudySummary()
-        .catch(function(error) {
-          console.log("공부시간 갱신 실패", error);
-        });
+      // 부가 조회는 동시에 몰리지 않게 분산
+      setTimeout(function() {
+        loadReasonList()
+          .catch(function(error) {
+            console.log("사유서 신청내역 갱신 실패", error);
+          });
+      }, 250);
 
-      loadScoreSummary()
-        .catch(function(error) {
-          console.log("시험성적 갱신 실패", error);
-        });
+      setTimeout(function() {
+        loadCounselingList()
+          .catch(function(error) {
+            console.log("상담 신청내역 갱신 실패", error);
+          });
+      }, 550);
 
-      loadPenaltySummary()
-        .catch(function(error) {
-          console.log("벌점 갱신 실패", error);
-        });
-
-      loadReasonList()
-        .catch(function(error) {
-          console.log("사유서 신청내역 갱신 실패", error);
-        });
-
-      loadCounselingList()
-        .catch(function(error) {
-          console.log("상담 신청내역 갱신 실패", error);
-        });
-
-      loadAssistantSchedule()
-        .catch(function(error) {
-          console.log("부담임 상담일정 갱신 실패", error);
-        });
+      setTimeout(function() {
+        loadAssistantSchedule()
+          .catch(function(error) {
+            console.log("부담임 상담일정 갱신 실패", error);
+          });
+      }, 850);
     }, 150);
 
   } catch (error) {
