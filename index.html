@@ -3034,6 +3034,7 @@ const API_URL =
 
 
 let sessionToken = "";
+let sessionErrorHandling = false;
 
 let studentId = "";
 
@@ -3304,6 +3305,8 @@ async function loginStudent() {
       return;
     }
 
+
+    sessionErrorHandling = false;
 
     sessionToken =
       result.sessionToken;
@@ -5250,6 +5253,9 @@ async function restoreSession() {
 
   } catch (error) {
     logout();
+    showLoginMessage(
+      "기존 로그인 정보가 만료되었습니다. 다시 로그인해주세요."
+    );
   }
 }
 
@@ -7217,18 +7223,32 @@ function handleSessionError(
       ? result.message
       : "로그인이 만료되었습니다.";
 
-
   if (
     message.indexOf(
       "로그인"
-    ) !== -1
+    ) === -1
   ) {
-
-    alert(message);
-
-    logout();
-
+    return;
   }
+
+  // 여러 API가 동시에 세션 만료를 반환해도 한 번만 처리
+  if (sessionErrorHandling) {
+    return;
+  }
+
+  sessionErrorHandling = true;
+
+  // 오래된 세션과 화면 캐시를 정리하고 로그인 화면으로 복귀
+  logout();
+
+  // 반복 alert 대신 로그인 화면 아래에서 안내
+  showLoginMessage(
+    "기존 로그인 정보가 만료되었습니다. 다시 로그인해주세요."
+  );
+
+  setTimeout(function() {
+    sessionErrorHandling = false;
+  }, 800);
 
 }
 
