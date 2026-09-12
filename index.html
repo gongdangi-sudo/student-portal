@@ -6,7 +6,7 @@
         content="width=device-width, initial-scale=1">
 
   <title>공단기 학생포털</title>
-  <!-- LOGIN_SPEED_V2 + SCORE_AI_FIX_V2 -->
+  <!-- LOGIN_STABILITY_V3 + SCORE_AI_FIX_V2 -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -3035,7 +3035,7 @@ const API_URL =
 
 let sessionToken = "";
 let sessionErrorHandling = false;
-let studyStatusRefreshTimer = null;
+let loginRequestInFlight = false;
 
 let studentId = "";
 
@@ -3186,18 +3186,6 @@ function apiRequest(
 
 
 
-/* =========================
-   학생 API 사전 예열
-   - 로그인 화면이 열린 직후 Apps Script 런타임을 미리 깨웁니다.
-========================= */
-(function prewarmStudentApi_() {
-  setTimeout(function() {
-    apiRequest(
-      "studentPenalty",
-      {sessionToken:"__STUDENT_PREWARM__"}
-    ).catch(function(){});
-  }, 80);
-})();
 
 
 /* =========================
@@ -3237,46 +3225,41 @@ document
 
 
 
+
+
 /* ========================================
- * 현재 출결상태 자동 갱신
- * 전체 대시보드가 아니라 studentStudy 하나만 15초마다 조회
+ * 저부하 공부시간 갱신
+ * - 15초 반복 호출 제거
+ * - 포털로 다시 돌아왔을 때도 최소 2분 간격으로만 1회 갱신
  * ======================================== */
-function stopStudyStatusAutoRefresh() {
-  if (studyStatusRefreshTimer) {
-    clearInterval(studyStatusRefreshTimer);
-    studyStatusRefreshTimer = null;
-  }
-}
-
-function startStudyStatusAutoRefresh() {
-  stopStudyStatusAutoRefresh();
-
-  if (!sessionToken) {
-    return;
-  }
-
-  studyStatusRefreshTimer = setInterval(function() {
-    if (!sessionToken || document.hidden) {
-      return;
-    }
-
-    loadStudy().catch(function(error) {
-      console.log("현재 출결상태 자동 갱신 실패", error);
-    });
-  }, 15000);
-}
+let lastStudyVisibilityRefreshAt_ = 0;
 
 document.addEventListener("visibilitychange", function() {
-  if (document.hidden || !sessionToken) {
+  if (
+    document.hidden ||
+    !sessionToken
+  ) {
     return;
   }
 
-  // 학생포털 화면으로 돌아오면 즉시 최신 상태 확인
-  loadStudy().catch(function(error) {
-    console.log("현재 출결상태 복귀 갱신 실패", error);
-  });
+  const now = Date.now();
 
-  startStudyStatusAutoRefresh();
+  if (
+    now - lastStudyVisibilityRefreshAt_ <
+    120000
+  ) {
+    return;
+  }
+
+  lastStudyVisibilityRefreshAt_ = now;
+
+  loadStudySummary()
+    .catch(function(error) {
+      console.log(
+        "공부시간 복귀 갱신 실패",
+        error
+      );
+    });
 });
 
 
@@ -3316,6 +3299,12 @@ async function loginStudent() {
     return;
   }
 
+  // 한 탭에서 로그인 요청이 중복 전송되지 않도록 차단
+  if (loginRequestInFlight) {
+    return;
+  }
+
+  loginRequestInFlight = true;
 
   button.disabled = true;
 
@@ -3374,7 +3363,6 @@ async function loginStudent() {
 
     showDashboard();
 
-    startStudyStatusAutoRefresh();
 
     // 로그인 응답에 학생정보가 있으면 즉시 표시
     if (result.student) {
@@ -3431,6 +3419,8 @@ async function loginStudent() {
   }
 
   finally {
+
+    loginRequestInFlight = false;
 
     button.disabled = false;
 
@@ -5167,7 +5157,6 @@ async function restoreSession() {
     // 1) 화면부터 즉시 표시
     showDashboard();
 
-    startStudyStatusAutoRefresh();
 
     // 2) 이전에 저장한 학생정보를 즉시 표시
     try {
@@ -7199,8 +7188,6 @@ document
 
 
 function logout() {
-  stopStudyStatusAutoRefresh();
-
   clearInterval(
     qrTimer
   );
