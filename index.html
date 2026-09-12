@@ -2396,6 +2396,19 @@
       cursor:pointer;
     }
 
+
+/* ACMEMO_V1_20260912: 학생에게 공개된 부담임 메모 */
+.assistant-memo-public{margin-top:12px;padding:11px;border:1px solid #e3d8f8;border-radius:11px;background:#faf7ff}
+.assistant-memo-public-title{font-size:12px;font-weight:900;color:#64408a}
+.assistant-memo-public-list{max-height:250px;overflow:auto;margin-top:5px}
+.assistant-memo-public-item{padding:9px 0;border-bottom:1px solid #eee5f7}
+.assistant-memo-public-item:last-child{border-bottom:0}
+.assistant-memo-public-meta{font-size:9px;line-height:1.5;color:#777}
+.assistant-memo-public-text{margin-top:5px;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.assistant-memo-public-help{margin-top:7px;color:#777;font-size:10px;line-height:1.5}
+.assistant-schedule-title-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.assistant-schedule-refresh{flex:0 0 auto;border:1px solid #ddd;background:#fff;border-radius:8px;padding:6px 9px;font-size:10px;font-weight:800;cursor:pointer}
+.assistant-schedule-refresh:disabled{opacity:.5;cursor:default}
 </style>
 </head>
 
@@ -2990,7 +3003,10 @@
 
     <!-- 부담임 상담 일정 -->
     <section class="card assistant-schedule-card">
-      <div class="card-title">🧑‍🏫 부담임 상담 일정</div>
+      <div class="card-title assistant-schedule-title-row">
+        <span>🧑‍🏫 부담임 상담 일정</span>
+        <button type="button" id="assistantScheduleRefreshButton" class="assistant-schedule-refresh">일정·메모 새로고침</button>
+      </div>
       <div id="assistantScheduleBox" class="placeholder">
         상담 일정을 불러오는 중입니다.
       </div>
@@ -6924,9 +6940,19 @@ async function deleteStudentCounselingRequest(applicationId) {
    부담임 상담 일정 / 학생 응답
 ========================= */
 
+// ACMEMO_V1_20260912: 해당 상담일정 카드만 수동 갱신. 자동 타이머 없음.
+let assistantScheduleMemoLoading_ = false;
+document.getElementById("assistantScheduleRefreshButton").addEventListener("click", function() {
+  loadAssistantSchedule();
+});
+
 async function loadAssistantSchedule() {
   const box = document.getElementById("assistantScheduleBox");
-  if (!box || !sessionToken) return;
+  if (!box || !sessionToken || assistantScheduleMemoLoading_) return;
+  assistantScheduleMemoLoading_ = true;
+  const requestSession = sessionToken;
+  const refreshButton = document.getElementById("assistantScheduleRefreshButton");
+  if (refreshButton) refreshButton.disabled = true;
 
   box.className = "placeholder";
   box.innerHTML = "상담 일정을 불러오는 중입니다.";
@@ -6934,8 +6960,10 @@ async function loadAssistantSchedule() {
   try {
     const result = await apiRequest(
       "studentAssistantCounselingList",
-      { sessionToken: sessionToken }
+      { sessionToken: requestSession }
     );
+
+    if (sessionToken !== requestSession) return;
 
     if (!result || !result.success) {
       box.innerHTML = escapeHtml(
@@ -6979,12 +7007,16 @@ async function loadAssistantSchedule() {
     });
 
   } catch (error) {
+    if (sessionToken !== requestSession) return;
     box.className = "placeholder";
     box.innerHTML = escapeHtml(
       error && error.message
         ? error.message
         : "상담 일정을 불러오지 못했습니다."
     );
+  } finally {
+    assistantScheduleMemoLoading_ = false;
+    if (refreshButton) refreshButton.disabled = false;
   }
 }
 
@@ -7001,6 +7033,28 @@ function studentLocalTodayYmd_() {
 function isAssistantCounselingToday_(item) {
   return String(item && item.proposedDate || "").trim() === studentLocalTodayYmd_();
 }
+
+function renderStudentAssistantMemos_(item) {
+  if (item.assistantMemoReadError) {
+    return '<div class="assistant-memo-public"><div class="assistant-memo-public-title">부담임 메모</div>' +
+      '<div class="assistant-memo-public-help">메모를 불러오지 못했습니다. 위의 일정·메모 새로고침을 눌러주세요.</div></div>';
+  }
+  const memos = Array.isArray(item.assistantMemos) ? item.assistantMemos : [];
+  if (!memos.length) return "";
+  const count = Number(item.assistantMemoCount) || memos.length;
+  return '<div class="assistant-memo-public">' +
+    '<div class="assistant-memo-public-title">💬 부담임 선생님 메모</div>' +
+    '<div class="assistant-memo-public-list">' + memos.map(function(memo) {
+      return '<div class="assistant-memo-public-item">' +
+        '<div class="assistant-memo-public-meta">' + escapeHtml(memo.senderName || item.assistantName || "부담임") +
+        ' · ' + escapeHtml(memo.sentAt || "") + '</div>' +
+        '<div class="assistant-memo-public-text">' + escapeHtml(memo.content || "") + '</div></div>';
+    }).join("") + '</div>' +
+    (count > memos.length ? '<div class="assistant-memo-public-help">전체 ' + escapeHtml(String(count)) +
+      '건 중 최근 ' + escapeHtml(String(memos.length)) + '건을 표시합니다.</div>' : '') +
+    '<div class="assistant-memo-public-help">메모는 안내이며 일정 확정은 아닙니다. 위의 상담 상태와 일시를 확인해주세요.</div></div>';
+}
+
 
 function renderAssistantScheduleItem_(item) {
   const id = escapeHtml(item.applicationId || "");
@@ -7078,6 +7132,7 @@ function renderAssistantScheduleItem_(item) {
       '<div class="assistant-schedule-row"><span>상담시간</span><b>' + escapeHtml(item.proposedTime || "-") + '</b></div>' +
       '<div class="assistant-schedule-row"><span>장소</span><b>' + escapeHtml(item.place || "학원 상담실") + '</b></div>' +
       changeInfo +
+      renderStudentAssistantMemos_(item) +
       actions +
     '</div>'
   );
